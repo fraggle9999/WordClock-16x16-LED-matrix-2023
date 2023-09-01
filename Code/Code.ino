@@ -74,7 +74,7 @@ DNSServer dnsServer;
 
 
 // ###########################################################################################################################################
-// # Declartions and variables used in the functions:
+// # Declarations and variables used in the functions:
 // ###########################################################################################################################################
 Preferences preferences;
 int langLEDlayout;
@@ -1271,12 +1271,62 @@ void ResetTextLEDs(uint32_t color) {
 // ###########################################################################################################################################
 void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
   if (ledNrFrom > ledNrTo) {
-    setLED(ledNrTo, ledNrFrom, 1);  // Sets LED numbers in correct order
+    setLED(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
   } else {
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
         strip.setPixelColor(i, color);
     }
+  }
+}
+
+
+void coord2PixelNr(int coordX, int coordY, int& firstRow, int& secondRow) {
+  firstRow = 15 - coordX + 32 * coordY;
+  secondRow = 16 + coordX + 32 * coordY;
+}
+
+void circleRound() {
+  int firstRow;
+  int secondRow;
+  
+  uint32_t color = strip.Color(255, 0, 0);
+  uint32_t color_black = strip.Color(0, 0, 0);
+  
+  // top from left to right
+  for (int x = 0; x < 16; ++x)
+  {
+    coord2PixelNr(x, 0, firstRow, secondRow);
+    setLEDcol(firstRow, firstRow, color);
+    delay(50);
+    setLEDCol(firstRow, firstRow, color_black);
+  }
+
+  // right from top to bottom (starting in second row, ending in second but last row)
+  for (int y = 1; y < 15; ++x)
+  {
+    coord2PixelNr(15, y, firstRow, secondRow);
+    setLEDcol(firstRow, firstRow, color);
+    delay(50);
+    setLEDCol(firstRow, firstRow, color_black);
+  }
+
+  // bottom from right to left
+  for (int x = 15; x >= 0; --x)
+  {
+    coord2PixelNr(x, 15, firstRow, secondRow);
+    setLEDcol(firstRow, firstRow, color);
+    delay(50);
+    setLEDCol(firstRow, firstRow, color_black);
+  }
+
+  // left from bottom to top (starting in second but last row, ending in second row)
+  for (int y = 14; y > 0; --y)
+  {
+    coord2PixelNr(0, y, firstRow, secondRow);
+    setLEDcol(firstRow, firstRow, color);
+    delay(50);
+    setLEDCol(firstRow, firstRow, color_black);
   }
 }
 
@@ -1494,12 +1544,32 @@ void show_time(int hours, int minutes) {
   back_color();
 
   // Static text color or random color mode:
-  if (RandomColor == 0) colorRGB = strip.Color(redVal_time, greenVal_time, blueVal_time);
-  if (RandomColor == 1) colorRGB = strip.Color(random(255), random(255), random(255));
+  if (RandomColor == 0) 
+    colorRGB = strip.Color(redVal_time, greenVal_time, blueVal_time);
+  else
+  {
+    // avoid black color
+    int redVal = 0;
+    int greenVal = 0;
+    int blueVal = 0;
+    
+    while ((redVal == 0) && (greenVal == 0) && (blueVal == 0))
+    {
+      redVal = random(255);
+      greenVal = random(255);
+      blueVal = random(255);
+    }
+    
+    colorRGB = strip.Color(redVal, greenVal, blueVal);
+  }
 
   // Display time:
   iHour = hours;
   iMinute = minutes;
+  
+  // circle round the display to new beginning hour
+  if (iMinute == 0)
+    circleRound();
 
   // Test a special time:
   if (testspecialtime == 1) {
@@ -1585,96 +1655,100 @@ void show_time(int hours, int minutes) {
         xHour++;
     }
 
+    uint32_t colorRGBForHour = colorRGB;
+    
+    if (RandomColor == 1)
+      colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
 
     switch (xHour) {
       case 1:
         {
           if (xHour == 1) {
-            setLEDcol(169, 171, colorRGB);  // EIN
-            setLEDcol(180, 182, colorRGB);  // 2nd row
+            setLEDcol(169, 171, colorRGBForHour);  // EIN
+            setLEDcol(180, 182, colorRGBForHour);  // 2nd row
             if (testPrintTimeTexts == 1) Serial.print("EIN ");
           }
           if ((xHour == 1) && (iMinute > 4)) {
-            setLEDcol(168, 171, colorRGB);  // EINS (S in EINS) (just used if not point 1 o'clock)
-            setLEDcol(180, 183, colorRGB);  // 2nd row
+            setLEDcol(168, 171, colorRGBForHour);  // EINS (S in EINS) (just used if not point 1 o'clock)
+            setLEDcol(180, 183, colorRGBForHour);  // 2nd row
             if (testPrintTimeTexts == 1) Serial.print("EINS ");
           }
           break;
         }
       case 2:
         {
-          setLEDcol(140, 143, colorRGB);  // ZWEI
-          setLEDcol(144, 147, colorRGB);  // 2nd row
+          setLEDcol(140, 143, colorRGBForHour);  // ZWEI
+          setLEDcol(144, 147, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("ZWEI ");
           break;
         }
       case 3:
         {
-          setLEDcol(136, 139, colorRGB);  // DREI
-          setLEDcol(148, 151, colorRGB);  // 2nd row
+          setLEDcol(136, 139, colorRGBForHour);  // DREI
+          setLEDcol(148, 151, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("DREI ");
           break;
         }
       case 4:
         {
-          setLEDcol(128, 131, colorRGB);  // VIER
-          setLEDcol(156, 159, colorRGB);  // 2nd row
+          setLEDcol(128, 131, colorRGBForHour);  // VIER
+          setLEDcol(156, 159, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("VIER ");
           break;
         }
       case 5:
         {
-          setLEDcol(160, 163, colorRGB);  // FUENF
-          setLEDcol(188, 191, colorRGB);  // 2nd row
+          setLEDcol(160, 163, colorRGBForHour);  // FUENF
+          setLEDcol(188, 191, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
           break;
         }
       case 6:
         {
-          setLEDcol(164, 168, colorRGB);  // SECHS
-          setLEDcol(183, 187, colorRGB);  // 2nd row
+          setLEDcol(164, 168, colorRGBForHour);  // SECHS
+          setLEDcol(183, 187, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("SECHS ");
           break;
         }
       case 7:
         {
-          setLEDcol(202, 207, colorRGB);  // SIEBEN
-          setLEDcol(208, 213, colorRGB);  // 2nd row
+          setLEDcol(202, 207, colorRGBForHour);  // SIEBEN
+          setLEDcol(208, 213, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("SIEBEN ");
           break;
         }
       case 8:
         {
-          setLEDcol(172, 175, colorRGB);  // ACHT
-          setLEDcol(176, 179, colorRGB);  // 2nd row
+          setLEDcol(172, 175, colorRGBForHour);  // ACHT
+          setLEDcol(176, 179, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("ACHT ");
           break;
         }
       case 9:
         {
-          setLEDcol(132, 135, colorRGB);  // NEUN
-          setLEDcol(152, 155, colorRGB);  // 2nd row
+          setLEDcol(132, 135, colorRGBForHour);  // NEUN
+          setLEDcol(152, 155, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("NEUN ");
           break;
         }
       case 10:
         {
-          setLEDcol(99, 102, colorRGB);   // ZEHN (Stunden)
-          setLEDcol(121, 124, colorRGB);  // 2nd row
+          setLEDcol(99, 102, colorRGBForHour);   // ZEHN (Stunden)
+          setLEDcol(121, 124, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
           break;
         }
       case 11:
         {
-          setLEDcol(96, 98, colorRGB);    // ELF
-          setLEDcol(125, 127, colorRGB);  // 2nd row
+          setLEDcol(96, 98, colorRGBForHour);    // ELF
+          setLEDcol(125, 127, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("ELF ");
           break;
         }
       case 12:
         {
-          setLEDcol(197, 201, colorRGB);  // ZWÖLF
-          setLEDcol(214, 218, colorRGB);  // 2nd row
+          setLEDcol(197, 201, colorRGBForHour);  // ZWÖLF
+          setLEDcol(214, 218, colorRGBForHour);  // 2nd row
           if (testPrintTimeTexts == 1) Serial.print("ZWÖLF ");
           break;
         }
@@ -4003,7 +4077,7 @@ String ledstatus = "ON";
 void handleLEDupdate() {  // LED server pages urls:
 
   ledserver.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {  // Show a manual how to use these links:
-    String message = "WordClock web configuration and querry options examples:\n\n";
+    String message = "WordClock web configuration and query options examples:\n\n";
     message = message + "General:\n";
     message = message + "http://" + IpAddress2String(WiFi.localIP()) + ":2023 --> Shows this text\n\n";
     message = message + "Get the status of the WordClock LEDs:\n";
@@ -4487,7 +4561,7 @@ const char* PARAM_INPUT_1 = "mySSID";
 const char* PARAM_INPUT_2 = "myPW";
 const char* PARAM_INPUT_3 = "setlanguage";
 const String captiveportalURL = "http://192.168.4.1";
-void CaptivePotalSetup() {
+void CaptivePortalSetup() {
   ScanWiFi();
   const char* temp_ssid = "WordClock";
   const char* temp_password = "";
@@ -4647,7 +4721,7 @@ void WIFI_SETUP() {
       showtext("I", TextWait, c);
       showtext(" ", TextWait, c);
       SetWLAN(strip.Color(0, 255, 255));
-      CaptivePotalSetup();
+      CaptivePortalSetup();
     } else {
       Serial.println("Try to connect to found WiFi configuration: ");
       WiFi.disconnect();
