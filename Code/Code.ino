@@ -1281,52 +1281,58 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
 }
 
 
-void coord2PixelNr(int coordX, int coordY, int& firstRow, int& secondRow) {
-  firstRow = 15 - coordX + 32 * coordY;
-  secondRow = 16 + coordX + 32 * coordY;
+// ###########################################################################################################################################
+// # Actual function, which controls 1/0 of the LED with X/Y position and color value:
+// ###########################################################################################################################################
+void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
+  int firstRow = 15 - coordX + 32 * coordY;
+  int secondRow = 16 + coordX + 32 * coordY;
+
+  setLEDcol(firstRow, firstRow + numCols - 1, color);
+  setLEDcol(secondRow, secondRow + numCols - 1, color);
 }
 
+
+// ###########################################################################################################################################
+// # Draw a circle round the clock.
+// ###########################################################################################################################################
 void circleRound() {
-  int firstRow;
-  int secondRow;
-  
   uint32_t color = strip.Color(255, 0, 0);
   uint32_t color_black = strip.Color(0, 0, 0);
   
+  const int max_cols = 16;
+  const int max_rows = 8;
+  
   // top from left to right
-  for (int x = 0; x < 16; ++x)
+  for (int x = 0; x < max_cols; ++x)
   {
-    coord2PixelNr(x, 0, firstRow, secondRow);
-    setLEDcol(firstRow, firstRow, color);
+    setLEDcolXY(x, 0, color);
     delay(50);
-    setLEDCol(firstRow, firstRow, color_black);
+    setLEDColXY(x, 0, color_black);
   }
 
   // right from top to bottom (starting in second row, ending in second but last row)
-  for (int y = 1; y < 15; ++x)
+  for (int y = 1; y < max_rows - 1; ++x)
   {
-    coord2PixelNr(15, y, firstRow, secondRow);
-    setLEDcol(firstRow, firstRow, color);
+    setLEDcolXY(max_cols - 1, y, color);
     delay(50);
-    setLEDCol(firstRow, firstRow, color_black);
+    setLEDColXY(max_cols - 1, y, color_black);
   }
 
   // bottom from right to left
-  for (int x = 15; x >= 0; --x)
+  for (int x = max_cols - 1; x >= 0; --x)
   {
-    coord2PixelNr(x, 15, firstRow, secondRow);
-    setLEDcol(firstRow, firstRow, color);
+    setLEDcolXY(x, max_rows - 1, color);
     delay(50);
-    setLEDCol(firstRow, firstRow, color_black);
+    setLEDColXY(x, max_rows - 1, color_black);
   }
 
   // left from bottom to top (starting in second but last row, ending in second row)
-  for (int y = 14; y > 0; --y)
+  for (int y = max_rows - 2; y > 0; --y)
   {
-    coord2PixelNr(0, y, firstRow, secondRow);
-    setLEDcol(firstRow, firstRow, color);
+    setLEDcolXY(0, y, color);
     delay(50);
-    setLEDCol(firstRow, firstRow, color_black);
+    setLEDColXY(0, y, color_black);
   }
 }
 
