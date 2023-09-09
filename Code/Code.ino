@@ -121,6 +121,7 @@ void setup() {
   strip.show();                           // Init the LEDs --> Set them to OFF
   intensity = intensity_day;              // Set the intenity to day mode for startup
   strip.setBrightness(intensity);         // Set LED brightness
+  circleRound();
   WIFI_SETUP();                           // WiFi login and startup of web services
 }
 
@@ -1271,8 +1272,15 @@ void ResetTextLEDs(uint32_t color) {
 // ###########################################################################################################################################
 void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
   if (ledNrFrom > ledNrTo) {
-    setLED(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
+    setLEDcol(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
   } else {
+    Serial.print("setLEDcol: from ");
+    Serial.print(ledNrFrom);
+    Serial.print(" to ");
+    Serial.print(ledNrTo);
+    Serial.print(" with color ");
+    Serial.println(color);
+
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
         strip.setPixelColor(i, color);
@@ -1285,8 +1293,17 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
 void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
+  Serial.print("setLEDcolXY: X = ");
+  Serial.print(coordX);
+  Serial.print(", Y = ");
+  Serial.print(coordY);
   int firstRow = 15 - coordX + 32 * coordY;
   int secondRow = 16 + coordX + 32 * coordY;
+
+  Serial.print(" -> firstRow = ");
+  Serial.print(firstRow);
+  Serial.print(", secondRow = ");
+  Serial.println(secondRow);
 
   setLEDcol(firstRow, firstRow + numCols - 1, color);
   setLEDcol(secondRow, secondRow + numCols - 1, color);
@@ -1297,43 +1314,60 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
 // # Draw a circle round the clock.
 // ###########################################################################################################################################
 void circleRound() {
+  delay(200);
+  Serial.println("Starting circle round the display ...");
+
   uint32_t color = strip.Color(255, 0, 0);
   uint32_t color_black = strip.Color(0, 0, 0);
   
   const int max_cols = 16;
   const int max_rows = 8;
+  const int delay_val = 50;
   
   // top from left to right
   for (int x = 0; x < max_cols; ++x)
   {
-    setLEDcolXY(x, 0, color);
-    delay(50);
-    setLEDColXY(x, 0, color_black);
+    setLEDcolXY(x, 0, 1, color);
+    strip.show();
+//    delay(delay_val);
+    setLEDcolXY(x, 0, 1, color_black);
+  //  strip.show();
   }
 
   // right from top to bottom (starting in second row, ending in second but last row)
-  for (int y = 1; y < max_rows - 1; ++x)
+  for (int y = 1; y < max_rows - 1; ++y)
   {
-    setLEDcolXY(max_cols - 1, y, color);
-    delay(50);
-    setLEDColXY(max_cols - 1, y, color_black);
+    setLEDcolXY(max_cols - 1, y, 1, color);
+    strip.show();
+//    delay(delay_val);
+    setLEDcolXY(max_cols - 1, y, 1, color_black);
+  //  strip.show();
   }
 
   // bottom from right to left
   for (int x = max_cols - 1; x >= 0; --x)
   {
-    setLEDcolXY(x, max_rows - 1, color);
-    delay(50);
-    setLEDColXY(x, max_rows - 1, color_black);
+    setLEDcolXY(x, max_rows - 1, 1, color);
+    strip.show();
+//    delay(delay_val);
+    setLEDcolXY(x, max_rows - 1, 1, color_black);
+  //  strip.show();
   }
 
   // left from bottom to top (starting in second but last row, ending in second row)
   for (int y = max_rows - 2; y > 0; --y)
   {
-    setLEDcolXY(0, y, color);
-    delay(50);
-    setLEDColXY(0, y, color_black);
+    setLEDcolXY(0, y, 1, color);
+    strip.show();
+//    delay(delay_val);
+    setLEDcolXY(0, y, 1, color_black);
+  //  strip.show();
   }
+
+  ClearDisplay();
+  strip.show();
+
+  Serial.println("Ending circle round the display ...");
 }
 
 
