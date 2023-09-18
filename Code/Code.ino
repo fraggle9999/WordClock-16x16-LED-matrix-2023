@@ -533,557 +533,109 @@ void ShowIPaddress() {
   //   delay(ipdelay);
   // }
 
-  // Octet 1:
-  ClearDisplay();
-  numbers(getDigit(int(WiFi.localIP()[0]), 2), 3);
-  numbers(getDigit(int(WiFi.localIP()[0]), 1), 2);
-  numbers(getDigit(int(WiFi.localIP()[0]), 0), 1);
-  setLED(160, 160, 1);
-  setLED(191, 191, 1);  // 2nd row
-  setLED(236, 239, 1);
-  setLED(240, 243, 1);  // 2nd row
-  strip.show();
-  delay(ipdelay);
+  uint32_t ipColor = strip.Color(255, 0, 0);
 
-  // // Octet 2:
-  ClearDisplay();
-  numbers(getDigit(int(WiFi.localIP()[1]), 2), 3);
-  numbers(getDigit(int(WiFi.localIP()[1]), 1), 2);
-  numbers(getDigit(int(WiFi.localIP()[1]), 0), 1);
-  setLED(160, 160, 1);
-  setLED(191, 191, 1);  // 2nd row
-  setLED(232, 239, 1);
-  setLED(240, 247, 1);  // 2nd row
-  strip.show();
-  delay(ipdelay);
+  for (int octet = 0; octet < 4; ++octet)
+  {
+    ClearDisplay();
 
-  // // Octet 3:
-  ClearDisplay();
-  numbers(getDigit(int(WiFi.localIP()[2]), 2), 3);
-  numbers(getDigit(int(WiFi.localIP()[2]), 1), 2);
-  numbers(getDigit(int(WiFi.localIP()[2]), 0), 1);
-  setLED(160, 160, 1);
-  setLED(191, 191, 1);  // 2nd row
-  setLED(228, 239, 1);
-  setLED(240, 251, 1);  // 2nd row
-  strip.show();
-  delay(ipdelay);
+    int OctetValue = int(WiFi.localIP()[octet]);
 
-  // // Octet 4:
-  ClearDisplay();
-  numbers(getDigit(int(WiFi.localIP()[3]), 2), 3);
-  numbers(getDigit(int(WiFi.localIP()[3]), 1), 2);
-  numbers(getDigit(int(WiFi.localIP()[3]), 0), 1);
-  setLED(224, 239, 1);
-  setLED(240, 255, 1);  // 2nd row
-  strip.show();
-  delay(ipdelay);
+    for (int digit = 0; digit < 4; ++digit)
+      numbers(getDigit(OctetValue, digit), digit, ipColor);
+
+    if (octet < 3) // nicht beim letzten Wert
+      setLEDcolXY(15, 5, 1, ipColor); // Punkt hinter dem Wert
+
+    setLEDcolXY(3 + octet, 7, 1, ipColor); // Ordnungszahl unten (1 bis 4)
+
+    strip.show();
+    delay(ipdelay);
+  }
+}
+
+
+// ###########################################################################################################################################
+// # Set one number on the display at a specific coordinate:
+// ###########################################################################################################################################
+void showNumber(char** number, int coordX, int coordY, uint32_t color){
+  for (int x = 0; x < 4; ++x)
+    for (int y = 0; y < 5; ++y)
+      if (number[x][y] != ' ')
+        setLEDcolXY(coordX + x, coordY + y, 1, color);
 }
 
 
 // ###########################################################################################################################################
 // # Set the numbers on the display in each single row:
 // ###########################################################################################################################################
-void numbers(int wert, int segment) {
+void numbers(int wert, int segment, uint32_t color) {
 
   // Serial.println(wert);
 
-  switch (segment) {
-    case 3:
-      {
-        switch (wert) {
-          case 0:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 108, 1);
-              setLED(115, 115, 1);  // 2nd row
-              setLED(111, 111, 1);
-              setLED(112, 112, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(143, 143, 1);
-              setLED(144, 144, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 1:
-            {
-              setLED(44, 44, 1);
-              setLED(51, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(108, 108, 1);
-              setLED(115, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 172, 1);
-              setLED(179, 179, 1);  // 2nd row
-              break;
-            }
-          case 2:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(143, 143, 1);
-              setLED(144, 144, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 3:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 4:
-            {
-              setLED(44, 44, 1);
-              setLED(51, 51, 1);  // 2nd row
-              setLED(47, 47, 1);
-              setLED(48, 48, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 172, 1);
-              setLED(179, 179, 1);  // 2nd row
-              break;
-            }
-          case 5:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 6:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(143, 143, 1);
-              setLED(144, 144, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 7:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(108, 108, 1);
-              setLED(115, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 172, 1);
-              setLED(179, 179, 1);  // 2nd row
-              break;
-            }
-          case 8:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(143, 143, 1);
-              setLED(144, 144, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-          case 9:
-            {
-              setLED(44, 47, 1);
-              setLED(48, 51, 1);  // 2nd row
-              setLED(76, 76, 1);
-              setLED(83, 83, 1);  // 2nd row
-              setLED(79, 79, 1);
-              setLED(80, 80, 1);  // 2nd row
-              setLED(108, 111, 1);
-              setLED(112, 115, 1);  // 2nd row
-              setLED(140, 140, 1);
-              setLED(147, 147, 1);  // 2nd row
-              setLED(172, 175, 1);
-              setLED(176, 179, 1);  // 2nd row
-              break;
-            }
-        }
-        break;
-      }
+  static char* numberArray[10][5] = { 
+    {"XXXX",
+     "X  X",
+     "X  X",
+     "X  X",
+     "XXXX"},
 
-    case 2:
-      {
-        switch (wert) {
-          case 0:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 103, 1);
-              setLED(120, 120, 1);  // 2nd row
-              setLED(106, 106, 1);
-              setLED(117, 117, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(138, 138, 1);
-              setLED(149, 149, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 1:
-            {
-              setLED(39, 39, 1);
-              setLED(56, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(103, 103, 1);
-              setLED(120, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 167, 1);
-              setLED(184, 184, 1);  // 2nd row
-              break;
-            }
-          case 2:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(138, 138, 1);
-              setLED(149, 149, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 3:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 4:
-            {
-              setLED(39, 39, 1);
-              setLED(56, 56, 1);  // 2nd row
-              setLED(42, 42, 1);
-              setLED(53, 53, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 167, 1);
-              setLED(184, 184, 1);  // 2nd row
-              break;
-            }
-          case 5:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 6:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(138, 138, 1);
-              setLED(149, 149, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 7:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(103, 103, 1);
-              setLED(120, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 167, 1);
-              setLED(184, 184, 1);  // 2nd row
-              break;
-            }
-          case 8:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(138, 138, 1);
-              setLED(149, 149, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-          case 9:
-            {
-              setLED(39, 42, 1);
-              setLED(53, 56, 1);  // 2nd row
-              setLED(71, 71, 1);
-              setLED(88, 88, 1);  // 2nd row
-              setLED(74, 74, 1);
-              setLED(85, 85, 1);  // 2nd row
-              setLED(103, 106, 1);
-              setLED(117, 120, 1);  // 2nd row
-              setLED(135, 135, 1);
-              setLED(152, 152, 1);  // 2nd row
-              setLED(167, 170, 1);
-              setLED(181, 184, 1);  // 2nd row
-              break;
-            }
-        }
-        break;
-      }
+    {"   X",
+     " XXX",
+     "   X",
+     "   X",
+     "   X"},
 
-    case 1:
-      {
-        switch (wert) {
-          case 0:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 98, 1);
-              setLED(125, 125, 1);  // 2nd row
-              setLED(101, 101, 1);
-              setLED(122, 122, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(133, 133, 1);
-              setLED(154, 154, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 1:
-            {
-              setLED(34, 34, 1);
-              setLED(61, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(98, 98, 1);
-              setLED(125, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 162, 1);
-              setLED(189, 189, 1);  // 2nd row
-              break;
-            }
-          case 2:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(133, 133, 1);
-              setLED(154, 154, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 3:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 4:
-            {
-              setLED(34, 34, 1);
-              setLED(61, 61, 1);  // 2nd row
-              setLED(37, 37, 1);
-              setLED(58, 58, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 162, 1);
-              setLED(189, 189, 1);  // 2nd row
-              break;
-            }
-          case 5:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 6:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(133, 133, 1);
-              setLED(154, 154, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 7:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(98, 98, 1);
-              setLED(125, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 162, 1);
-              setLED(189, 189, 1);  // 2nd row
-              break;
-            }
-          case 8:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(133, 133, 1);
-              setLED(154, 154, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-          case 9:
-            {
-              setLED(34, 37, 1);
-              setLED(58, 61, 1);  // 2nd row
-              setLED(66, 66, 1);
-              setLED(93, 93, 1);  // 2nd row
-              setLED(69, 69, 1);
-              setLED(90, 90, 1);  // 2nd row
-              setLED(98, 101, 1);
-              setLED(122, 125, 1);  // 2nd row
-              setLED(130, 130, 1);
-              setLED(157, 157, 1);  // 2nd row
-              setLED(162, 165, 1);
-              setLED(186, 189, 1);  // 2nd row
-              break;
-            }
-        }
-        break;
-      }
-  }
+    {"XXXX",
+     "   X",
+     "XXXX",
+     "X   ",
+     "XXXX"},
+
+    {"XXXX",
+     "   X",
+     "XXXX",
+     "   X",
+     "XXXX"},
+
+    {"X  X",
+     "X  X",
+     "XXXX",
+     "   X",
+     "   X"},
+
+    {"XXXX",
+     "X   ",
+     "XXXX",
+     "   X",
+     "XXXX"},
+
+    {"XXXX",
+     "X   ",
+     "XXXX",
+     "X  X",
+     "XXXX"},
+
+    {"XXXX",
+     "   X",
+     "   X",
+     "   X",
+     "   X"},
+
+    {"XXXX",
+     "X  X",
+     "XXXX",
+     "X  X",
+     "XXXX"},
+
+    {"XXXX",
+     "X  X",
+     "XXXX",
+     "   X",
+     "XXXX"}
+  };
+
+  showNumber(numberArray[wert], (2 - segment) * 5, 2, color);
 }
 
 
@@ -1290,6 +842,15 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
 
 
 // ###########################################################################################################################################
+// # Calculate pixel nrs from x/y coordinate:
+// ###########################################################################################################################################
+void coords2Pixel(int coordX, int coordY, int& firstRow, int& secondRow) {
+  firstRow = 15 - coordX + 32 * coordY;
+  secondRow = 16 + coordX + 32 * coordY;
+}
+  
+
+// ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
 void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
@@ -1297,8 +858,9 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
   Serial.print(coordX);
   Serial.print(", Y = ");
   Serial.print(coordY);
-  int firstRow = 15 - coordX + 32 * coordY;
-  int secondRow = 16 + coordX + 32 * coordY;
+
+  int firstRow, secondRow;
+  coords2Pixel(coordX, coordY, firstRow, secondRow);
 
   Serial.print(" -> firstRow = ");
   Serial.print(firstRow);
@@ -3768,6 +3330,18 @@ void setLED(int ledNrFrom, int ledNrTo, int switchOn) {
         strip.setPixelColor(i, strip.Color(0, 0, 0));  // Switch LEDs off
     }
   }
+}
+
+
+// ###########################################################################################################################################
+// # Actual function, which controls 1/0 of the LED with x/y coords:
+// ###########################################################################################################################################
+void setLEDXY(int coordX, int coordY, int numCols, int switchOn) {
+  uint32_t color = strip.Color(redVal_time, greenVal_time, blueVal_time);
+  if (switchOn == 0)
+    color = strip.Color(0, 0, 0);
+
+  setLEDcolXY(coordX, coordY, numCols, color);
 }
 
 
