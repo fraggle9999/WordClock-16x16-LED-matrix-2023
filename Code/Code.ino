@@ -3891,89 +3891,81 @@ void showChar(char letter, int wait, uint32_t c) {
 // ###########################################################################################################################################
 // # Startup WiFi text function:
 // ###########################################################################################################################################
-void SetWLAN(uint32_t color) {
+void ShowWLAN(uint32_t color) {
   if (debugtexts == 1) Serial.println("Show text WLAN/WIFI...");
   ClearDisplay();
+  
+  int coordX = -1, coordY = -1;
 
-  if (langLEDlayout == 0) {  // DE:
-    for (uint16_t i = 5; i < 9; i++) {
-      strip.setPixelColor(i, color);
-    }
-    for (uint16_t i = 23; i < 27; i++) {  // 2nd row
-      strip.setPixelColor(i, color);
-    }
+  switch (langLEDlayout)
+  {
+    case 0:  // DE
+      coordX = 7;
+      coordY = 0;
+      break;
+        
+    case 1:  // EN:
+      coordX = 5;
+      coordY = 0;
+      break;
+      
+    case 2:  // NL:
+      coordX = 1;
+      coordY = 2;
+      break;
+      
+    case 3:  // SWE:
+      coordX = 12;
+      coordY = 0;
+      break;
+
+    case 4:  // IT:
+      setLEDcol(233, 233, color);  // W
+      setLEDcol(246, 246, color);  // 2nd row
+      setLEDcol(231, 231, color);  // I
+      setLEDcol(248, 248, color);  // 2nd row
+      setLEDcol(226, 226, color);  // F
+      setLEDcol(253, 253, color);  // 2nd row
+      setLEDcol(224, 224, color);  // I
+      setLEDcol(255, 255, color);  // 2nd row
+      break;
+
+    case 5:  // FR:
+      setLEDcol(239, 239, color);  // W
+      setLEDcol(240, 240, color);  // 2nd row
+      setLEDcol(237, 237, color);  // I
+      setLEDcol(242, 242, color);  // 2nd row
+      setLEDcol(232, 232, color);  // F
+      setLEDcol(247, 247, color);  // 2nd row
+      setLEDcol(224, 224, color);  // I
+      setLEDcol(255, 255, color);  // 2nd row
+      break;
+
+    case 6:    // GSW:
+      coordX = 5;
+      coordY = 0;
+      break;
+
+    case 7:    // CN:
+      setLEDcol(42, 43, color);  // WIFI
+      setLEDcol(52, 53, color);  // 2nd row
+      break;
+
+    case 8:    // SWABIAN:
+      setLEDcol(12, 13, color);  // WI
+      setLEDcol(18, 19, color);  // 2nd row
+      setLEDcol(7, 8, color);    // FI
+      setLEDcol(23, 24, color);  // 2nd row
+      break;
+
+    case 9:    // BAVARIAN:
+      coordX = 2;
+      coordY = 0;
+      break;
   }
 
-  if (langLEDlayout == 1) {  // EN:
-    for (uint16_t i = 7; i < 11; i++) {
-      strip.setPixelColor(i, color);
-    }
-    for (uint16_t i = 21; i < 25; i++) {  // 2nd row
-      strip.setPixelColor(i, color);
-    }
-  }
-
-  if (langLEDlayout == 2) {  // NL:
-    for (uint16_t i = 75; i < 79; i++) {
-      strip.setPixelColor(i, color);
-    }
-    for (uint16_t i = 81; i < 85; i++) {  // 2nd row
-      strip.setPixelColor(i, color);
-    }
-  }
-
-  if (langLEDlayout == 3) {  // SWE:
-    for (uint16_t i = 0; i < 4; i++) {
-      strip.setPixelColor(i, color);
-    }
-    for (uint16_t i = 28; i < 32; i++) {  // 2nd row
-      strip.setPixelColor(i, color);
-    }
-  }
-
-  if (langLEDlayout == 4) {      // IT:
-    setLEDcol(233, 233, color);  // W
-    setLEDcol(246, 246, color);  // 2nd row
-    setLEDcol(231, 231, color);  // I
-    setLEDcol(248, 248, color);  // 2nd row
-    setLEDcol(226, 226, color);  // F
-    setLEDcol(253, 253, color);  // 2nd row
-    setLEDcol(224, 224, color);  // I
-    setLEDcol(255, 255, color);  // 2nd row
-  }
-
-  if (langLEDlayout == 5) {      // FR:
-    setLEDcol(239, 239, color);  // W
-    setLEDcol(240, 240, color);  // 2nd row
-    setLEDcol(237, 237, color);  // I
-    setLEDcol(242, 242, color);  // 2nd row
-    setLEDcol(232, 232, color);  // F
-    setLEDcol(247, 247, color);  // 2nd row
-    setLEDcol(224, 224, color);  // I
-    setLEDcol(255, 255, color);  // 2nd row
-  }
-
-  if (langLEDlayout == 6) {    // GSW:
-    setLEDcol(7, 10, color);   // WIFI
-    setLEDcol(21, 24, color);  // 2nd row
-  }
-
-  if (langLEDlayout == 7) {    // CN:
-    setLEDcol(42, 43, color);  // WIFI
-    setLEDcol(52, 53, color);  // 2nd row
-  }
-
-  if (langLEDlayout == 8) {    // SWABIAN:
-    setLEDcol(12, 13, color);  // WI
-    setLEDcol(18, 19, color);  // 2nd row
-    setLEDcol(7, 8, color);    // FI
-    setLEDcol(23, 24, color);  // 2nd row
-  }
-
-  if (langLEDlayout == 9) {    // BAVARIAN:
-    setLEDcol(10, 13, color);  // WIFI
-    setLEDcol(18, 21, color);  // 2nd row
-  }
+  if ((coordX >= 0) && (coordY >= 0))
+    setLEDcolXY(coordX, coordY, 4, color);
 
   strip.show();
 }
@@ -4319,7 +4311,7 @@ void WIFI_SETUP() {
       uint32_t c = strip.Color(0, 255, 255);
       int TextWait = 500;
       showText("SET WIFI ", TextWait, c);
-      SetWLAN(strip.Color(0, 255, 255));
+      ShowWLAN(strip.Color(0, 255, 255));
       CaptivePortalSetup();
     } else {
       Serial.println("Try to connect to found WiFi configuration: ");
@@ -4329,12 +4321,12 @@ void WIFI_SETUP() {
       WiFi.begin((const char*)WIFIssid.c_str(), (const char*)WIFIpass.c_str());
       Serial.println("Connecting to WiFi " + String(WIFIssid));
       while (WiFi.status() != WL_CONNECTED) {
-        SetWLAN(strip.Color(0, 0, 255));
+        ShowWLAN(strip.Color(0, 0, 255));
         tryCount = tryCount + 1;
         Serial.print("Connection try #: ");
         Serial.println(tryCount);
         if (tryCount >= maxWiFiconnctiontries - 10) {
-          SetWLAN(strip.Color(255, 0, 0));
+          ShowWLAN(strip.Color(255, 0, 0));
         }
         if (tryCount == maxWiFiconnctiontries) {
           Serial.println("\n\nWIFI CONNECTION ERROR: If the connection still can not be established please check the WiFi settings or location of the device.\n\n");
@@ -4346,7 +4338,7 @@ void WIFI_SETUP() {
           ESP.restart();
         }
         delay(500);
-        SetWLAN(strip.Color(0, 0, 0));
+        ShowWLAN(strip.Color(0, 0, 0));
         delay(500);
       }
       Serial.println(" ");
@@ -4355,7 +4347,7 @@ void WIFI_SETUP() {
       Serial.println(WiFi.SSID());
       Serial.println("IP: " + WiFi.localIP().toString());
       Serial.println("DNS: " + WiFi.dnsIP().toString());
-      SetWLAN(strip.Color(0, 255, 0));
+      ShowWLAN(strip.Color(0, 255, 0));
       delay(1000);
 
       if (useStartupText == 1) callStartText();  // Show "WordClock" startup text
