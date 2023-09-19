@@ -581,7 +581,7 @@ void numbers(int wert, int segment, uint32_t color) {
      "XXXX"},
 
     {"   X",
-     " XXX",
+     "   X",
      "   X",
      "   X",
      "   X"},
@@ -694,12 +694,7 @@ void buttonUpdate(Control* sender, int type, void* param) {
     updatemode = true;
     int32_t c = strip.Color(0, 0, 255);
     int TextWait = 500;
-    showtext("U", TextWait, c);
-    showtext("P", TextWait, c);
-    showtext("D", TextWait, c);
-    showtext("A", TextWait, c);
-    showtext("T", TextWait, c);
-    showtext("E", TextWait, c);
+    showText("UPDATE", TextWait, c);
     setLED(0, 0, 1);
     setLED(31, 31, 1);  // 2nd row
     setLED(15, 15, 1);
@@ -1064,10 +1059,7 @@ void update_display() {
     usenightmode = 0;
     uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
     int TextWait = 500;
-    showtext("T", TextWait, c);
-    showtext("E", TextWait, c);
-    showtext("S", TextWait, c);
-    showtext("T", TextWait, c);
+    showText("TEST", TextWait, c);
     for (int i = 1; i <= 12; i++) {  // 12 hours only:
       show_time(i, 0);
       delay(3000);
@@ -3771,113 +3763,114 @@ void callStartText() {
   Serial.println("Show 'WordClock' startup text...");
   uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
   int TextWait = 500;
-  showtext("W", TextWait, c);
-  showtext("o", TextWait, c);
-  showtext("r", TextWait, c);
-  showtext("d", TextWait, c);
-  showtext("C", TextWait, c);
-  showtext("l", TextWait, c);
-  showtext("o", TextWait, c);
-  showtext("c", TextWait, c);
-  showtext("k", TextWait, c);
+  showText("WordClock", TextWait, c);
 }
 
 
 // ###########################################################################################################################################
 // # Text output function:
 // ###########################################################################################################################################
-void showtext(String letter, int wait, uint32_t c) {
+void showText(String text, int wait, uint32_t c) {
+  for (char ch : text)
+    showChar(ch, wait, c);
+}
+
+    
+// ###########################################################################################################################################
+// # Character output function:
+// ###########################################################################################################################################
+void showChar(char letter, int wait, uint32_t c) {
   ClearDisplay();
 
   int myArray[50];
   memset(myArray, 0, sizeof(myArray));
 
-  if (letter == "W") {
+  if (letter == 'W') {
     int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 151, 136, 135, 152, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "o") {
+  if (letter == 'o') {
     int myArray2[] = { 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 102, 121, 120, 103, 104, 119, 118, 105 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "r") {
+  if (letter == 'r') {
     int myArray2[] = { 154, 133, 122, 101, 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "d") {
+  if (letter == 'd') {
     int myArray2[] = { 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "C") {
+  if (letter == 'C') {
     int myArray2[] = { 58, 37, 57, 38, 39, 56, 40, 55, 41, 54, 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "l") {
+  if (letter == 'l') {
     int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181 };  // , 169, 182, 183, 168
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "c") {
+  if (letter == 'c') {
     int myArray2[] = { 122, 101, 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "k") {
+  if (letter == 'k') {
     int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 105, 118, 104, 119, 71, 88, 37, 58, 134, 153, 165, 186 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "S") {
+  if (letter == 'S') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 133, 154, 165, 166, 167, 168, 169, 170, 181, 182, 183, 184, 185, 186 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "E") {
+  if (letter == 'E') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 165, 166, 167, 168, 169, 170, 181, 182, 183, 184, 185, 186 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "T") {
+  if (letter == 'T') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 43, 52, 53, 54, 55, 56, 57, 58, 72, 87, 104, 119, 136, 151, 168, 183 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "I") {
+  if (letter == 'I') {
     int myArray2[] = { 40, 55, 72, 87, 104, 119, 136, 151, 168, 183 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "F") {
+  if (letter == 'F') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "U") {
+  if (letter == 'U') {
     int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "P") {
+  if (letter == 'P') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 69, 90, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "D") {
+  if (letter == 'D') {
     int myArray2[] = { 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 74, 85, 69, 90, 101, 106, 117, 122, 138, 149, 170, 181, 133, 154, 169, 182, 183, 168, 167, 184, 166, 185 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == "A") {
+  if (letter == 'A') {
     int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 69, 90, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181, 133, 154, 165, 186 };
     memcpy(myArray, myArray2, sizeof(myArray2));
   }
 
-  if (letter == " ") {
+  if (letter == ' ') {
     int myArray2[] = { 255 };
     memcpy(myArray, myArray2, sizeof(myArray2));
     c = strip.Color(0, 0, 0);
@@ -4325,15 +4318,7 @@ void WIFI_SETUP() {
       Serial.println("Show SET WIFI...");
       uint32_t c = strip.Color(0, 255, 255);
       int TextWait = 500;
-      showtext("S", TextWait, c);
-      showtext("E", TextWait, c);
-      showtext("T", TextWait, c);
-      showtext(" ", TextWait, c);
-      showtext("W", TextWait, c);
-      showtext("I", TextWait, c);
-      showtext("F", TextWait, c);
-      showtext("I", TextWait, c);
-      showtext(" ", TextWait, c);
+      showText("SET WIFI ", TextWait, c);
       SetWLAN(strip.Color(0, 255, 255));
       CaptivePortalSetup();
     } else {
