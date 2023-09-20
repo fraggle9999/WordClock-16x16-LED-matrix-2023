@@ -540,9 +540,21 @@ void ShowIPaddress() {
     ClearDisplay();
 
     int OctetValue = int(WiFi.localIP()[octet]);
+    Serial.print("Octet ");
+    Serial.print(octet);
+    Serial.print(" = ");
+    Serial.println(OctetValue);
 
-    for (int digit = 0; digit < 4; ++digit)
-      numbers(getDigit(OctetValue, digit), digit, ipColor);
+    for (int digit = 2; digit >= 0; --digit)
+    {
+      int DigitValue = getDigit(OctetValue, digit);
+      Serial.print("digit ");
+      Serial.print(digit);
+      Serial.print(" = ");
+      Serial.println(DigitValue);
+
+      numbers(DigitValue, digit, ipColor);
+    }
 
     if (octet < 3) // nicht beim letzten Wert
       setLEDcolXY(15, 5, 1, ipColor); // Punkt hinter dem Wert
@@ -558,10 +570,10 @@ void ShowIPaddress() {
 // ###########################################################################################################################################
 // # Set one number on the display at a specific coordinate:
 // ###########################################################################################################################################
-void showNumber(char** number, int coordX, int coordY, uint32_t color){
+void showNumber(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color){
   for (int x = 0; x < 4; ++x)
     for (int y = 0; y < 5; ++y)
-      if (number[x][y] != ' ')
+      if (number[y][x] != ' ')
         setLEDcolXY(coordX + x, coordY + y, 1, color);
 }
 
@@ -570,10 +582,7 @@ void showNumber(char** number, int coordX, int coordY, uint32_t color){
 // # Set the numbers on the display in each single row:
 // ###########################################################################################################################################
 void numbers(int wert, int segment, uint32_t color) {
-
-  // Serial.println(wert);
-
-  static char* numberArray[10][5] = { 
+  static std::vector<std::vector<std::string>> numberVector = {
     {"XXXX",
      "X  X",
      "X  X",
@@ -635,7 +644,7 @@ void numbers(int wert, int segment, uint32_t color) {
      "XXXX"}
   };
 
-  showNumber(numberArray[wert], (2 - segment) * 5, 2, color);
+  showNumber(numberVector[wert], (2 - segment) * 5, 1, color);
 }
 
 
@@ -853,6 +862,8 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
   Serial.print(coordX);
   Serial.print(", Y = ");
   Serial.print(coordY);
+  Serial.print(", numCols = ");
+  Serial.print(numCols);
 
   int firstRow, secondRow;
   coords2Pixel(coordX, coordY, firstRow, secondRow);
@@ -3962,10 +3973,19 @@ void ShowWLAN(uint32_t color) {
       coordX = 2;
       coordY = 0;
       break;
+
+    default:
+      break;
   }
 
   if ((coordX >= 0) && (coordY >= 0))
+  {
+    Serial.print("WLAN coordX = ");
+    Serial.print(coordX);
+    Serial.print(", coordY = ");
+    Serial.println(coordY);
     setLEDcolXY(coordX, coordY, 4, color);
+  }
 
   strip.show();
 }
