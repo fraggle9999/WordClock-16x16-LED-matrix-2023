@@ -873,7 +873,7 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
   Serial.print(", secondRow = ");
   Serial.println(secondRow);
 
-  setLEDcol(firstRow, firstRow + numCols - 1, color);
+  setLEDcol(firstRow, firstRow - numCols + 1, color); // firstRow ist von rechts nach links numeriert
   setLEDcol(secondRow, secondRow + numCols - 1, color);
 }
 
