@@ -5,8 +5,8 @@ int WordClockResetCounter = 0;
 void buttonWordClockReset(Control* sender, int type, void* param) {
   updatedevice = false;
   delay(100);
-  if (WordClockResetCounter == 0) ResetTextLEDs(strip.Color(255, 0, 0));
-  if (WordClockResetCounter == 1) ResetTextLEDs(strip.Color(0, 255, 0));
+  if (WordClockResetCounter == 0) ShowReset(strip.Color(255, 0, 0));
+  if (WordClockResetCounter == 1) ShowReset(strip.Color(0, 255, 0));
   switch (type) {
     case B_DOWN:
       break;
@@ -86,7 +86,7 @@ void call_langauge_select(Control* sender, int type) {
 void buttonWiFiReset(Control* sender, int type, void* param) {
   updatedevice = false;
   Serial.println("Status: WIFI SETTINGS RESET REQUEST");
-  ResetTextLEDs(strip.Color(0, 255, 0));
+  ShowReset(strip.Color(0, 255, 0));
   WiFi.disconnect();  // DISCONNECT FROM WIFI
   delay(1000);
   preferences.putString("WIFIssid", "");                // Reset WiFi SSID
@@ -378,7 +378,7 @@ String IpAddress2String(const IPAddress& ipAddress) {
 // ###########################################################################################################################################
 void buttonRestart(Control* sender, int type, void* param) {
   updatedevice = false;
-  ResetTextLEDs(strip.Color(0, 255, 0));
+  ShowReset(strip.Color(0, 255, 0));
   if (changedvalues == true) setFlashValues();  // Write settings to flash
   preferences.end();
   delay(250);

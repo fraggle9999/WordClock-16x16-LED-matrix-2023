@@ -203,7 +203,7 @@ void CaptivePortalSetup() {
       inputParam = "none";
     }
     request->send_P(200, "text/html", saved_html);
-    ResetTextLEDs(strip.Color(0, 255, 0));
+    ShowReset(strip.Color(0, 255, 0));
     delay(1000);
     ESP.restart();
   });

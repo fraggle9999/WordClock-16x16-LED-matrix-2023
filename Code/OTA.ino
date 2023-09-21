@@ -116,10 +116,10 @@ void setupOTAupate() {
       otaserver.sendHeader("Connection", "close");
       if (Update.hasError()) {
         otaserver.send(200, "text/html", otaNOK);
-        ResetTextLEDs(strip.Color(255, 0, 0));
+        ShowReset(strip.Color(255, 0, 0));
       } else {
         otaserver.send(200, "text/html", otaOK);
-        ResetTextLEDs(strip.Color(0, 255, 0));
+        ShowReset(strip.Color(0, 255, 0));
       }
       delay(3000);
       ESP.restart();
