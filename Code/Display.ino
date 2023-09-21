@@ -97,7 +97,7 @@ void numbers(int wert, int segment, uint32_t color) {
     { "XXXX",
       "   X",
       "XXXX",
-      "X   ",
+      "X",
       "XXXX" },
 
     { "XXXX",
@@ -113,13 +113,13 @@ void numbers(int wert, int segment, uint32_t color) {
       "   X" },
 
     { "XXXX",
-      "X   ",
+      "X",
       "XXXX",
       "   X",
       "XXXX" },
 
     { "XXXX",
-      "X   ",
+      "X",
       "XXXX",
       "X  X",
       "XXXX" },
@@ -144,6 +144,126 @@ void numbers(int wert, int segment, uint32_t color) {
   };
 
   showNumber(numberVector[wert], (2 - segment) * 5, 1, color);
+}
+
+
+// ###########################################################################################################################################
+// # Character output function:
+// ###########################################################################################################################################
+void showChar(char letter, int wait, uint32_t c) {
+  ClearDisplay();
+
+  static std::map<char, std::vector<std::string>> charMap = 
+    { { 'W', { "X    X",
+               "X    X",
+               "X XX X",
+               "X XX X",
+               "XXXXXX" } },
+
+      { 'o', { "",
+               "XXXXXX",
+               "X    X",
+               "X    X",
+               "XXXXXX" } },
+
+      { 'r', { "",
+               "XXXXXX",
+               "X",
+               "X",
+               "X" } },
+
+      { 'd', { "     X",
+               "     X",
+               "XXXXXX",
+               "X    X",
+               "XXXXXX" } },
+
+      { 'C', { "XXXXXX",
+               "X",
+               "X",
+               "X",
+               "XXXXXX" } },
+
+      { 'l', { "X",
+               "X",
+               "X",
+               "X",
+               "X" } },
+
+      { 'c', { "",
+               "XXXXX",
+               "X",
+               "X",
+               "XXXXX" } },
+
+      { 'k', { "X",
+               "X  X",
+               "XXX",
+               "X  X",
+               "X   X" } },
+
+      { 'S', { " XXXX",
+               "X",
+               " XXXX",
+               "     X",
+               " XXXX" } },
+
+      { 'E', { "XXXXXX",
+               "X",
+               "XXXX",
+               "X",
+               "XXXXXX" } },
+
+      { 'T', { "XXXXXX",
+               "  XX",
+               "  XX",
+               "  XX",
+               "  XX" } },
+
+      { 'I', { " XXXX",
+               "  XX",
+               "  XX",
+               "  XX",
+               " XXXX" } },
+
+      { 'F', { "XXXXXX",
+               "X",
+               "XXXX",
+               "X",
+               "X" } },
+
+      { 'U', { "X    X",
+               "X    X",
+               "X    X",
+               "X    X",
+               " XXXX" } },
+
+      { 'P', { "XXXXX",
+               "X    X",
+               "XXXXX",
+               "X",
+               "X" } },
+
+      { 'D', { "XXXX",
+               "X   X",
+               "X    X",
+               "X   X",
+               "XXXX" } },
+
+      { 'A', { "  XX",
+               " X  X",
+               "XXXXXX",
+               "X    X",
+               "X    X" } }
+    };
+
+  const auto Index = charMap.find(letter);
+  if (Index != charMap.end())
+    showNumber(Index->second, 5, 2, c);
+
+  strip.show();
+  delay(wait);
+  ClearDisplay();
 }
 
 
@@ -454,126 +574,6 @@ void callStartText() {
 void showText(String text, int wait, uint32_t c) {
   for (const char ch : text)
     showChar(ch, wait, c);
-}
-
-
-// ###########################################################################################################################################
-// # Character output function:
-// ###########################################################################################################################################
-void showChar(char letter, int wait, uint32_t c) {
-  ClearDisplay();
-
-  static std::vector<std::vector<std::string>> numberVector = {
-    { "XXXX",
-      "X  X",
-      "X  X",
-      "X  X",
-      "XXXX" }
-  };
-
-  int myArray[50];
-  memset(myArray, 0, sizeof(myArray));
-
-  if (letter == 'W') {
-    int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 151, 136, 135, 152, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'o') {
-    int myArray2[] = { 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 102, 121, 120, 103, 104, 119, 118, 105 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'r') {
-    int myArray2[] = { 154, 133, 122, 101, 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'd') {
-    int myArray2[] = { 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'C') {
-    int myArray2[] = { 58, 37, 57, 38, 39, 56, 40, 55, 41, 54, 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'l') {
-    int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181 };  // , 169, 182, 183, 168
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'c') {
-    int myArray2[] = { 122, 101, 102, 121, 120, 103, 104, 119, 118, 105, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'k') {
-    int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 105, 118, 104, 119, 71, 88, 37, 58, 134, 153, 165, 186 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'S') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 133, 154, 165, 166, 167, 168, 169, 170, 181, 182, 183, 184, 185, 186 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'E') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 165, 166, 167, 168, 169, 170, 181, 182, 183, 184, 185, 186 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'T') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 43, 52, 53, 54, 55, 56, 57, 58, 72, 87, 104, 119, 136, 151, 168, 183 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'I') {
-    int myArray2[] = { 40, 55, 72, 87, 104, 119, 136, 151, 168, 183 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'F') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'U') {
-    int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'P') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 69, 90, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'D') {
-    int myArray2[] = { 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 74, 85, 69, 90, 101, 106, 117, 122, 138, 149, 170, 181, 133, 154, 169, 182, 183, 168, 167, 184, 166, 185 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == 'A') {
-    int myArray2[] = { 37, 38, 39, 40, 41, 42, 53, 54, 55, 56, 57, 58, 74, 85, 69, 90, 101, 102, 103, 104, 105, 106, 117, 118, 119, 120, 121, 122, 138, 149, 170, 181, 133, 154, 165, 186 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-  }
-
-  if (letter == ' ') {
-    int myArray2[] = { 255 };
-    memcpy(myArray, myArray2, sizeof(myArray2));
-    c = strip.Color(0, 0, 0);
-  }
-
-  for (int element : myArray) {
-    if (element != 0) {
-      strip.setPixelColor(element, c);
-    }
-  }
-
-  strip.show();
-  delay(wait);
-  ClearDisplay();
 }
 
 
