@@ -28,8 +28,7 @@ void ShowIPaddress() {
 
   uint32_t ipColor = strip.Color(255, 0, 0);
 
-  for (int octet = 0; octet < 4; ++octet)
-  {
+  for (int octet = 0; octet < 4; ++octet) {
     ClearDisplay();
 
     int OctetValue = int(WiFi.localIP()[octet]);
@@ -38,8 +37,7 @@ void ShowIPaddress() {
     Serial.print(" = ");
     Serial.println(OctetValue);
 
-    for (int digit = 2; digit >= 0; --digit)
-    {
+    for (int digit = 2; digit >= 0; --digit) {
       int DigitValue = getDigit(OctetValue, digit);
       Serial.print("digit ");
       Serial.print(digit);
@@ -49,10 +47,10 @@ void ShowIPaddress() {
       numbers(DigitValue, digit, ipColor);
     }
 
-    if (octet < 3) // nicht beim letzten Wert
-      setLEDcolXY(15, 5, 1, ipColor); // Punkt hinter dem Wert
+    if (octet < 3)                     // nicht beim letzten Wert
+      setLEDcolXY(15, 5, 1, ipColor);  // Punkt hinter dem Wert
 
-    setLEDcolXY(3 + octet, 7, 1, ipColor); // Ordnungszahl unten (1 bis 4)
+    setLEDcolXY(3 + octet, 7, 1, ipColor);  // Ordnungszahl unten (1 bis 4)
 
     strip.show();
     delay(ipdelay);
@@ -63,7 +61,7 @@ void ShowIPaddress() {
 // ###########################################################################################################################################
 // # Set one number on the display at a specific coordinate:
 // ###########################################################################################################################################
-void showNumber(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color){
+void showNumber(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color) {
   for (int x = 0; x < 4; ++x)
     for (int y = 0; y < 5; ++y)
       if (number[y][x] != ' ')
@@ -76,65 +74,65 @@ void showNumber(const std::vector<std::string>& number, int coordX, int coordY, 
 // ###########################################################################################################################################
 void numbers(int wert, int segment, uint32_t color) {
   static std::vector<std::vector<std::string>> numberVector = {
-    {"XXXX",
-     "X  X",
-     "X  X",
-     "X  X",
-     "XXXX"},
+    { "XXXX",
+      "X  X",
+      "X  X",
+      "X  X",
+      "XXXX" },
 
-    {"   X",
-     "   X",
-     "   X",
-     "   X",
-     "   X"},
+    { "   X",
+      "   X",
+      "   X",
+      "   X",
+      "   X" },
 
-    {"XXXX",
-     "   X",
-     "XXXX",
-     "X   ",
-     "XXXX"},
+    { "XXXX",
+      "   X",
+      "XXXX",
+      "X   ",
+      "XXXX" },
 
-    {"XXXX",
-     "   X",
-     "XXXX",
-     "   X",
-     "XXXX"},
+    { "XXXX",
+      "   X",
+      "XXXX",
+      "   X",
+      "XXXX" },
 
-    {"X  X",
-     "X  X",
-     "XXXX",
-     "   X",
-     "   X"},
+    { "X  X",
+      "X  X",
+      "XXXX",
+      "   X",
+      "   X" },
 
-    {"XXXX",
-     "X   ",
-     "XXXX",
-     "   X",
-     "XXXX"},
+    { "XXXX",
+      "X   ",
+      "XXXX",
+      "   X",
+      "XXXX" },
 
-    {"XXXX",
-     "X   ",
-     "XXXX",
-     "X  X",
-     "XXXX"},
+    { "XXXX",
+      "X   ",
+      "XXXX",
+      "X  X",
+      "XXXX" },
 
-    {"XXXX",
-     "   X",
-     "   X",
-     "   X",
-     "   X"},
+    { "XXXX",
+      "   X",
+      "   X",
+      "   X",
+      "   X" },
 
-    {"XXXX",
-     "X  X",
-     "XXXX",
-     "X  X",
-     "XXXX"},
+    { "XXXX",
+      "X  X",
+      "XXXX",
+      "X  X",
+      "XXXX" },
 
-    {"XXXX",
-     "X  X",
-     "XXXX",
-     "   X",
-     "XXXX"}
+    { "XXXX",
+      "X  X",
+      "XXXX",
+      "   X",
+      "XXXX" }
   };
 
   showNumber(numberVector[wert], (2 - segment) * 5, 1, color);
@@ -152,93 +150,72 @@ int getDigit(int number, int pos) {
 // ###########################################################################################################################################
 // # Show a LED output for RESET in the different languages:
 // ###########################################################################################################################################
-void ResetTextLEDs(uint32_t color) {
+void ShowReset(uint32_t color) {
   updatedevice = false;
   delay(1000);
   ClearDisplay();
 
-  if (langLEDlayout == 0) {      // DE:
-    setLEDcol(137, 138, color);  // RE
-    setLEDcol(149, 150, color);  // 2nd row
-    setLEDcol(167, 168, color);  // SE
-    setLEDcol(183, 184, color);  // 2nd row
-    setLEDcol(227, 227, color);  // T
-    setLEDcol(252, 252, color);  // 2nd row
-  }
+  switch (langLEDlayout) {
+    case 0:                          // DE:
+      setLEDcolXY(5, 4, 2, color);   // RE
+      setLEDcolXY(7, 5, 2, color);   // SE
+      setLEDcolXY(11, 6, 2, color);  // T
+      break;
 
-  if (langLEDlayout == 1) {      // EN:
-    setLEDcol(100, 101, color);  // RE
-    setLEDcol(122, 123, color);  // 2nd row
-    setLEDcol(174, 175, color);  // SE
-    setLEDcol(176, 177, color);  // 2nd row
-    setLEDcol(227, 227, color);  // T
-    setLEDcol(252, 252, color);  // 2nd row
-  }
+    case 1:                          // EN:
+      setLEDcolXY(10, 3, 2, color);  // RE
+      setLEDcolXY(0, 5, 2, color);   // SE
+      setLEDcolXY(11, 6, 1, color);  // T
+      break;
 
-  if (langLEDlayout == 2) {      // NL:
-    setLEDcol(33, 33, color);    // R
-    setLEDcol(62, 62, color);    // 2nd row
-    setLEDcol(96, 97, color);    // ES
-    setLEDcol(126, 127, color);  // 2nd row
-    setLEDcol(164, 164, color);  // E
-    setLEDcol(187, 187, color);  // 2nd row
-    setLEDcol(227, 227, color);  // T
-    setLEDcol(252, 252, color);  // 2nd row
-  }
 
-  if (langLEDlayout == 3) {    // SWE:
-    setLEDcol(67, 71, color);  // R
-    setLEDcol(88, 92, color);  // 2nd row
-  }
+    case 2:                          // NL:
+      setLEDcolXY(14, 1, 1, color);  // R
+      setLEDcolXY(14, 3, 2, color);  // ES
+      setLEDcolXY(11, 5, 1, color);  // E
+      setLEDcolXY(11, 6, 1, color);  // T
+      break;
 
-  if (langLEDlayout == 4) {    // IT:
-    setLEDcol(11, 11, color);  // R
-    setLEDcol(20, 20, color);  // 2nd row
-    setLEDcol(9, 9, color);    // E
-    setLEDcol(22, 22, color);  // 2nd row
-    setLEDcol(45, 47, color);  // SET
-    setLEDcol(48, 50, color);  // 2nd row
-  }
+    case 3:                         // SWE:
+      setLEDcolXY(8, 2, 5, color);  // RESET
+      break;
 
-  if (langLEDlayout == 5) {    // FR:
-    setLEDcol(11, 13, color);  // RES
-    setLEDcol(18, 20, color);  // 2nd row
-    setLEDcol(5, 5, color);    // E
-    setLEDcol(26, 26, color);  // 2nd row
-    setLEDcol(36, 36, color);  // T
-    setLEDcol(59, 59, color);  // 2nd row
-  }
+    case 4:                         // IT:
+      setLEDcolXY(4, 0, 1, color);  // R
+      setLEDcolXY(6, 0, 1, color);  // E
+      setLEDcolXY(0, 1, 3, color);  // SET
+      break;
 
-  if (langLEDlayout == 6) {    // GSW:
-    setLEDcol(11, 15, color);  // RESET
-    setLEDcol(16, 20, color);  // 2nd row
-  }
+    case 5:                         // FR:
+      setLEDcolXY(2, 0, 3, color);  // RES
+      setLEDcolXY(10, 0, 1, color); // E
+      setLEDcolXY(11, 1, 1, color); // T
+      break;
 
-  if (langLEDlayout == 7) {    // CN:
-    setLEDcol(38, 39, color);  // RESET 重置
-    setLEDcol(56, 57, color);  // 2nd row
-  }
+    case 6:                         // GSW:
+      setLEDcolXY(0, 0, 5, color);  // RESET
+      break;
 
-  if (langLEDlayout == 8) {      // SWABIAN GERMAN:
-    setLEDcol(40, 41, color);    // RE
-    setLEDcol(54, 55, color);    // 2nd row
-    setLEDcol(133, 134, color);  // SE
-    setLEDcol(153, 154, color);  // 2nd row
-    setLEDcol(204, 204, color);  // T
-    setLEDcol(211, 211, color);  // 2nd row
-  }
+    case 7:                         // CN:
+      setLEDcolXY(8, 1, 2, color);  // RESET 重置
+      break;
 
-  if (langLEDlayout == 9) {      // BAVARIAN:
-    setLEDcol(106, 106, color);  // R
-    setLEDcol(117, 117, color);  // 2nd row
-    setLEDcol(133, 133, color);  // E
-    setLEDcol(154, 154, color);  // 2nd row
-    setLEDcol(175, 175, color);  // S
-    setLEDcol(176, 176, color);  // 2nd row
-    setLEDcol(170, 170, color);  // E
-    setLEDcol(181, 181, color);  // 2nd row
-    setLEDcol(160, 160, color);  // T
-    setLEDcol(191, 191, color);  // 2nd row
+    case 8:                         // SWABIAN GERMAN:
+      setLEDcolXY(6, 1, 2, color);  // RE
+      setLEDcolXY(8, 3, 2, color);  // SE
+      setLEDcolXY(3, 6, 1, color);  // T
+      break;
+
+    case 9:                         // BAVARIAN:
+      setLEDcolXY(5, 3, 1, color);  // R
+      setLEDcolXY(10, 4, 1, color);  // E
+      setLEDcolXY(0, 5, 1, color);  // S
+      setLEDcolXY(5, 5, 1, color);  // E
+      setLEDcolXY(15, 5, 1, color);  // T
+      break;
+
+    default:
+      break;
   }
 
   strip.show();
@@ -252,7 +229,7 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
   if (ledNrFrom > ledNrTo) {
     setLEDcol(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
   } else {
-/*
+    /*
     Serial.print("setLEDcol: from ");
     Serial.print(ledNrFrom);
     Serial.print(" to ");
@@ -276,13 +253,13 @@ void coords2Pixel(int coordX, int coordY, int& firstRow, int& secondRow) {
   firstRow = 15 - coordX + 32 * coordY;
   secondRow = 16 + coordX + 32 * coordY;
 }
-  
+
 
 // ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
 void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
-/*
+  /*
   Serial.print("setLEDcolXY: X = ");
   Serial.print(coordX);
   Serial.print(", Y = ");
@@ -293,14 +270,14 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
   int firstRow, secondRow;
   coords2Pixel(coordX, coordY, firstRow, secondRow);
 
-/*
+  /*
   Serial.print(" -> firstRow = ");
   Serial.print(firstRow);
   Serial.print(", secondRow = ");
   Serial.println(secondRow);
 */
 
-  setLEDcol(firstRow, firstRow - numCols + 1, color); // firstRow ist von rechts nach links numeriert
+  setLEDcol(firstRow, firstRow - numCols + 1, color);  // firstRow ist von rechts nach links numeriert
   setLEDcol(secondRow, secondRow + numCols - 1, color);
 }
 
@@ -314,49 +291,45 @@ void circleRound() {
 
   uint32_t color = strip.Color(255, 0, 0);
   uint32_t color_black = strip.Color(0, 0, 0);
-  
+
   const int max_cols = 16;
   const int max_rows = 8;
   const int delay_val = 50;
-  
+
   // top from left to right
-  for (int x = 0; x < max_cols; ++x)
-  {
+  for (int x = 0; x < max_cols; ++x) {
     setLEDcolXY(x, 0, 1, color);
     strip.show();
-//    delay(delay_val);
+    //    delay(delay_val);
     setLEDcolXY(x, 0, 1, color_black);
-  //  strip.show();
+    //  strip.show();
   }
 
   // right from top to bottom (starting in second row, ending in second but last row)
-  for (int y = 1; y < max_rows - 1; ++y)
-  {
+  for (int y = 1; y < max_rows - 1; ++y) {
     setLEDcolXY(max_cols - 1, y, 1, color);
     strip.show();
-//    delay(delay_val);
+    //    delay(delay_val);
     setLEDcolXY(max_cols - 1, y, 1, color_black);
-  //  strip.show();
+    //  strip.show();
   }
 
   // bottom from right to left
-  for (int x = max_cols - 1; x >= 0; --x)
-  {
+  for (int x = max_cols - 1; x >= 0; --x) {
     setLEDcolXY(x, max_rows - 1, 1, color);
     strip.show();
-//    delay(delay_val);
+    //    delay(delay_val);
     setLEDcolXY(x, max_rows - 1, 1, color_black);
-  //  strip.show();
+    //  strip.show();
   }
 
   // left from bottom to top (starting in second but last row, ending in second row)
-  for (int y = max_rows - 2; y > 0; --y)
-  {
+  for (int y = max_rows - 2; y > 0; --y) {
     setLEDcolXY(0, y, 1, color);
     strip.show();
-//    delay(delay_val);
+    //    delay(delay_val);
     setLEDcolXY(0, y, 1, color_black);
-  //  strip.show();
+    //  strip.show();
   }
 
   ClearDisplay();
@@ -475,7 +448,7 @@ void showText(String text, int wait, uint32_t c) {
     showChar(ch, wait, c);
 }
 
-    
+
 // ###########################################################################################################################################
 // # Character output function:
 // ###########################################################################################################################################
@@ -594,32 +567,31 @@ void showChar(char letter, int wait, uint32_t c) {
 void ShowWLAN(uint32_t color) {
   if (debugtexts == 1) Serial.println("Show text WLAN/WIFI...");
   ClearDisplay();
-  
+
   int coordX = -1, coordY = -1;
 
-  switch (langLEDlayout)
-  {
+  switch (langLEDlayout) {
     case 0:  // DE
       coordX = 7;
       coordY = 0;
       break;
-        
+
     case 1:  // EN:
       coordX = 5;
       coordY = 0;
       break;
-      
+
     case 2:  // NL:
       coordX = 1;
       coordY = 2;
       break;
-      
+
     case 3:  // SWE:
       coordX = 12;
       coordY = 0;
       break;
 
-    case 4:  // IT:
+    case 4:                        // IT:
       setLEDcol(233, 233, color);  // W
       setLEDcol(246, 246, color);  // 2nd row
       setLEDcol(231, 231, color);  // I
@@ -630,7 +602,7 @@ void ShowWLAN(uint32_t color) {
       setLEDcol(255, 255, color);  // 2nd row
       break;
 
-    case 5:  // FR:
+    case 5:                        // FR:
       setLEDcol(239, 239, color);  // W
       setLEDcol(240, 240, color);  // 2nd row
       setLEDcol(237, 237, color);  // I
@@ -641,24 +613,24 @@ void ShowWLAN(uint32_t color) {
       setLEDcol(255, 255, color);  // 2nd row
       break;
 
-    case 6:    // GSW:
+    case 6:  // GSW:
       coordX = 5;
       coordY = 0;
       break;
 
-    case 7:    // CN:
+    case 7:                      // CN:
       setLEDcol(42, 43, color);  // WIFI
       setLEDcol(52, 53, color);  // 2nd row
       break;
 
-    case 8:    // SWABIAN:
+    case 8:                      // SWABIAN:
       setLEDcol(12, 13, color);  // WI
       setLEDcol(18, 19, color);  // 2nd row
       setLEDcol(7, 8, color);    // FI
       setLEDcol(23, 24, color);  // 2nd row
       break;
 
-    case 9:    // BAVARIAN:
+    case 9:  // BAVARIAN:
       coordX = 2;
       coordY = 0;
       break;
@@ -672,5 +644,3 @@ void ShowWLAN(uint32_t color) {
 
   strip.show();
 }
-
-
