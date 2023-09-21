@@ -252,12 +252,14 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
   if (ledNrFrom > ledNrTo) {
     setLEDcol(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
   } else {
+/*
     Serial.print("setLEDcol: from ");
     Serial.print(ledNrFrom);
     Serial.print(" to ");
     Serial.print(ledNrTo);
     Serial.print(" with color ");
     Serial.println(color);
+*/
 
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
@@ -280,20 +282,23 @@ void coords2Pixel(int coordX, int coordY, int& firstRow, int& secondRow) {
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
 void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
+/*
   Serial.print("setLEDcolXY: X = ");
   Serial.print(coordX);
   Serial.print(", Y = ");
   Serial.print(coordY);
   Serial.print(", numCols = ");
   Serial.print(numCols);
-
+*/
   int firstRow, secondRow;
   coords2Pixel(coordX, coordY, firstRow, secondRow);
 
+/*
   Serial.print(" -> firstRow = ");
   Serial.print(firstRow);
   Serial.print(", secondRow = ");
   Serial.println(secondRow);
+*/
 
   setLEDcol(firstRow, firstRow - numCols + 1, color); // firstRow ist von rechts nach links numeriert
   setLEDcol(secondRow, secondRow + numCols - 1, color);
@@ -663,13 +668,7 @@ void ShowWLAN(uint32_t color) {
   }
 
   if ((coordX >= 0) && (coordY >= 0))
-  {
-    Serial.print("WLAN coordX = ");
-    Serial.print(coordX);
-    Serial.print(", coordY = ");
-    Serial.println(coordY);
     setLEDcolXY(coordX, coordY, 4, color);
-  }
 
   strip.show();
 }
