@@ -62,10 +62,18 @@ void ShowIPaddress() {
 // # Set one number on the display at a specific coordinate:
 // ###########################################################################################################################################
 void showNumber(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color) {
-  for (int x = 0; x < 4; ++x)
-    for (int y = 0; y < 5; ++y)
-      if (number[y][x] != ' ')
-        setLEDcolXY(coordX + x, coordY + y, 1, color);
+  for (int row = 0; row < number.size(); ++row)
+  {
+    const std::string line = number[row];
+
+    for (int col = 0; col < line.size(); ++col)
+    {
+      const char Ch = line[col];
+
+      if (Ch != ' ')
+        setLEDcolXY(coordX + col, coordY + row, 1, color);
+    }
+  }
 }
 
 
@@ -444,7 +452,7 @@ void callStartText() {
 // # Text output function:
 // ###########################################################################################################################################
 void showText(String text, int wait, uint32_t c) {
-  for (char ch : text)
+  for (const char ch : text)
     showChar(ch, wait, c);
 }
 
@@ -454,6 +462,14 @@ void showText(String text, int wait, uint32_t c) {
 // ###########################################################################################################################################
 void showChar(char letter, int wait, uint32_t c) {
   ClearDisplay();
+
+  static std::vector<std::vector<std::string>> numberVector = {
+    { "XXXX",
+      "X  X",
+      "X  X",
+      "X  X",
+      "XXXX" }
+  };
 
   int myArray[50];
   memset(myArray, 0, sizeof(myArray));
