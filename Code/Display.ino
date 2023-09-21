@@ -591,26 +591,18 @@ void ShowWLAN(uint32_t color) {
       coordY = 0;
       break;
 
-    case 4:                        // IT:
-      setLEDcol(233, 233, color);  // W
-      setLEDcol(246, 246, color);  // 2nd row
-      setLEDcol(231, 231, color);  // I
-      setLEDcol(248, 248, color);  // 2nd row
-      setLEDcol(226, 226, color);  // F
-      setLEDcol(253, 253, color);  // 2nd row
-      setLEDcol(224, 224, color);  // I
-      setLEDcol(255, 255, color);  // 2nd row
+    case 4:                         // IT:
+      setLEDcolXY(6, 7, 1, color);  // W
+      setLEDcolXY(8, 7, 1, color);  // I
+      setLEDcolXY(13, 7, 1, color); // F
+      setLEDcolXY(15, 7, 1, color); // I
       break;
 
-    case 5:                        // FR:
-      setLEDcol(239, 239, color);  // W
-      setLEDcol(240, 240, color);  // 2nd row
-      setLEDcol(237, 237, color);  // I
-      setLEDcol(242, 242, color);  // 2nd row
-      setLEDcol(232, 232, color);  // F
-      setLEDcol(247, 247, color);  // 2nd row
-      setLEDcol(224, 224, color);  // I
-      setLEDcol(255, 255, color);  // 2nd row
+    case 5:                         // FR:
+      setLEDcolXY(0, 7, 1, color);  // W
+      setLEDcolXY(2, 7, 1, color);  // I
+      setLEDcolXY(7, 7, 1, color);  // F
+      setLEDcolXY(15, 7, 1, color);  // I
       break;
 
     case 6:  // GSW:
@@ -618,16 +610,13 @@ void ShowWLAN(uint32_t color) {
       coordY = 0;
       break;
 
-    case 7:                      // CN:
-      setLEDcol(42, 43, color);  // WIFI
-      setLEDcol(52, 53, color);  // 2nd row
+    case 7:                        // CN:
+      setLEDcolXY(4, 1, 2, color); // WIFI
       break;
 
-    case 8:                      // SWABIAN:
-      setLEDcol(12, 13, color);  // WI
-      setLEDcol(18, 19, color);  // 2nd row
-      setLEDcol(7, 8, color);    // FI
-      setLEDcol(23, 24, color);  // 2nd row
+    case 8:                        // SWABIAN:
+      setLEDcolXY(2, 0, 2, color); // WI
+      setLEDcolXY(7, 0, 2, color); // FI
       break;
 
     case 9:  // BAVARIAN:
