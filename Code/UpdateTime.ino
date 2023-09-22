@@ -100,6 +100,52 @@ void show_time(int hours, int minutes) {
 // ###########################################################################################################################################
 void showTime(const int minDiv)
 {
+  struct coord_type
+  {
+    x: int;
+    y: int;
+    len: int;
+  }
+  
+  enum class time_parts { prefix1, prefix2, five_min, quarter, ten_min, twenty, after, before, half,
+      one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, o_clock };
+
+  static std::map<int, std::map<time_parts, coord_type>> timePartsMap =
+      { { 0, // DE
+          { 
+            { time_parts::prefix1, { 0, 0, 2 } }, // ES
+            { time_parts::prefix2, { 3, 0, 3 } }  // IST
+          }
+        },
+        { 1, // EN
+          { } 
+        },
+        { 2, // NL
+          { } 
+        },
+        { 3, // SWE
+          { } 
+        },
+        { 4, // IT
+          { } 
+        },
+        { 5, // FR
+          { } 
+        },
+        { 6, // GSW
+          { } 
+        },
+        { 7, // CN
+          { } 
+        },
+        { 8, // SWABIAN
+          { } 
+        },
+        { 9, // BAVARIAN
+          { } 
+        }
+      };
+  
   // ########################################################### DE:
   if (langLEDlayout == 0) {  // DE:
 
