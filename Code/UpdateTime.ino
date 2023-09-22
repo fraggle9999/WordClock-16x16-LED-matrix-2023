@@ -258,6 +258,9 @@ void showTime(const int iHour, const int iMinute)
         }  
       };
 
+  static std::vector<int> hourThresholds =
+      { 25, 35, 20, 25, 40, 35, 25, 0, 15, 25 }; 
+
   const auto Index = timePartsMap.find(langLEDlayout);
   if (Index == timePartsMap.end())
   {
@@ -352,11 +355,15 @@ void showTime(const int iHour, const int iMinute)
     xHour = 12;
   // at minute 25 hour needs to be counted up:
   // fuenf vor halb 2 = 13:25
-  if (iMinute >= 25) {
-    if (xHour == 12)
-      xHour = 1;
-    else
-      xHour++;
+  const auto hourThreshold = hourThresholds[langLEDlayout];
+  if (hourThreshold > 0)
+  {
+    if (iMinute >= hourThreshold) {
+      if (xHour == 12)
+        xHour = 1;
+      else
+        xHour++;
+    }
   }
 
   uint32_t colorRGBForHour = colorRGB;
