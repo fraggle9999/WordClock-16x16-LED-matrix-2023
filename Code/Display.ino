@@ -50,7 +50,7 @@ void ShowIPaddress() {
     if (octet < 3)                     // nicht beim letzten Wert
       setLEDcolXY(15, 5, 1, ipColor);  // Punkt hinter dem Wert
 
-    setLEDcolXY(3 + octet, 7, 1, ipColor);  // Ordnungszahl unten (1 bis 4)
+    setLEDcolXY(0, 7, (octet + 1) * 4, ipColor);  // Fortschrittsbalken unten
 
     strip.show();
     delay(ipdelay);
