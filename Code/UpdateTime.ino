@@ -1736,474 +1736,65 @@ void show_time(int hours, int minutes) {
 // ###########################################################################################################################################
 void showMinutes(int minutes) {
   int minMod = (minutes % 5);
+  if (minMod == 0)
+    return;
+  
   // Serial.println(minMod);
+  
+  int coordY = 7;
 
-  // ##################################################### DE:
-  if (langLEDlayout == 0) {  // DE:
+  int plus_coordX = -1;
+  int minuteVal_offsetX = -1;
+  int minuteText_coordX = -1;
+  int minuteText_len = -1;
 
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(236, 236, colorRGB);  // 1
-          setLEDcol(243, 243, colorRGB);  // 2nd row
-          setLEDcol(226, 231, colorRGB);  // MINUTE
-          setLEDcol(248, 253, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(235, 235, colorRGB);  // 2
-          setLEDcol(244, 244, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(234, 234, colorRGB);  // 3
-          setLEDcol(245, 245, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(233, 233, colorRGB);  // 4
-          setLEDcol(246, 246, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
+  switch (langLEDlayout)
+  {
+    case 0:  // DE:
+    case 1:  // EN:
+    case 2:  // NL:
+    case 3:  // SWE:
+    case 5:  // FR:
+      plus_coordX = 1;
+      minuteVal_offsetX = 2;
+      minuteText_coordX = 8;
+      minuteText_len = minMod == 1 ? 6 : 7;
+      break;
+  
+    case 4:  // IT:
+      plus_coordX = 7;
+      minuteVal_offsetX = 8;
+      minuteText_coordX = 14;
+      minuteText_len = 1;
+      break;
+
+    case 6:  // GSW:
+      plus_coordX = 8;
+      minuteVal_offsetX = 9;
+      minuteText_coordX = 15;
+      minuteText_len = 1;
+      break;
+      
+    case 7:  // CN:
+      plus_coordX = 7;
+      coordY = 6;
+      minuteVal_offsetX = 5;
+      minuteText_coordX = 12;
+      minuteText_len = 2;
+      break;
+    
+    case 8:  // SWABIAN:
+    case 9:  // BAVARIAN:
+      plus_coordX = 9;
+      minuteVal_offsetX = 9;
+      minuteText_coordX = 15;
+      minuteText_len = 1;
+      break;
   }
-
-  // ##################################################### EN:
-  if (langLEDlayout == 1) {  // EN:
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(236, 236, colorRGB);  // 1
-          setLEDcol(243, 243, colorRGB);  // 2nd row
-          setLEDcol(226, 231, colorRGB);  // MINUTE
-          setLEDcol(248, 253, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(235, 235, colorRGB);  // 2
-          setLEDcol(244, 244, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(234, 234, colorRGB);  // 3
-          setLEDcol(245, 245, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(233, 233, colorRGB);  // 4
-          setLEDcol(246, 246, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### NL:
-  if (langLEDlayout == 2) {  // NL:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(236, 236, colorRGB);  // 1
-          setLEDcol(243, 243, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN (set to this on request, because there was no space for the extra word "minuut")
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(235, 235, colorRGB);  // 2
-          setLEDcol(244, 244, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(234, 234, colorRGB);  // 3
-          setLEDcol(245, 245, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(233, 233, colorRGB);  // 4
-          setLEDcol(246, 246, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTEN
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### SWE:
-  if (langLEDlayout == 3) {  // SWE:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(236, 236, colorRGB);  // 1
-          setLEDcol(243, 243, colorRGB);  // 2nd row
-          setLEDcol(227, 231, colorRGB);  // MINUT
-          setLEDcol(248, 252, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(235, 235, colorRGB);  // 2
-          setLEDcol(244, 244, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTER
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(234, 234, colorRGB);  // 3
-          setLEDcol(245, 245, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTER
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(233, 233, colorRGB);  // 4
-          setLEDcol(246, 246, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTER
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### IT:
-  if (langLEDlayout == 4) {  // IT:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(232, 232, colorRGB);  // +
-          setLEDcol(247, 247, colorRGB);  // 2nd row
-          setLEDcol(230, 230, colorRGB);  // 1
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(225, 225, colorRGB);  // M
-          setLEDcol(254, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(232, 232, colorRGB);  // +
-          setLEDcol(247, 247, colorRGB);  // 2nd row
-          setLEDcol(229, 229, colorRGB);  // 2
-          setLEDcol(250, 250, colorRGB);  // 2nd row
-          setLEDcol(225, 225, colorRGB);  // M
-          setLEDcol(254, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(232, 232, colorRGB);  // +
-          setLEDcol(247, 247, colorRGB);  // 2nd row
-          setLEDcol(228, 228, colorRGB);  // 3
-          setLEDcol(251, 251, colorRGB);  // 2nd row
-          setLEDcol(225, 225, colorRGB);  // M
-          setLEDcol(254, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(232, 232, colorRGB);  // +
-          setLEDcol(247, 247, colorRGB);  // 2nd row
-          setLEDcol(227, 227, colorRGB);  // 4
-          setLEDcol(252, 252, colorRGB);  // 2nd row
-          setLEDcol(225, 225, colorRGB);  // M
-          setLEDcol(254, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### FR:
-  if (langLEDlayout == 5) {  // FR:
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(236, 236, colorRGB);  // 1
-          setLEDcol(243, 243, colorRGB);  // 2nd row
-          setLEDcol(226, 231, colorRGB);  // MINUTE
-          setLEDcol(248, 253, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(235, 235, colorRGB);  // 2
-          setLEDcol(244, 244, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(234, 234, colorRGB);  // 3
-          setLEDcol(245, 245, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(238, 238, colorRGB);  // +
-          setLEDcol(241, 241, colorRGB);  // 2nd row
-          setLEDcol(233, 233, colorRGB);  // 4
-          setLEDcol(246, 246, colorRGB);  // 2nd row
-          setLEDcol(225, 231, colorRGB);  // MINUTES
-          setLEDcol(248, 254, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### GSW:
-  if (langLEDlayout == 6) {  // GSW:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(231, 231, colorRGB);  // +
-          setLEDcol(248, 248, colorRGB);  // 2nd row
-          setLEDcol(229, 229, colorRGB);  // 1
-          setLEDcol(250, 250, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(231, 231, colorRGB);  // +
-          setLEDcol(248, 248, colorRGB);  // 2nd row
-          setLEDcol(228, 228, colorRGB);  // 2
-          setLEDcol(251, 251, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(231, 231, colorRGB);  // +
-          setLEDcol(248, 248, colorRGB);  // 2nd row
-          setLEDcol(227, 227, colorRGB);  // 3
-          setLEDcol(252, 252, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(231, 231, colorRGB);  // +
-          setLEDcol(248, 248, colorRGB);  // 2nd row
-          setLEDcol(226, 226, colorRGB);  // 4
-          setLEDcol(253, 253, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ########################################################### CN:
-  if (langLEDlayout == 7) {  // CN:
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(200, 200, colorRGB);  // 加
-          setLEDcol(215, 215, colorRGB);  // 2nd row
-          setLEDcol(199, 199, colorRGB);  // 一
-          setLEDcol(216, 216, colorRGB);  // 2nd row
-          setLEDcol(194, 195, colorRGB);  // 分钟
-          setLEDcol(220, 221, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(200, 200, colorRGB);  // 加
-          setLEDcol(215, 215, colorRGB);  // 2nd row
-          setLEDcol(198, 198, colorRGB);  // 二
-          setLEDcol(217, 217, colorRGB);  // 2nd row
-          setLEDcol(194, 195, colorRGB);  // 分钟
-          setLEDcol(220, 221, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(200, 200, colorRGB);  // 加
-          setLEDcol(215, 215, colorRGB);  // 2nd row
-          setLEDcol(197, 197, colorRGB);  // 三
-          setLEDcol(218, 218, colorRGB);  // 2nd row
-          setLEDcol(194, 195, colorRGB);  // 分钟
-          setLEDcol(220, 221, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(200, 200, colorRGB);  // 加
-          setLEDcol(215, 215, colorRGB);  // 2nd row
-          setLEDcol(196, 196, colorRGB);  // 四
-          setLEDcol(219, 219, colorRGB);  // 2nd row
-          setLEDcol(194, 195, colorRGB);  // 分钟
-          setLEDcol(220, 221, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### SWABIAN:
-  if (langLEDlayout == 8) {  // SWABIAN:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(229, 229, colorRGB);  // 1
-          setLEDcol(250, 250, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(228, 228, colorRGB);  // 2
-          setLEDcol(251, 251, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(227, 227, colorRGB);  // 3
-          setLEDcol(252, 252, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(226, 226, colorRGB);  // 4
-          setLEDcol(253, 253, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ##################################################### BAVARIAN:
-  if (langLEDlayout == 9) {  // BAVARIAN:
-
-    switch (minMod) {
-      case 1:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(229, 229, colorRGB);  // 1
-          setLEDcol(250, 250, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(228, 228, colorRGB);  // 2
-          setLEDcol(251, 251, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(227, 227, colorRGB);  // 3
-          setLEDcol(252, 252, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(230, 230, colorRGB);  // +
-          setLEDcol(249, 249, colorRGB);  // 2nd row
-          setLEDcol(226, 226, colorRGB);  // 4
-          setLEDcol(253, 253, colorRGB);  // 2nd row
-          setLEDcol(224, 224, colorRGB);  // M
-          setLEDcol(255, 255, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
+  
+  setLEDcolXY(plus_coordX, coordY, 1, colorRGB);
+  setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGB);
+  setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB);
 }
 
 
