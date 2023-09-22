@@ -172,7 +172,11 @@ void showTime(const int iHour, const int iMinute)
           }
         },
         { 4, // IT
-          { } 
+          { 
+            { time_parts::prefix1, { 5, 0, 2 } },
+            { time_parts::prefix2, { 0, 0, 4 } },
+            { time_parts::one1, { 15, 0, 1 } } 
+          }
         },
         { 5, // FR
           { } 
@@ -255,6 +259,22 @@ void showTime(const int iHour, const int iMinute)
             { 0, 6, 4 },
             { 9, 5, 4 }
           } 
+        },  
+        { 4, // IT
+          { 
+            { 3, 3, 5 },
+            { 8, 3, 3 },
+            { 0, 3, 3 },
+            { 0, 2, 7 },
+            { 10, 2, 6 },
+            { 5, 1, 3 },
+            { 0, 1, 5 },
+            { 6, 2, 4 },
+            { 11, 3, 4 },
+            { 1, 4, 5 },
+            { 9, 0, 6 },
+            { 8, 1, 6 }
+          } 
         }  
       };
 
@@ -290,14 +310,9 @@ void showTime(const int iHour, const int iMinute)
   const bool twenty_defined = (Index20 != timeParts.end());
 
   // ES IST:
-  setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
-  setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
-  if (testPrintTimeTexts == 1) {
-    Serial.println("");
-    Serial.print(hours);
-    Serial.print(":");
-    Serial.print(minutes);
-    Serial.print(" --> ES IST ");
+  if ((langLEDlayout != 4) || (xHour > 1)) {  // IT:
+    setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
+    setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
   }
 
   // FÜNF: (Minuten)
@@ -371,7 +386,7 @@ void showTime(const int iHour, const int iMinute)
   if (RandomColor == 1)
     colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
 
-  if ((xHour == 1) && (iMinute <= 4))
+  if (xHour == 1)
   {
     setLEDtimePart(timeParts, time_parts::one1, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("EIN ");
@@ -395,123 +410,6 @@ void showTime(const int iHour, const int iMinute)
 
   // ########################################################### IT:
   if (langLEDlayout == 4) {  // IT:
-
-    //set hour from 1 to 12 (at noon, or midnight)
-    int xHour = (iHour % 12);
-    if (xHour == 0)
-      xHour = 12;
-    // at minute 40 hour needs to be counted up:
-    if (iMinute >= 40) {
-      if (xHour == 12)
-        xHour = 1;
-      else
-        xHour++;
-    }
-
-    // SONO LE:
-    if (xHour > 1) { // NOTE: Displayed only from 2 to 23
-      setLEDcol(9, 10, colorRGB);   // LE
-      setLEDcol(21, 22, colorRGB);  // 2nd row
-      setLEDcol(12, 15, colorRGB);  // SONO
-      setLEDcol(16, 19, colorRGB);  // 2nd row
-      if (testPrintTimeTexts == 1) {
-        Serial.println("");
-        Serial.print(hours);
-        Serial.print(":");
-        Serial.print(minutes);
-        Serial.print(" --> SONO LE ");
-      }
-    }
-
-    switch (xHour) {
-      case 1:
-        {
-          setLEDcol(0, 0, colorRGB);      // È
-          setLEDcol(31, 31, colorRGB);    // 2nd row
-          setLEDcol(104, 108, colorRGB);  // L’UNA
-          setLEDcol(115, 119, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("È L’UNA ");
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(101, 103, colorRGB);  // DUE
-          setLEDcol(120, 122, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("DUE ");
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(109, 111, colorRGB);  // TRE
-          setLEDcol(112, 114, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("TRE ");
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(73, 79, colorRGB);  // QUATTRO
-          setLEDcol(80, 86, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("QUATTRO ");
-          break;
-        }
-      case 5:
-        {
-          setLEDcol(64, 69, colorRGB);  // CINQUE
-          setLEDcol(90, 95, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("CINQUE ");
-          break;
-        }
-      case 6:
-        {
-          setLEDcol(40, 42, colorRGB);  // SEI
-          setLEDcol(53, 55, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("SEI ");
-          break;
-        }
-      case 7:
-        {
-          setLEDcol(43, 47, colorRGB);  // SETTE
-          setLEDcol(48, 52, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("SETTE ");
-          break;
-        }
-      case 8:
-        {
-          setLEDcol(70, 73, colorRGB);  // OTTO
-          setLEDcol(86, 89, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("OTTO ");
-          break;
-        }
-      case 9:
-        {
-          setLEDcol(97, 100, colorRGB);   // NOVE
-          setLEDcol(123, 126, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("NOVE ");
-          break;
-        }
-      case 10:
-        {
-          setLEDcol(138, 142, colorRGB);  // DIECI
-          setLEDcol(145, 149, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("DIECI ");
-          break;
-        }
-      case 11:
-        {
-          setLEDcol(1, 6, colorRGB);    // UNDICI
-          setLEDcol(25, 30, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("UNDICI ");
-          break;
-        }
-      case 12:
-        {
-          setLEDcol(34, 39, colorRGB);  // DODICI
-          setLEDcol(56, 61, colorRGB);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("DODICI ");
-          break;
-        }
-    }
-
     // E:
     if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
       setLEDcol(134, 134, colorRGB);
