@@ -182,7 +182,17 @@ void showTime(const int iHour, const int iMinute)
           { } 
         },
         { 6, // GSW
-          { } 
+          { 
+            { time_parts::prefix1, { 1, 0, 2 } },
+            { time_parts::prefix2, { 8, 0, 4 } },
+            { time_parts::five_min, { 0, 1, 4 } }, 
+            { time_parts::quarter, { 1, 2, 7 } }, 
+            { time_parts::ten_min, { 11, 1, 3 } }, 
+            { time_parts::twenty, { 9, 2, 6 } }, 
+            { time_parts::past, { 0, 3, 2 } }, 
+            { time_parts::to, { 2, 3, 3 } },
+            { time_parts::half, { 6, 3, 5 } }
+          } 
         },
         { 7, // CN
           { } 
@@ -275,6 +285,38 @@ void showTime(const int iHour, const int iMinute)
             { 9, 0, 6 },
             { 8, 1, 6 }
           } 
+        },  
+        { 5, // FR
+          { 
+          } 
+        },  
+        { 6, // GSW
+          { 
+            { 13, 4, 3 },
+            { 4, 4, 4 },
+            { 12, 3, 4 },
+            { 11, 5, 5 },
+            { 0, 5, 5 },
+            { 5, 5, 6 },
+            { 0, 6, 6 },
+            { 11, 6, 5 },
+            { 8, 4, 5 },
+            { 6, 6, 5 },
+            { 0, 4, 4 },
+            { 1, 7, 6 }
+          } 
+        },  
+        { 7, // CN
+          { 
+          } 
+        },  
+        { 8, // SWABIAN
+          { 
+          } 
+        },  
+        { 9, // BAVARIAN
+          { 
+          } 
         }  
       };
 
@@ -308,6 +350,11 @@ void showTime(const int iHour, const int iMinute)
 
   const auto Index20 = timeParts.find(time_parts::twenty);
   const bool twenty_defined = (Index20 != timeParts.end());
+
+  //set hour from 1 to 12 (at noon, or midnight)
+  int xHour = (iHour % 12);
+  if (xHour == 0)
+    xHour = 12;
 
   // ES IST:
   if ((langLEDlayout != 4) || (xHour > 1)) {  // IT:
@@ -364,10 +411,6 @@ void showTime(const int iHour, const int iMinute)
     if (testPrintTimeTexts == 1) Serial.print("HALB ");
   }
 
-  //set hour from 1 to 12 (at noon, or midnight)
-  int xHour = (iHour % 12);
-  if (xHour == 0)
-    xHour = 12;
   // at minute 25 hour needs to be counted up:
   // fuenf vor halb 2 = 13:25
   const auto hourThreshold = hourThresholds[langLEDlayout];
@@ -634,142 +677,6 @@ void showTime(const int iHour, const int iMinute)
           if (iHour == 0 || (iHour == 23 && iMinute >= 35)) setLEDcol(54, 59, colorRGB);   // 2nd row
           if (iHour == 12 || (iHour == 11 && iMinute >= 35)) setLEDcol(73, 76, colorRGB);  // MIDI (12)
           if (iHour == 12 || (iHour == 11 && iMinute >= 35)) setLEDcol(83, 86, colorRGB);  // 2nd row
-          break;
-        }
-    }
-  }
-
-  // ########################################################### GSW:
-  if (langLEDlayout == 6) {  // GSW:
-
-    // ES ISCH:
-    setLEDcol(13, 14, colorRGB);  // ES
-    setLEDcol(17, 18, colorRGB);  // 2nd row
-    setLEDcol(4, 7, colorRGB);    // ISCH
-    setLEDcol(24, 27, colorRGB);  // 2nd row
-
-    // FÜÜF: (Minuten)
-    if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
-      setLEDcol(44, 47, colorRGB);
-      setLEDcol(48, 51, colorRGB);  // 2nd row
-    }
-    // VIERTEL:
-    if ((minDiv == 3) || (minDiv == 9)) {
-      setLEDcol(72, 78, colorRGB);
-      setLEDcol(81, 87, colorRGB);  // 2nd row
-    }
-    // ZÄH: (Minuten)
-    if ((minDiv == 2) || (minDiv == 10)) {
-      setLEDcol(34, 36, colorRGB);
-      setLEDcol(59, 61, colorRGB);  // 2nd row
-    }
-    // ZWÄNZG:
-    if ((minDiv == 4) || (minDiv == 8)) {
-      setLEDcol(65, 70, colorRGB);
-      setLEDcol(89, 94, colorRGB);  // 2nd row
-    }
-    // AB:
-    if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 7)) {
-      setLEDcol(110, 111, colorRGB);
-      setLEDcol(112, 113, colorRGB);  // 2nd row
-    }
-    // VOR:
-    if ((minDiv == 5) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
-      setLEDcol(107, 109, colorRGB);
-      setLEDcol(114, 116, colorRGB);  // 2nd row
-    }
-    // HALBI:
-    if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
-      setLEDcol(101, 105, colorRGB);
-      setLEDcol(118, 122, colorRGB);  // 2nd row
-    }
-
-
-    // set hour from 1 to 12 (at noon, or midnight)
-    int xHour = (iHour % 12);
-    if (xHour == 0)
-      xHour = 12;
-    // at minute 25 hour needs to be counted up:
-    // fuenf vor halb 2 = 13:25
-    if (iMinute >= 25) {
-      if (xHour == 12)
-        xHour = 1;
-      else
-        xHour++;
-    }
-
-
-    switch (xHour) {
-      case 1:
-        {
-          setLEDcol(128, 130, colorRGB);  // EIS
-          setLEDcol(157, 159, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(136, 139, colorRGB);  // ZWEI
-          setLEDcol(148, 151, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(96, 99, colorRGB);    // DRÜÜ
-          setLEDcol(124, 127, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(160, 164, colorRGB);  // VIERI
-          setLEDcol(187, 191, colorRGB);  // 2nd row
-          break;
-        }
-      case 5:
-        {
-          setLEDcol(171, 175, colorRGB);  // FÜÜFI
-          setLEDcol(176, 180, colorRGB);  // 2nd row
-          break;
-        }
-      case 6:
-        {
-          setLEDcol(165, 170, colorRGB);  // SÄCHSI
-          setLEDcol(181, 186, colorRGB);  // 2nd row
-          break;
-        }
-      case 7:
-        {
-          setLEDcol(202, 207, colorRGB);  // SIEBNI
-          setLEDcol(208, 213, colorRGB);  // 2nd row
-          break;
-        }
-      case 8:
-        {
-          setLEDcol(192, 196, colorRGB);  // ACHTI
-          setLEDcol(219, 223, colorRGB);  // 2nd row
-          break;
-        }
-      case 9:
-        {
-          setLEDcol(131, 135, colorRGB);  // NÜÜNI
-          setLEDcol(152, 156, colorRGB);  // 2nd row
-          break;
-        }
-      case 10:
-        {
-          setLEDcol(197, 201, colorRGB);  // ZÄHNI (Stunden)
-          setLEDcol(214, 218, colorRGB);  // 2nd row
-          break;
-        }
-      case 11:
-        {
-          setLEDcol(140, 143, colorRGB);  // ELFI
-          setLEDcol(144, 147, colorRGB);  // 2nd row
-          break;
-        }
-      case 12:
-        {
-          setLEDcol(233, 238, colorRGB);  // ZWÖLFI
-          setLEDcol(241, 246, colorRGB);  // 2nd row
           break;
         }
     }
