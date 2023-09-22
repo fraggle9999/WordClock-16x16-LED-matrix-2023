@@ -77,7 +77,7 @@ void show_time(int hours, int minutes) {
   
   // circle round the display to new beginning hour
   if (iMinute == 0)
-    circleRound();
+    randomEffect();
 
   // Test a special time:
   if (testspecialtime == 1) {
