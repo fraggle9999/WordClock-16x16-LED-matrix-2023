@@ -94,25 +94,49 @@ void show_time(int hours, int minutes) {
 
 
 // ###########################################################################################################################################
+// # Set LEDs for time part:
+// ###########################################################################################################################################
+void setLEDtimePart(const std::map<time_parts, position_t>& timeParts, const time_parts timePart, uint32_t color)
+{
+  const auto Index = timeParts.find(timePart);
+  if (Index == timeParts.end())
+    return;
+
+  setLEDcolXY(Index->second, color);
+}
+
+
+// ###########################################################################################################################################
 // # Display time function:
 // ###########################################################################################################################################
 void showTime(const int iHour, const int iMinute)
 {
-  struct position
-  {
-    int x;
-    int y;
-    int len;
-  };
-  
-  enum class time_parts { prefix1, prefix2, five_min, quarter, ten_min, twenty, after, before, half,
-      one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, o_clock };
-
-  static std::map<int, std::map<time_parts, position>> timePartsMap =
+  static std::map<int, std::map<time_parts, position_t>> timePartsMap =
       { { 0, // DE
           { 
             { time_parts::prefix1, { 0, 0, 2 } }, // ES
-            { time_parts::prefix2, { 3, 0, 3 } }  // IST
+            { time_parts::prefix2, { 3, 0, 3 } }, // IST
+            { time_parts::five_min, { 0, 2, 4 } }, 
+            { time_parts::quarter, { 4, 2, 7 } }, 
+            { time_parts::ten_min, { 12, 1, 4 } }, 
+            { time_parts::twenty, { 0, 1, 7 } }, 
+            { time_parts::after, { 12, 2, 4 } }, 
+            { time_parts::before, { 0, 3, 3 } },
+            { time_parts::half, { 4, 3, 4 } }, 
+            { time_parts::one1, { 4, 5, 3 } }, 
+            { time_parts::one2, { 4, 5, 4 } }, 
+            { time_parts::two, { 0, 4, 4 } }, 
+            { time_parts::three, { 4, 4, 4 } }, 
+            { time_parts::four, { 12, 4, 4 } }, 
+            { time_parts::five, { 12, 5, 4 } }, 
+            { time_parts::six, { 7, 5, 5 } }, 
+            { time_parts::seven, { 0, 6, 6 } }, 
+            { time_parts::eight, { 0, 5, 4 } }, 
+            { time_parts::nine, { 8, 4, 4 } }, 
+            { time_parts::ten, { 9, 3, 4 } }, 
+            { time_parts::eleven, { 13, 3, 3 } }, 
+            { time_parts::twelve, { 6, 6, 5 } }, 
+            { time_parts::o_clock, { 13, 6, 3 } }, 
           }
         },
         { 1, // EN
@@ -144,6 +168,44 @@ void showTime(const int iHour, const int iMinute)
         }
       };
   
+  static std::map<int, std::vector<position_t>> hoursMap =
+      { { 0, // DE
+          { 
+            { 4, 5, 4 },  // EINS
+            { 0, 4, 4 },  // ZWEI
+            { 4, 4, 4 },  // DREI
+            { 12, 4, 4 }, // VIER
+            { 12, 5, 4 }, // FÜNF
+            { 7, 5, 5 },  // SECHS
+            { 0, 6, 6 },  // SIEBEN
+            { 0, 5, 4 },  // ACHT
+            { 8, 4, 4 },  // NEUN
+            { 9, 3, 4 },  // ZEHN
+            { 13, 3, 3 }, // ELF
+            { 6, 6, 5 }   // ZWÖLF
+          } 
+        }  
+      };
+
+  const auto Index = timePartsMap.find(langLEDlayout);
+  if (Index == timePartsMap.end())
+  {
+    const std::vector<std::string> questionMark =
+        { 
+          " XXXX",
+          "X    X",
+          "    X",
+          "   X",
+          "",
+          "   X"
+        };
+
+    showCharMatrix(questionMark, 5, 1, strip.Color(255, 0, 0));
+    return;
+  }
+
+  const auto& timeParts = Index->second;
+
   // divide minute by 5 to get value for display control
   int minDiv = iMinute / 5;
 
@@ -154,10 +216,8 @@ void showTime(const int iHour, const int iMinute)
   if (langLEDlayout == 0) {  // DE:
 
     // ES IST:
-    setLEDcol(14, 15, colorRGB);
-    setLEDcol(16, 17, colorRGB);  // 2nd row
-    setLEDcol(10, 12, colorRGB);
-    setLEDcol(19, 21, colorRGB);  // 2nd row
+    setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
+    setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
     if (testPrintTimeTexts == 1) {
       Serial.println("");
       Serial.print(hours);
@@ -168,47 +228,39 @@ void showTime(const int iHour, const int iMinute)
 
     // FÜNF: (Minuten)
     if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
-      setLEDcol(76, 79, colorRGB);
-      setLEDcol(80, 83, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::five_min, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
     }
     // VIERTEL:
     if ((minDiv == 3) || (minDiv == 9)) {
-      setLEDcol(69, 75, colorRGB);
-      setLEDcol(84, 90, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::quarter, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("VIERTEL ");
     }
     // ZEHN: (Minuten)
     if ((minDiv == 2) || (minDiv == 10)) {
-      setLEDcol(32, 35, colorRGB);
-      setLEDcol(60, 63, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
     }
     // ZWANZIG:
     if ((minDiv == 4) || (minDiv == 8)) {
-      setLEDcol(41, 47, colorRGB);
-      setLEDcol(48, 54, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("ZWANZIG ");
     }
     // NACH:
     if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 7)) {
-      setLEDcol(64, 67, colorRGB);
-      setLEDcol(92, 95, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::after, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("NACH ");
     }
     // VOR:
     if ((minDiv == 5) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
-      setLEDcol(109, 111, colorRGB);
-      setLEDcol(112, 114, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::before, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("VOR ");
     }
     // HALB:
     if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
-      setLEDcol(104, 107, colorRGB);
-      setLEDcol(116, 119, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::half, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("HALB ");
     }
-
 
     //set hour from 1 to 12 (at noon, or midnight)
     int xHour = (iHour % 12);
@@ -228,103 +280,25 @@ void showTime(const int iHour, const int iMinute)
     if (RandomColor == 1)
       colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
 
-    switch (xHour) {
-      case 1:
-        {
-          if (xHour == 1) {
-            setLEDcol(169, 171, colorRGBForHour);  // EIN
-            setLEDcol(180, 182, colorRGBForHour);  // 2nd row
-            if (testPrintTimeTexts == 1) Serial.print("EIN ");
-          }
-          if ((xHour == 1) && (iMinute > 4)) {
-            setLEDcol(168, 171, colorRGBForHour);  // EINS (S in EINS) (just used if not point 1 o'clock)
-            setLEDcol(180, 183, colorRGBForHour);  // 2nd row
-            if (testPrintTimeTexts == 1) Serial.print("EINS ");
-          }
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(140, 143, colorRGBForHour);  // ZWEI
-          setLEDcol(144, 147, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("ZWEI ");
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(136, 139, colorRGBForHour);  // DREI
-          setLEDcol(148, 151, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("DREI ");
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(128, 131, colorRGBForHour);  // VIER
-          setLEDcol(156, 159, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("VIER ");
-          break;
-        }
-      case 5:
-        {
-          setLEDcol(160, 163, colorRGBForHour);  // FUENF
-          setLEDcol(188, 191, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
-          break;
-        }
-      case 6:
-        {
-          setLEDcol(164, 168, colorRGBForHour);  // SECHS
-          setLEDcol(183, 187, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("SECHS ");
-          break;
-        }
-      case 7:
-        {
-          setLEDcol(202, 207, colorRGBForHour);  // SIEBEN
-          setLEDcol(208, 213, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("SIEBEN ");
-          break;
-        }
-      case 8:
-        {
-          setLEDcol(172, 175, colorRGBForHour);  // ACHT
-          setLEDcol(176, 179, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("ACHT ");
-          break;
-        }
-      case 9:
-        {
-          setLEDcol(132, 135, colorRGBForHour);  // NEUN
-          setLEDcol(152, 155, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("NEUN ");
-          break;
-        }
-      case 10:
-        {
-          setLEDcol(99, 102, colorRGBForHour);   // ZEHN (Stunden)
-          setLEDcol(121, 124, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
-          break;
-        }
-      case 11:
-        {
-          setLEDcol(96, 98, colorRGBForHour);    // ELF
-          setLEDcol(125, 127, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("ELF ");
-          break;
-        }
-      case 12:
-        {
-          setLEDcol(197, 201, colorRGBForHour);  // ZWÖLF
-          setLEDcol(214, 218, colorRGBForHour);  // 2nd row
-          if (testPrintTimeTexts == 1) Serial.print("ZWÖLF ");
-          break;
-        }
+    if ((xHour == 1) && (iMinute <= 4))
+    {
+      setLEDtimePart(timeParts, time_parts::one1, colorRGB);
+      if (testPrintTimeTexts == 1) Serial.print("EIN ");
+    }
+    else
+    {
+      const auto Index = hoursMap.find(langLEDlayout);
+      if (Index != hoursMap.end())
+      {
+        const auto& positionVector = Index->second;
+
+        if (xHour < positionVector.size())
+          setLEDcolXY(positionVector[xHour - 1], colorRGB);
+      }
     }
 
     if (iMinute < 5) {
-      setLEDcol(192, 194, colorRGB);  // UHR
-      setLEDcol(221, 223, colorRGB);  // 2nd row
+      setLEDtimePart(timeParts, time_parts::o_clock, colorRGB);
       if (testPrintTimeTexts == 1) Serial.print("UHR ");
     }
   }

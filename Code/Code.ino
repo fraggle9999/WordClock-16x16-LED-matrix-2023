@@ -104,6 +104,16 @@ uint16_t text_colour_time;
 int switchRandomColorID, switchSingleMinutesID;
 bool WiFIsetup = false;
 
+struct position_t
+{
+  int x;
+  int y;
+  int len;
+};
+  
+enum class time_parts { prefix1, prefix2, five_min, quarter, ten_min, twenty, after, before, half,
+    one1, one2, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, o_clock };
+
 
 // ###########################################################################################################################################
 // # Setup function that runs once at startup of the ESP:
