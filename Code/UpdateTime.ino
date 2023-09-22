@@ -124,7 +124,7 @@ void showTime(const int iHour, const int iMinute)
             { time_parts::to, { 0, 3, 3 } },
             { time_parts::half, { 4, 3, 4 } }, 
             { time_parts::one1, { 4, 5, 3 } }, 
-            { time_parts::o_clock, { 13, 6, 3 } }, 
+            { time_parts::o_clock, { 13, 6, 3 } } 
           }
         },
         { 1, // EN
@@ -140,7 +140,7 @@ void showTime(const int iHour, const int iMinute)
             { time_parts::to, { 13, 2, 2 } },
             { time_parts::half, { 9, 0, 4 } }, 
             { time_parts::one1, { 4, 6, 3 } }, 
-            { time_parts::o_clock, { 8, 6, 7 } }, 
+            { time_parts::o_clock, { 8, 6, 7 } }
           }
         },
         { 2, // NL
@@ -154,11 +154,22 @@ void showTime(const int iHour, const int iMinute)
             { time_parts::to, { 12, 2, 4 } },
             { time_parts::half, { 1, 3, 4 } }, 
             { time_parts::one1, { 10, 3, 3 } }, 
-            { time_parts::o_clock, { 12, 6, 3 } }, 
+            { time_parts::o_clock, { 12, 6, 3 } } 
           }
         },
         { 3, // SWE
-          { } 
+          { 
+            { time_parts::prefix1, { 0, 0, 7 } },
+            { time_parts::prefix2, { 9, 0, 2 } },
+            { time_parts::five_min, { 13, 2, 3 } }, 
+            { time_parts::quarter, { 1, 1, 5 } }, 
+            { time_parts::ten_min, { 5, 2, 3 } }, 
+            { time_parts::twenty, { 0, 2, 5 } }, 
+            { time_parts::past, { 0, 3, 4 } }, 
+            { time_parts::to, { 14, 3, 1 } },
+            { time_parts::half, { 0, 4, 4 } }, 
+            { time_parts::one1, { 3, 5, 3 } } 
+          }
         },
         { 4, // IT
           { } 
@@ -212,7 +223,7 @@ void showTime(const int iHour, const int iMinute)
             { 0, 4, 6 },
             { 6, 4, 6 }
           } 
-        }  ,
+        },
         { 2, // NL
           { 
             { 10, 3, 3 },
@@ -227,6 +238,22 @@ void showTime(const int iHour, const int iMinute)
             { 0, 4, 4 },
             { 5, 5, 3 },
             { 4, 4, 6 }
+          } 
+        },
+        { 3, // SWE
+          { 
+            { 3, 5, 3 },
+            { 13, 5, 3 },
+            { 9, 4, 3 },
+            { 7, 6, 4 },
+            { 11, 6, 3 },
+            { 4, 6, 3 },
+            { 0, 5, 3 },
+            { 12, 4, 4 },
+            { 6, 4, 3 },
+            { 5, 5, 3 },
+            { 0, 6, 4 },
+            { 9, 5, 4 }
           } 
         }  
       };
