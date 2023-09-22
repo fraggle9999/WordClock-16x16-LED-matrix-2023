@@ -87,30 +87,28 @@ void show_time(int hours, int minutes) {
     iMinute = test_minute;
   }
 
-  // divide minute by 5 to get value for display control
-  int minDiv = iMinute / 5;
   if (usesinglemin == 1) showMinutes(iMinute);
 
-  showTime(minDiv);
+  showTime(iHour, iMinute);
 }
 
 
 // ###########################################################################################################################################
 // # Display time function:
 // ###########################################################################################################################################
-void showTime(const int minDiv)
+void showTime(const int iHour, const int iMinute)
 {
-  struct coord_type
+  struct position
   {
-    x: int;
-    y: int;
-    len: int;
-  }
+    int x;
+    int y;
+    int len;
+  };
   
   enum class time_parts { prefix1, prefix2, five_min, quarter, ten_min, twenty, after, before, half,
       one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, o_clock };
 
-  static std::map<int, std::map<time_parts, coord_type>> timePartsMap =
+  static std::map<int, std::map<time_parts, position>> timePartsMap =
       { { 0, // DE
           { 
             { time_parts::prefix1, { 0, 0, 2 } }, // ES
@@ -146,6 +144,12 @@ void showTime(const int minDiv)
         }
       };
   
+  // divide minute by 5 to get value for display control
+  int minDiv = iMinute / 5;
+
+  int hours = iHour;
+  int minutes = iMinute;
+
   // ########################################################### DE:
   if (langLEDlayout == 0) {  // DE:
 
