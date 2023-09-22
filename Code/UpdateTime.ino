@@ -179,7 +179,10 @@ void showTime(const int iHour, const int iMinute)
           }
         },
         { 5, // FR
-          { } 
+          {
+            { time_parts::prefix1, { 0, 0, 2 } },
+            { time_parts::prefix2, { 3, 0, 3 } }
+          }
         },
         { 6, // GSW
           { 
@@ -195,7 +198,10 @@ void showTime(const int iHour, const int iMinute)
           } 
         },
         { 7, // CN
-          { } 
+          {
+            { time_parts::prefix1, { 2, 1, 2 } },
+            { time_parts::prefix2, { 6, 1, 2 } }
+          }
         },
         { 8, // SWABIAN
           { } 
@@ -320,6 +326,18 @@ void showTime(const int iHour, const int iMinute)
         },  
         { 7, // CN
           { 
+            { 3, 2, 2 },
+            { 6, 2, 2 },
+            { 10, 1, 2 },
+            { 12, 1, 2 },
+            { 8, 2, 2 },
+            { 10, 2, 2 },
+            { 12, 2, 2 },
+            { 2, 3, 2 },
+            { 4, 3, 2 },
+            { 6, 3, 2 },
+            { 2, 2, 3 },
+            { 5, 2, 3 }
           } 
         },  
         { 8, // SWABIAN
@@ -525,13 +543,6 @@ void showTime(const int iHour, const int iMinute)
 
   // ########################################################### FR:
   if (langLEDlayout == 5) {  // FR:
-
-    // IL EST:
-    setLEDcol(14, 15, colorRGB);  // IL
-    setLEDcol(16, 17, colorRGB);  // 2nd row
-    setLEDcol(10, 12, colorRGB);  // EST
-    setLEDcol(19, 21, colorRGB);  // 2nd row
-
     // CINQ: (Minutes) x:05, x:25, x:35, x:55
     if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
       setLEDcol(197, 200, colorRGB);
@@ -591,13 +602,6 @@ void showTime(const int iHour, const int iMinute)
 
   // ########################################################### CN:
   if (langLEDlayout == 7) {  // CN:
-
-    // IT IS: 现在 时间
-    setLEDcol(44, 45, colorRGB);
-    setLEDcol(50, 51, colorRGB);  // 2nd row
-    setLEDcol(40, 41, colorRGB);
-    setLEDcol(54, 55, colorRGB);  // 2nd row
-
     // 零五分                         // x:05
     if ((minDiv == 1)) {
       setLEDcol(101, 103, colorRGB);
@@ -652,88 +656,6 @@ void showTime(const int iHour, const int iMinute)
     if ((minDiv == 11)) {
       setLEDcol(202, 205, colorRGB);
       setLEDcol(210, 213, colorRGB);  // 2nd row
-    }
-
-    //set hour from 1 to 12 (at noon, or midnight)
-    int xHour = (iHour % 12);
-    if (xHour == 0) {
-      xHour = 12;
-    }
-
-
-    switch (xHour) {
-      case 1:
-        {
-          setLEDcol(75, 76, colorRGB);  // 一点
-          setLEDcol(83, 84, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(72, 73, colorRGB);  // 二点
-          setLEDcol(86, 87, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(36, 37, colorRGB);  // 三点
-          setLEDcol(58, 59, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(34, 35, colorRGB);  // 四点
-          setLEDcol(60, 61, colorRGB);  // 2nd row
-          break;
-        }
-      case 5:
-        {
-          setLEDcol(70, 71, colorRGB);  // 五点
-          setLEDcol(88, 89, colorRGB);  // 2nd row
-          break;
-        }
-      case 6:
-        {
-          setLEDcol(68, 69, colorRGB);  // 六点
-          setLEDcol(90, 91, colorRGB);  // 2nd row
-          break;
-        }
-      case 7:
-        {
-          setLEDcol(66, 67, colorRGB);  // 七点
-          setLEDcol(92, 93, colorRGB);  // 2nd row
-          break;
-        }
-      case 8:
-        {
-          setLEDcol(108, 109, colorRGB);  // 八点
-          setLEDcol(114, 115, colorRGB);  // 2nd row
-          break;
-        }
-      case 9:
-        {
-          setLEDcol(106, 107, colorRGB);  // 九点
-          setLEDcol(116, 117, colorRGB);  // 2nd row
-          break;
-        }
-      case 10:
-        {
-          setLEDcol(104, 105, colorRGB);  // 十点
-          setLEDcol(118, 119, colorRGB);  // 2nd row
-          break;
-        }
-      case 11:
-        {
-          setLEDcol(75, 77, colorRGB);  // 十一点
-          setLEDcol(82, 84, colorRGB);  // 2nd row
-          break;
-        }
-      case 12:
-        {
-          setLEDcol(72, 74, colorRGB);  // 十二点
-          setLEDcol(85, 87, colorRGB);  // 2nd row
-          break;
-        }
     }
 
     if (iMinute < 5) {
