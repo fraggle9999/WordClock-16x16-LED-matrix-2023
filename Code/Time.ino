@@ -5,12 +5,74 @@ void configNTPTime() {
   initTime(Timezone);
   printLocalTime();
 }
+
+
 // ###########################################################################################################################################
 void setTimezone(String timezone) {
   Serial.printf("Setting timezone to %s\n", timezone.c_str());
   setenv("TZ", timezone.c_str(), 1);  //  Now adjust the TZ.  Clock settings are adjusted to show the new local time
   tzset();
 }
+
+
+// ###########################################################################################################################################
+void showTimeText(uint32_t color) {
+  switch (langLEDlayout) {
+    case 0:  // DE:
+      setLEDcolXY(11, 0, 4, color);
+      break;
+
+    case 1:  // EN:
+      setLEDcolXY(11, 1, 4, color);
+      break;
+
+    case 2:  // NL:
+      setLEDcolXY(7, 2, 4, color);
+      break;
+
+    case 3:  // SWE:
+      setLEDcolXY(13, 3, 3, color);
+      break;
+
+    case 4:                                         // IT:
+      setLEDcolXY(0, 3, 1, color);  // T
+      setLEDcolXY(14, 3, 2, color); // EM
+      setLEDcolXY(12, 4, 1, color); // P
+      setLEDcolXY(5, 7, 1, color);  // O
+      break;
+
+    case 5:                                         // FR:
+      setLEDcolXY(5, 0, 1, color);  // T
+      setLEDcolXY(5, 1, 2, color);  // EM
+      setLEDcolXY(6, 3, 1, color);  // p
+      setLEDcolXY(15, 4, 1, color); // S
+      break;
+
+    case 6:                                       // GSW:
+      setLEDcolXY(12, 0, 4, color);    // ZIIT
+      break;
+
+    case 7:  // CN:
+      setLEDcolXY(6, 1, 2, color);
+      break;
+
+    case 8:                                         // SWABIAN:
+      setLEDcolXY(5, 2, 2, color);    // ZE
+      setLEDcolXY(12, 4, 1, color);  // I
+      setLEDcolXY(3, 6, 1, color);  // T
+      break;
+
+    case 9:                                       // BAVARIAN:
+      setLEDcolXY(7, 0, 4, color);    // ZEID
+      break;
+
+    default:
+      break;
+  }
+
+  strip.show();
+}
+
 // ###########################################################################################################################################
 int TimeResetCounter = 1;
 void initTime(String timezone) {
@@ -28,150 +90,21 @@ void initTime(String timezone) {
       ESP.restart();
     }
 
-    if (langLEDlayout == 0) {  // DE:
-      setLEDcol(1, 4, strip.Color(255, 0, 0));
-      setLEDcol(27, 30, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 1) {  // EN:
-      setLEDcol(33, 36, strip.Color(255, 0, 0));
-      setLEDcol(59, 62, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 2) {  // NL:
-      setLEDcol(69, 72, strip.Color(255, 0, 0));
-      setLEDcol(87, 90, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 3) {  // SWE:
-      setLEDcol(96, 98, strip.Color(255, 0, 0));
-      setLEDcol(125, 127, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 4) {                       // IT:
-      setLEDcol(111, 111, strip.Color(255, 0, 0));  // T
-      setLEDcol(112, 112, strip.Color(255, 0, 0));  // 2nd row
-      setLEDcol(96, 97, strip.Color(255, 0, 0));    // EM
-      setLEDcol(126, 127, strip.Color(255, 0, 0));  // 2nd row
-      setLEDcol(131, 131, strip.Color(255, 0, 0));  // P
-      setLEDcol(156, 156, strip.Color(255, 0, 0));  // 2nd row
-      setLEDcol(234, 234, strip.Color(255, 0, 0));  // O
-      setLEDcol(245, 245, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 5) {                       // FR:
-      setLEDcol(10, 10, strip.Color(255, 0, 0));    // T
-      setLEDcol(21, 21, strip.Color(255, 0, 0));    // 2nd row
-      setLEDcol(41, 42, strip.Color(255, 0, 0));    // EM
-      setLEDcol(53, 54, strip.Color(255, 0, 0));    // 2nd row
-      setLEDcol(105, 105, strip.Color(255, 0, 0));  // p
-      setLEDcol(118, 118, strip.Color(255, 0, 0));  // 2nd row
-      setLEDcol(128, 128, strip.Color(255, 0, 0));  // S
-      setLEDcol(159, 159, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 6) {                     // GSW:
-      setLEDcol(0, 3, strip.Color(255, 0, 0));    // ZIIT
-      setLEDcol(28, 31, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 7) {  // CN:
-      setLEDcol(40, 41, strip.Color(255, 0, 0));
-      setLEDcol(54, 55, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 8) {                       // SWABIAN:
-      setLEDcol(73, 74, strip.Color(255, 0, 0));    // ZE
-      setLEDcol(85, 86, strip.Color(255, 0, 0));    // 2nd row
-      setLEDcol(131, 131, strip.Color(255, 0, 0));  // I
-      setLEDcol(156, 156, strip.Color(255, 0, 0));  // 2nd row
-      setLEDcol(204, 204, strip.Color(255, 0, 0));  // T
-      setLEDcol(211, 211, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    if (langLEDlayout == 9) {                     // BAVARIAN:
-      setLEDcol(5, 8, strip.Color(255, 0, 0));    // ZEID
-      setLEDcol(23, 26, strip.Color(255, 0, 0));  // 2nd row
-    }
-
-    strip.show();
+    showTimeText(strip.Color(255, 0, 0));
     delay(250);
     ClearDisplay();
   }
 
   // Time successfully received:
   ClearDisplay();
-  if (langLEDlayout == 0) {  // DE:
-    setLEDcol(1, 4, strip.Color(0, 255, 0));
-    setLEDcol(27, 30, strip.Color(0, 255, 0));  // 2nd row
-  }
+  showTimeText(strip.Color(0, 255, 0));
 
-  if (langLEDlayout == 1) {  // EN:
-    setLEDcol(33, 36, strip.Color(0, 255, 0));
-    setLEDcol(59, 62, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 2) {  // NL:
-    setLEDcol(69, 72, strip.Color(0, 255, 0));
-    setLEDcol(87, 90, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 3) {  // SWE:
-    setLEDcol(96, 98, strip.Color(0, 255, 0));
-    setLEDcol(125, 127, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 4) {                       // IT:
-    setLEDcol(111, 111, strip.Color(0, 255, 0));  // T
-    setLEDcol(112, 112, strip.Color(0, 255, 0));  // 2nd row
-    setLEDcol(96, 97, strip.Color(0, 255, 0));    // EM
-    setLEDcol(126, 127, strip.Color(0, 255, 0));  // 2nd row
-    setLEDcol(131, 131, strip.Color(0, 255, 0));  // P
-    setLEDcol(156, 156, strip.Color(0, 255, 0));  // 2nd row
-    setLEDcol(234, 234, strip.Color(0, 255, 0));  // O
-    setLEDcol(245, 245, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 5) {                       // FR:
-    setLEDcol(10, 10, strip.Color(0, 255, 0));    // T
-    setLEDcol(21, 21, strip.Color(0, 255, 0));    // 2nd row
-    setLEDcol(41, 42, strip.Color(0, 255, 0));    // EM
-    setLEDcol(53, 54, strip.Color(0, 255, 0));    // 2nd row
-    setLEDcol(105, 105, strip.Color(0, 255, 0));  // p
-    setLEDcol(118, 118, strip.Color(0, 255, 0));  // 2nd row
-    setLEDcol(128, 128, strip.Color(0, 255, 0));  // S
-    setLEDcol(159, 159, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 6) {                     // GSW:
-    setLEDcol(0, 3, strip.Color(0, 255, 0));    // ZIIT
-    setLEDcol(28, 31, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 7) {  // CN:
-    setLEDcol(40, 41, strip.Color(0, 255, 0));
-    setLEDcol(54, 55, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 8) {                       // SWABIAN:
-    setLEDcol(73, 74, strip.Color(0, 255, 0));    // ZE
-    setLEDcol(85, 86, strip.Color(0, 255, 0));    // 2nd row
-    setLEDcol(131, 131, strip.Color(0, 255, 0));  // I
-    setLEDcol(156, 156, strip.Color(0, 255, 0));  // 2nd row
-    setLEDcol(204, 204, strip.Color(0, 255, 0));  // T
-    setLEDcol(211, 211, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  if (langLEDlayout == 9) {                     // BAVARIAN:
-    setLEDcol(5, 8, strip.Color(0, 255, 0));    // ZEID
-    setLEDcol(23, 26, strip.Color(0, 255, 0));  // 2nd row
-  }
-
-  strip.show();
   delay(1000);
   Serial.println("Got the time from NTP");
   setTimezone(timezone);
 }
+
+
 // ###########################################################################################################################################
 void printLocalTime() {
   struct tm timeinfo;
@@ -193,6 +126,7 @@ void printLocalTime() {
   // Serial.println(iSecond);
   delay(1000);
 }
+
 // ###########################################################################################################################################
 void setTime(int yr, int month, int mday, int hr, int minute, int sec, int isDst) {
   struct tm tm;
@@ -208,6 +142,6 @@ void setTime(int yr, int month, int mday, int hr, int minute, int sec, int isDst
   struct timeval now = { .tv_sec = t };
   settimeofday(&now, NULL);
 }
+
+
 // ###########################################################################################################################################
-
-

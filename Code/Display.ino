@@ -59,9 +59,9 @@ void ShowIPaddress() {
 
 
 // ###########################################################################################################################################
-// # Set one number on the display at a specific coordinate:
+// # Set one char as a matrix on the display at a specific coordinate:
 // ###########################################################################################################################################
-void showNumber(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color) {
+void showCharMatrix(const std::vector<std::string>& number, int coordX, int coordY, uint32_t color) {
   for (int row = 0; row < number.size(); ++row)
   {
     const std::string line = number[row];
@@ -143,7 +143,7 @@ void numbers(int wert, int segment, uint32_t color) {
       "XXXX" }
   };
 
-  showNumber(numberVector[wert], (2 - segment) * 5, 1, color);
+  showCharMatrix(numberVector[wert], (2 - segment) * 5, 1, color);
 }
 
 
@@ -259,7 +259,7 @@ void showChar(char letter, int wait, uint32_t c) {
 
   const auto Index = charMap.find(letter);
   if (Index != charMap.end())
-    showNumber(Index->second, 5, 2, c);
+    showCharMatrix(Index->second, 5, 2, c);
 
   strip.show();
   delay(wait);
@@ -336,10 +336,10 @@ void ShowReset(uint32_t color) {
 
     case 9:                         // BAVARIAN:
       setLEDcolXY(5, 3, 1, color);  // R
-      setLEDcolXY(10, 4, 1, color);  // E
+      setLEDcolXY(10, 4, 1, color); // E
       setLEDcolXY(0, 5, 1, color);  // S
       setLEDcolXY(5, 5, 1, color);  // E
-      setLEDcolXY(15, 5, 1, color);  // T
+      setLEDcolXY(15, 5, 1, color); // T
       break;
 
     default:
