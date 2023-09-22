@@ -1,9 +1,10 @@
-// ###########################################################################################################################################
-// # Display hours and minutes text function:
-// ###########################################################################################################################################
 uint32_t colorRGB;
 static int lastHourSet = -1;
 static int lastMinutesSet = -1;
+
+// ###########################################################################################################################################
+// # Display hours and minutes text function:
+// ###########################################################################################################################################
 void show_time(int hours, int minutes) {
 
   if ((lastHourSet == hours && lastMinutesSet == minutes) && updatenow == false) {  // Reduce display updates to new minutes and new config updates
@@ -90,6 +91,15 @@ void show_time(int hours, int minutes) {
   int minDiv = iMinute / 5;
   if (usesinglemin == 1) showMinutes(iMinute);
 
+  showTime(minDiv);
+}
+
+
+// ###########################################################################################################################################
+// # Display time function:
+// ###########################################################################################################################################
+void showTime(const int minDiv)
+{
   // ########################################################### DE:
   if (langLEDlayout == 0) {  // DE:
 
@@ -1729,8 +1739,8 @@ void show_time(int hours, int minutes) {
 
   strip.show();
 }
-
-
+  
+  
 // ###########################################################################################################################################
 // # Display extra minutes function:
 // ###########################################################################################################################################
@@ -1796,5 +1806,3 @@ void showMinutes(int minutes) {
   setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGB);
   setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB);
 }
-
-
