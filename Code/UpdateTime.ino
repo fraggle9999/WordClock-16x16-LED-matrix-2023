@@ -120,27 +120,28 @@ void showTime(const int iHour, const int iMinute)
             { time_parts::quarter, { 4, 2, 7 } }, 
             { time_parts::ten_min, { 12, 1, 4 } }, 
             { time_parts::twenty, { 0, 1, 7 } }, 
-            { time_parts::after, { 12, 2, 4 } }, 
-            { time_parts::before, { 0, 3, 3 } },
+            { time_parts::past, { 12, 2, 4 } }, 
+            { time_parts::to, { 0, 3, 3 } },
             { time_parts::half, { 4, 3, 4 } }, 
             { time_parts::one1, { 4, 5, 3 } }, 
-            { time_parts::one2, { 4, 5, 4 } }, 
-            { time_parts::two, { 0, 4, 4 } }, 
-            { time_parts::three, { 4, 4, 4 } }, 
-            { time_parts::four, { 12, 4, 4 } }, 
-            { time_parts::five, { 12, 5, 4 } }, 
-            { time_parts::six, { 7, 5, 5 } }, 
-            { time_parts::seven, { 0, 6, 6 } }, 
-            { time_parts::eight, { 0, 5, 4 } }, 
-            { time_parts::nine, { 8, 4, 4 } }, 
-            { time_parts::ten, { 9, 3, 4 } }, 
-            { time_parts::eleven, { 13, 3, 3 } }, 
-            { time_parts::twelve, { 6, 6, 5 } }, 
             { time_parts::o_clock, { 13, 6, 3 } }, 
           }
         },
         { 1, // EN
-          { } 
+          { 
+            { time_parts::prefix1, { 0, 0, 2 } },
+            { time_parts::prefix2, { 3, 0, 2 } },
+            { time_parts::five_min, { 6, 1, 4 } }, 
+            { time_parts::quarter_prefix, { 10, 0, 1} },
+            { time_parts::quarter, { 1, 2, 7 } }, 
+            { time_parts::ten_min, { 13, 0, 3 } }, 
+            { time_parts::twenty, { 0, 1, 6 } }, 
+            { time_parts::past, { 10, 2, 4 } }, 
+            { time_parts::to, { 13, 2, 2 } },
+            { time_parts::half, { 9, 0, 4 } }, 
+            { time_parts::one1, { 4, 6, 3 } }, 
+            { time_parts::o_clock, { 8, 6, 7 } }, 
+          }
         },
         { 2, // NL
           { } 
@@ -184,6 +185,22 @@ void showTime(const int iHour, const int iMinute)
             { 13, 3, 3 }, // ELF
             { 6, 6, 5 }   // ZWÖLF
           } 
+        },  
+        { 1, // EN
+          { 
+            { 4, 6, 3 },
+            { 4, 3, 3 },
+            { 8, 3, 5 },
+            { 12, 4, 4 },
+            { 0, 3, 4 },
+            { 10, 5, 3 },
+            { 0, 5, 5 },
+            { 5, 5, 5 },
+            { 0, 6, 4 },
+            { 13, 3, 3 },
+            { 0, 4, 6 },
+            { 6, 4, 6 }
+          } 
         }  
       };
 
@@ -212,241 +229,92 @@ void showTime(const int iHour, const int iMinute)
   int hours = iHour;
   int minutes = iMinute;
 
-  // ########################################################### DE:
-  if (langLEDlayout == 0) {  // DE:
+  // ES IST:
+  setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
+  setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
+  if (testPrintTimeTexts == 1) {
+    Serial.println("");
+    Serial.print(hours);
+    Serial.print(":");
+    Serial.print(minutes);
+    Serial.print(" --> ES IST ");
+  }
 
-    // ES IST:
-    setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
-    setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
-    if (testPrintTimeTexts == 1) {
-      Serial.println("");
-      Serial.print(hours);
-      Serial.print(":");
-      Serial.print(minutes);
-      Serial.print(" --> ES IST ");
-    }
+  // FÜNF: (Minuten)
+  if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
+    setLEDtimePart(timeParts, time_parts::five_min, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
+  }
+  // VIERTEL:
+  if ((minDiv == 3) || (minDiv == 9)) {
+    setLEDtimePart(timeParts, time_parts::quarter_prefix, colorRGB);
+    setLEDtimePart(timeParts, time_parts::quarter, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("VIERTEL ");
+  }
+  // ZEHN: (Minuten)
+  if ((minDiv == 2) || (minDiv == 10)) {
+    setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
+  }
+  // ZWANZIG:
+  if ((minDiv == 4) || (minDiv == 8)) {
+    setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("ZWANZIG ");
+  }
+  // NACH:
+  if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 7)) {
+    setLEDtimePart(timeParts, time_parts::past, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("NACH ");
+  }
+  // VOR:
+  if ((minDiv == 5) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
+    setLEDtimePart(timeParts, time_parts::to, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("VOR ");
+  }
+  // HALB:
+  if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
+    setLEDtimePart(timeParts, time_parts::half, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("HALB ");
+  }
 
-    // FÜNF: (Minuten)
-    if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
-      setLEDtimePart(timeParts, time_parts::five_min, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
-    }
-    // VIERTEL:
-    if ((minDiv == 3) || (minDiv == 9)) {
-      setLEDtimePart(timeParts, time_parts::quarter, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("VIERTEL ");
-    }
-    // ZEHN: (Minuten)
-    if ((minDiv == 2) || (minDiv == 10)) {
-      setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
-    }
-    // ZWANZIG:
-    if ((minDiv == 4) || (minDiv == 8)) {
-      setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("ZWANZIG ");
-    }
-    // NACH:
-    if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 7)) {
-      setLEDtimePart(timeParts, time_parts::after, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("NACH ");
-    }
-    // VOR:
-    if ((minDiv == 5) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
-      setLEDtimePart(timeParts, time_parts::before, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("VOR ");
-    }
-    // HALB:
-    if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
-      setLEDtimePart(timeParts, time_parts::half, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("HALB ");
-    }
-
-    //set hour from 1 to 12 (at noon, or midnight)
-    int xHour = (iHour % 12);
-    if (xHour == 0)
-      xHour = 12;
-    // at minute 25 hour needs to be counted up:
-    // fuenf vor halb 2 = 13:25
-    if (iMinute >= 25) {
-      if (xHour == 12)
-        xHour = 1;
-      else
-        xHour++;
-    }
-
-    uint32_t colorRGBForHour = colorRGB;
-    
-    if (RandomColor == 1)
-      colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
-
-    if ((xHour == 1) && (iMinute <= 4))
-    {
-      setLEDtimePart(timeParts, time_parts::one1, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("EIN ");
-    }
+  //set hour from 1 to 12 (at noon, or midnight)
+  int xHour = (iHour % 12);
+  if (xHour == 0)
+    xHour = 12;
+  // at minute 25 hour needs to be counted up:
+  // fuenf vor halb 2 = 13:25
+  if (iMinute >= 25) {
+    if (xHour == 12)
+      xHour = 1;
     else
+      xHour++;
+  }
+
+  uint32_t colorRGBForHour = colorRGB;
+  
+  if (RandomColor == 1)
+    colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
+
+  if ((xHour == 1) && (iMinute <= 4))
+  {
+    setLEDtimePart(timeParts, time_parts::one1, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("EIN ");
+  }
+  else
+  {
+    const auto Index = hoursMap.find(langLEDlayout);
+    if (Index != hoursMap.end())
     {
-      const auto Index = hoursMap.find(langLEDlayout);
-      if (Index != hoursMap.end())
-      {
-        const auto& positionVector = Index->second;
+      const auto& positionVector = Index->second;
 
-        if (xHour < positionVector.size())
-          setLEDcolXY(positionVector[xHour - 1], colorRGB);
-      }
-    }
-
-    if (iMinute < 5) {
-      setLEDtimePart(timeParts, time_parts::o_clock, colorRGB);
-      if (testPrintTimeTexts == 1) Serial.print("UHR ");
+      if (xHour < positionVector.size())
+        setLEDcolXY(positionVector[xHour - 1], colorRGB);
     }
   }
 
-  // ########################################################### EN:
-  if (langLEDlayout == 1) {  // EN:
-
-    // IT IS:
-    setLEDcol(14, 15, colorRGB);
-    setLEDcol(16, 17, colorRGB);  // 2nd row
-    setLEDcol(11, 12, colorRGB);
-    setLEDcol(19, 20, colorRGB);  // 2nd row
-
-    // FIVE: (Minutes)                         // x:05 + x:25 + x:35 + x:55
-    if ((minDiv == 1) || (minDiv == 5) || (minDiv == 7) || (minDiv == 11)) {
-      setLEDcol(38, 41, colorRGB);
-      setLEDcol(54, 57, colorRGB);  // 2nd row
-    }
-    // QUARTER:                                // x:15 + X:45
-    if ((minDiv == 3) || (minDiv == 9)) {
-      setLEDcol(72, 78, colorRGB);
-      setLEDcol(81, 87, colorRGB);  // 2nd row
-    }
-    // A:
-    if ((minDiv == 3) || (minDiv == 9)) {
-      setLEDcol(5, 5, colorRGB);
-      setLEDcol(26, 26, colorRGB);  // 2nd row
-    }
-    // TEN: (Minutes)                          // x:10 + x:50
-    if ((minDiv == 2) || (minDiv == 10)) {
-      setLEDcol(0, 2, colorRGB);
-      setLEDcol(29, 31, colorRGB);  // 2nd row
-    }
-    // TWENTY:                                 // x:20 + x:25 + x:35 + x:40
-    if ((minDiv == 4) || (minDiv == 5) || (minDiv == 7) || (minDiv == 8)) {
-      setLEDcol(42, 47, colorRGB);
-      setLEDcol(48, 53, colorRGB);  // 2nd row
-    }
-    // PAST:                                   // x:05 + x:10 + x:15 + x:20 + x:25 + x:30
-    if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 5) || (minDiv == 6)) {
-      setLEDcol(66, 69, colorRGB);
-      setLEDcol(90, 93, colorRGB);  // 2nd row
-    }
-    // TO:                                     // x:35 + x:40 + x:45 + x:50 + x:55
-    if ((minDiv == 7) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
-      setLEDcol(65, 66, colorRGB);
-      setLEDcol(93, 94, colorRGB);  // 2nd row
-    }
-    // HALF:                                   // x:30
-    if ((minDiv == 6)) {
-      setLEDcol(3, 6, colorRGB);
-      setLEDcol(25, 28, colorRGB);  // 2nd row
-    }
-
-
-    //set hour from 1 to 12 (at noon, or midnight)
-    int xHour = (iHour % 12);
-    if (xHour == 0)
-      xHour = 12;
-    // at minute 35 hour needs to be counted up:
-    // Twenty five to two = 13:35
-    if (iMinute >= 35) {
-      if (xHour == 12)
-        xHour = 1;
-      else
-        xHour++;
-    }
-
-
-    switch (xHour) {
-      case 1:
-        {
-          setLEDcol(201, 203, colorRGB);  // ONE
-          setLEDcol(212, 214, colorRGB);  // 2nd row
-          break;
-        }
-      case 2:
-        {
-          setLEDcol(105, 107, colorRGB);  // TWO
-          setLEDcol(116, 118, colorRGB);  // 2nd row
-          break;
-        }
-      case 3:
-        {
-          setLEDcol(99, 103, colorRGB);   // THREE
-          setLEDcol(120, 124, colorRGB);  // 2nd row
-          break;
-        }
-      case 4:
-        {
-          setLEDcol(128, 131, colorRGB);  // FOUR
-          setLEDcol(156, 159, colorRGB);  // 2nd row
-          break;
-        }
-      case 5:
-        {
-          setLEDcol(108, 111, colorRGB);  // FIVE
-          setLEDcol(112, 115, colorRGB);  // 2nd row
-          break;
-        }
-      case 6:
-        {
-          setLEDcol(163, 165, colorRGB);  // SIX
-          setLEDcol(186, 188, colorRGB);  // 2nd row
-          break;
-        }
-      case 7:
-        {
-          setLEDcol(171, 175, colorRGB);  // SEVEN
-          setLEDcol(176, 180, colorRGB);  // 2nd row
-          break;
-        }
-      case 8:
-        {
-          setLEDcol(166, 170, colorRGB);  // EIGHT
-          setLEDcol(181, 185, colorRGB);  // 2nd row
-          break;
-        }
-      case 9:
-        {
-          setLEDcol(204, 207, colorRGB);  // NINE
-          setLEDcol(208, 211, colorRGB);  // 2nd row
-          break;
-        }
-      case 10:
-        {
-          setLEDcol(96, 98, colorRGB);    // TEN
-          setLEDcol(125, 127, colorRGB);  // 2nd row
-          break;
-        }
-      case 11:
-        {
-          setLEDcol(138, 143, colorRGB);  // ELEVEN
-          setLEDcol(144, 149, colorRGB);  // 2nd row
-          break;
-        }
-      case 12:
-        {
-          setLEDcol(132, 137, colorRGB);  // TWELVE
-          setLEDcol(150, 155, colorRGB);  // 2nd row
-          break;
-        }
-    }
-
-    if (iMinute < 5) {
-      setLEDcol(193, 199, colorRGB);  // O'CLOCK
-      setLEDcol(216, 222, colorRGB);  // 2nd row
-    }
+  if (iMinute < 5) {
+    setLEDtimePart(timeParts, time_parts::o_clock, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("UHR ");
   }
 
   // ########################################################### NL:
