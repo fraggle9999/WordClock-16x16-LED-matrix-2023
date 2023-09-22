@@ -144,7 +144,18 @@ void showTime(const int iHour, const int iMinute)
           }
         },
         { 2, // NL
-          { } 
+          { 
+            { time_parts::prefix1, { 0, 0, 3 } },
+            { time_parts::prefix2, { 4, 0, 2 } },
+            { time_parts::five_min, { 12, 0, 4 } }, 
+            { time_parts::quarter, { 5, 1, 5 } }, 
+            { time_parts::ten_min, { 0, 1, 4 } }, 
+            { time_parts::past, { 10, 2, 4 } }, 
+            { time_parts::to, { 13, 2, 2 } },
+            { time_parts::half, { 9, 0, 4 } }, 
+            { time_parts::one1, { 4, 6, 3 } }, 
+            { time_parts::o_clock, { 8, 6, 7 } }, 
+          }
         },
         { 3, // SWE
           { } 
@@ -229,6 +240,9 @@ void showTime(const int iHour, const int iMinute)
   int hours = iHour;
   int minutes = iMinute;
 
+  const auto Index20 = timeParts.find(time_parts::twenty);
+  const bool twenty_defined = (Index20 != timeParts.end());
+
   // ES IST:
   setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
   setLEDtimePart(timeParts, time_parts::prefix2, colorRGB);
@@ -258,7 +272,18 @@ void showTime(const int iHour, const int iMinute)
   }
   // ZWANZIG:
   if ((minDiv == 4) || (minDiv == 8)) {
-    setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
+    // test, if twenty is defined, otherwise use ten to/ten after
+    if (twenty_defined)
+      setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
+    else
+    {
+      setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
+      if (minDiv == 4)
+        setLEDtimePart(timeParts, time_parts::to, colorRGB);
+      else
+        setLEDtimePart(timeParts, time_parts::past, colorRGB);
+    }
+
     if (testPrintTimeTexts == 1) Serial.print("ZWANZIG ");
   }
   // NACH:
@@ -272,8 +297,9 @@ void showTime(const int iHour, const int iMinute)
     if (testPrintTimeTexts == 1) Serial.print("VOR ");
   }
   // HALB:
-  if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
-    setLEDtimePart(timeParts, time_parts::half, colorRGB);
+  if ((minDiv == 4) || (minDiv == 8) || (minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
+    if (((minDiv != 4) && (minDiv != 8)) || !twenty_defined)
+      setLEDtimePart(timeParts, time_parts::half, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("HALB ");
   }
 
