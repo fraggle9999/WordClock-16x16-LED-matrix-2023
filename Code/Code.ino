@@ -121,7 +121,7 @@ void setup() {
   strip.show();                           // Init the LEDs --> Set them to OFF
   intensity = intensity_day;              // Set the intenity to day mode for startup
   strip.setBrightness(intensity);         // Set LED brightness
-  circleRound();
+  randomEffect();
   WIFI_SETUP();                           // WiFi login and startup of web services
 }
 
