@@ -111,7 +111,7 @@ struct position_t
   int len;
 };
   
-enum class time_parts { prefix1, prefix2, five_min, quarter_prefix, quarter, ten_min, twenty, past, to, half, one1, o_clock };
+enum class time_parts { prefix1, prefix2, five_min, quarter_prefix, quarter, three_quarters, ten_min, twenty, past, to, half, one1, o_clock };
 
 
 // ###########################################################################################################################################
