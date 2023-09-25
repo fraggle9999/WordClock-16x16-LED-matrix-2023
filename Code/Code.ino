@@ -104,6 +104,12 @@ uint16_t text_colour_time;
 int switchRandomColorID, switchSingleMinutesID;
 bool WiFIsetup = false;
 
+const int max_cols = 16;
+const int max_rows = 8;
+const int effects_delay= 50;
+const uint32_t color_red = strip.Color(255, 0, 0);
+const uint32_t color_black = strip.Color(0, 0, 0);
+
 struct position_t
 {
   int x;
@@ -130,8 +136,11 @@ void setup() {
   strip.show();                           // Init the LEDs --> Set them to OFF
   intensity = intensity_day;              // Set the intenity to day mode for startup
   strip.setBrightness(intensity);         // Set LED brightness
+
   initEffects();
+  delay(200);
   allEffects();
+
   WIFI_SETUP();                           // WiFi login and startup of web services
 }
 

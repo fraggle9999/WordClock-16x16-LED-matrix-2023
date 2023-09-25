@@ -515,7 +515,7 @@ void showTime(const int iHour, const int iMinute)
 
   if (xHour == 1)
   {
-    setLEDtimePart(timeParts, time_parts::one1, colorRGB);
+    setLEDtimePart(timeParts, time_parts::one1, colorRGBForHour);
     if (testPrintTimeTexts == 1) Serial.print("EIN ");
   }
   else
@@ -526,7 +526,7 @@ void showTime(const int iHour, const int iMinute)
       const auto& positionVector = Index->second;
 
       if (xHour < positionVector.size())
-        setLEDcolXY(positionVector[xHour - 1], colorRGB);
+        setLEDcolXY(positionVector[xHour - 1], colorRGBForHour);
     }
   }
 
