@@ -287,7 +287,7 @@ void ShowReset(uint32_t color) {
     case 0:                          // DE:
       setLEDcolXY(5, 4, 2, color);   // RE
       setLEDcolXY(7, 5, 2, color);   // SE
-      setLEDcolXY(11, 6, 2, color);  // T
+      setLEDcolXY(11, 6, 1, color);  // T
       break;
 
     case 1:                          // EN:
