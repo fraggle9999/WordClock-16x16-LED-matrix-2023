@@ -107,6 +107,16 @@ void setLEDtimePart(const std::map<time_parts, position_t>& timeParts, const tim
 
 
 // ###########################################################################################################################################
+// # Check if the map contains a timepart:
+// ###########################################################################################################################################
+bool containsTimePart(const std::map<time_parts, position_t>& timePartsMap, const time_parts tp)
+{
+  const auto Index = timePartsMap.find(tp);
+  return Index != timePartsMap.end();
+}
+
+
+// ###########################################################################################################################################
 // # Display time function:
 // ###########################################################################################################################################
 void showTime(const int iHour, const int iMinute)
@@ -423,11 +433,9 @@ void showTime(const int iHour, const int iMinute)
   int hours = iHour;
   int minutes = iMinute;
 
-  const auto Index20 = timeParts.find(time_parts::twenty);
-  const bool twenty_defined = (Index20 != timeParts.end());
-
-  const auto Index45 = timeParts.find(time_parts::three_quarters);
-  const bool three_quarters_defined = (Index45 != timeParts.end());
+  const auto twenty_defined = containsTimePart(timeParts, time_parts::twenty);
+  const auto three_quarters_defined = containsTimePart(timeParts, time_parts::three_quarters);
+  const auto one1_defined = containsTimePart(timeParts, time_parts::one1);
 
   // set hour from 1 to 12 (at noon, or midnight)
   int xHour = (iHour % 12);
@@ -513,7 +521,7 @@ void showTime(const int iHour, const int iMinute)
   if (RandomColor == 1)
     colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
 
-  if (xHour == 1)
+  if (one1_defined && (xHour == 1) && (iMinute < 5))
   {
     setLEDtimePart(timeParts, time_parts::one1, colorRGBForHour);
     if (testPrintTimeTexts == 1) Serial.print("EIN ");
@@ -525,7 +533,7 @@ void showTime(const int iHour, const int iMinute)
     {
       const auto& positionVector = Index->second;
 
-      if (xHour < positionVector.size())
+      if (xHour <= positionVector.size())
         setLEDcolXY(positionVector[xHour - 1], colorRGBForHour);
     }
   }
