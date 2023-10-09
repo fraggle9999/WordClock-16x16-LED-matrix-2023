@@ -3,6 +3,26 @@ static int lastHourSet = -1;
 static int lastMinutesSet = -1;
 
 // ###########################################################################################################################################
+// # Get a random color, avoid black and very light colors
+// ###########################################################################################################################################
+uint32_t getRamdomColor() {
+  int redVal = 0;
+  int greenVal = 0;
+  int blueVal = 0;
+  
+  while (((redVal == 0) && (greenVal == 0) && (blueVal == 0)) || // avoid black color
+         (redVal + greenVal + blueVal < 64)) // avoid very light colors
+  {
+    redVal = random(255);
+    greenVal = random(255);
+    blueVal = random(255);
+  }
+  
+  return strip.Color(redVal, greenVal, blueVal);
+}
+
+
+// ###########################################################################################################################################
 // # Display hours and minutes text function:
 // ###########################################################################################################################################
 void show_time(int hours, int minutes) {
@@ -56,21 +76,7 @@ void show_time(int hours, int minutes) {
   if (RandomColor == 0) 
     colorRGB = strip.Color(redVal_time, greenVal_time, blueVal_time);
   else
-  {
-    // avoid black color
-    int redVal = 0;
-    int greenVal = 0;
-    int blueVal = 0;
-    
-    while ((redVal == 0) && (greenVal == 0) && (blueVal == 0))
-    {
-      redVal = random(255);
-      greenVal = random(255);
-      blueVal = random(255);
-    }
-    
-    colorRGB = strip.Color(redVal, greenVal, blueVal);
-  }
+    colorRGB = getRandomColor();
 
   // Display time:
   iHour = hours;
