@@ -106,7 +106,7 @@ bool WiFIsetup = false;
 
 const int max_cols = 16;
 const int max_rows = 8;
-const int effects_delay= 50;
+const int effects_delay = 50;
 const uint32_t color_red = strip.Color(255, 0, 0);
 const uint32_t color_black = strip.Color(0, 0, 0);
 

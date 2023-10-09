@@ -24,7 +24,7 @@ void randomEffect() {
 void circleEffect() {
   // top from left to right
   for (int x = 0; x < max_cols; ++x) {
-    setLEDcolXY(x, 0, 1, color_red);
+    setLEDcolXY(x, 0, 1, getRandomColor());
     strip.show();
     delay(effects_delay / 2);
     setLEDcolXY(x, 0, 1, color_black);
@@ -33,7 +33,7 @@ void circleEffect() {
 
   // right from top to bottom (starting in second row, ending in second but last row)
   for (int y = 1; y < max_rows - 1; ++y) {
-    setLEDcolXY(max_cols - 1, y, 1, color_red);
+    setLEDcolXY(max_cols - 1, y, 1, getRandomColor());
     strip.show();
     delay(effects_delay / 2);
     setLEDcolXY(max_cols - 1, y, 1, color_black);
@@ -42,7 +42,7 @@ void circleEffect() {
 
   // bottom from right to left
   for (int x = max_cols - 1; x >= 0; --x) {
-    setLEDcolXY(x, max_rows - 1, 1, color_red);
+    setLEDcolXY(x, max_rows - 1, 1, getRandomColor());
     strip.show();
     delay(effects_delay / 2);
     setLEDcolXY(x, max_rows - 1, 1, color_black);
@@ -51,7 +51,7 @@ void circleEffect() {
 
   // left from bottom to top (starting in second but last row, ending in second row)
   for (int y = max_rows - 2; y > 0; --y) {
-    setLEDcolXY(0, y, 1, color_red);
+    setLEDcolXY(0, y, 1, getRandomColor());
     strip.show();
     delay(effects_delay / 2);
     setLEDcolXY(0, y, 1, color_black);
@@ -67,7 +67,7 @@ void circleEffect() {
 // ###########################################################################################################################################
 void horizontalLineEffect() {
   for (int y = 0; y < max_rows; ++y) {
-    setLEDcolXY(0, y, max_cols, color_red);
+    setLEDcolXY(0, y, max_cols, getRandomColor());
     strip.show();
     delay(effects_delay);
     setLEDcolXY(0, y, max_cols, color_black);
@@ -110,7 +110,7 @@ void explosionEffect() {
   float factor = max_rows / max_cols; // < 1
   while ((start_x >= 0) && (end_x < max_cols) && (start_y >= 0) && (end_y < max_rows))
   {
-    drawRectangle(start_x, start_y, end_x, end_y, color_red);
+    drawRectangle(start_x, start_y, end_x, end_y, getRandomColor());
     delay(effects_delay);
     drawRectangle(start_x, start_y, end_x, end_y, color_black);
     delay(effects_delay);
