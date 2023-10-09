@@ -353,9 +353,9 @@ void ShowReset(uint32_t color) {
 // ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with color value:
 // ###########################################################################################################################################
-void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
+void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color, const int CharDelay = 0) {
   if (ledNrFrom > ledNrTo) {
-    setLEDcol(ledNrTo, ledNrFrom, color);  // Sets LED numbers in correct order
+    setLEDcol(ledNrTo, ledNrFrom, color, CharDelay);  // Sets LED numbers in correct order
   } else {
     /*
     Serial.print("setLEDcol: from ");
@@ -368,7 +368,10 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color) {
 
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
+      {
         strip.setPixelColor(i, color);
+        delay(CharDelay);
+      }
     }
   }
 }
@@ -386,7 +389,7 @@ void coords2Pixel(int coordX, int coordY, int& firstRow, int& secondRow) {
 // ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
-void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
+void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color, const int CharDelay = 0) {
   /*
   Serial.print("setLEDcolXY: X = ");
   Serial.print(coordX);
@@ -405,17 +408,17 @@ void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color) {
   Serial.println(secondRow);
 */
 
-  setLEDcol(firstRow, firstRow - numCols + 1, color);  // firstRow ist von rechts nach links numeriert
-  setLEDcol(secondRow, secondRow + numCols - 1, color);
+  setLEDcol(firstRow, firstRow - numCols + 1, color, CharDelay);  // firstRow ist von rechts nach links numeriert
+  setLEDcol(secondRow, secondRow + numCols - 1, color, CharDelay);
 }
 
 
 // ###########################################################################################################################################
 // # Update the display / time on it:
 // ###########################################################################################################################################
-void setLEDcolXY(const position_t& p, uint32_t color)
+void setLEDcolXY(const position_t& p, uint32_t color, const int CharDelay = 0)
 {
-  setLEDcolXY(p.x, p.y, p.len, color);
+  setLEDcolXY(p.x, p.y, p.len, color, CharDelay);
 }
 
 

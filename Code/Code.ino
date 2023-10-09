@@ -108,6 +108,7 @@ bool WiFIsetup = false;
 int FixedHourColor = 1;
 int FixedMinuteColors = 1;
 int TextAnimation = 1;
+int AnimationDelay = 20;
 
 const int max_cols = 16;
 const int max_rows = 8;

@@ -108,7 +108,7 @@ void setLEDtimePart(const std::map<time_parts, position_t>& timeParts, const tim
   if (Index == timeParts.end())
     return;
 
-  setLEDcolXY(Index->second, color);
+  setLEDcolXY(Index->second, color, AnimationDelay);
 }
 
 
@@ -540,7 +540,7 @@ void showTime(const int iHour, const int iMinute)
       const auto& positionVector = Index->second;
 
       if (xHour <= positionVector.size())
-        setLEDcolXY(positionVector[xHour - 1], colorRGBForHour);
+        setLEDcolXY(positionVector[xHour - 1], colorRGBForHour, AnimationDelay);
     }
   }
 
