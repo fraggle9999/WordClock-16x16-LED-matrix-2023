@@ -29,7 +29,12 @@ void setLEDcol(int ledNrFrom, int ledNrTo, uint32_t color, const int CharDelay =
       if ((i >= 0) && (i < NUMPIXELS))
       {
         strip.setPixelColor(i, color);
-        delay(CharDelay);
+
+        if (CharDelay > 0)
+        {
+          strip.show();
+          delay(CharDelay);
+        }
       }
     }
   }
