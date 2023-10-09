@@ -886,12 +886,10 @@ void showMinutes(int minutes) {
   
   uint32_t colorRGBforMinute = colorRGB;
   
-  static 
-  
   if (RandomColor == 1)
   {
     // fixed colors for minutes
-    switch (minmod)
+    switch (minMod)
     {
         case 1:
           colorRGBforMinute = strip.Color(255, 0, 0); // red
