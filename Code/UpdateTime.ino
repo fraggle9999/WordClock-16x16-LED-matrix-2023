@@ -524,7 +524,7 @@ void showTime(const int iHour, const int iMinute)
 
   uint32_t colorRGBForHour = colorRGB;
   
-  if (RandomColor == 1)
+  if (FixedHourColor == 1)
     colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
 
   if (one1_defined && (xHour == 1) && (iMinute < 5))
@@ -886,7 +886,7 @@ void showMinutes(int minutes) {
   
   uint32_t colorRGBforMinute = colorRGB;
   
-  if (RandomColor == 1)
+  if (FixedMinuteColors == 1)
   {
     // fixed colors for minutes
     switch (minMod)
