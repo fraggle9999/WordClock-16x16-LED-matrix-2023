@@ -884,7 +884,37 @@ void showMinutes(int minutes) {
       break;
   }
   
+  uint32_t colorRGBforMinute = colorRGB;
+  
+  static 
+  
+  if (RandomColor == 1)
+  {
+    // fixed colors for minutes
+    switch (minmod)
+    {
+        case 1:
+          colorRGBforMinute = strip.Color(255, 0, 0); // red
+          break;
+          
+        case 2:
+          colorRGBforMinute = strip.Color(0, 0, 255); // blue
+          break;
+          
+        case 3:
+          colorRGBforMinute = strip.Color(0, 255, 0); // green
+          break;
+          
+        case 4:
+          colorRGBforMinute = strip.Color(255, 255, 0); // yellow
+          break;
+          
+        default:
+          break;
+    }
+  }
+
   setLEDcolXY(plus_coordX, coordY, 1, colorRGB);
-  setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGB);
+  setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute);
   setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB);
 }
