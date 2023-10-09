@@ -896,7 +896,7 @@ void showMinutes(int minutes) {
           break;
           
         case 2:
-          colorRGBforMinute = strip.Color(0, 0, 255); // blue
+          colorRGBforMinute = strip.Color(255, 255, 255); // white
           break;
           
         case 3:
