@@ -913,7 +913,7 @@ void showMinutes(int minutes) {
     }
   }
 
-  setLEDcolXY(plus_coordX, coordY, 1, colorRGB);
-  setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute, AnimationDelay);
-  setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB);
+  setLEDcolXY(plus_coordX, coordY, 1, colorRGB); // +
+  setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute); // num minutes
+  setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB, AnimationDelay); // "MINUTEN"
 }
