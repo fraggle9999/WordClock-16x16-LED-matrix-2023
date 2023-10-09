@@ -487,9 +487,9 @@ void back_color() {
 // ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED:
 // ###########################################################################################################################################
-void setLED(int ledNrFrom, int ledNrTo, int switchOn) {
+void switchLED(int ledNrFrom, int ledNrTo, int switchOn) {
   if (ledNrFrom > ledNrTo) {
-    setLED(ledNrTo, ledNrFrom, switchOn);  // Sets LED numbers in correct order
+    switchLED(ledNrTo, ledNrFrom, switchOn);  // Sets LED numbers in correct order
   } else {
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
@@ -508,7 +508,7 @@ void setLED(int ledNrFrom, int ledNrTo, int switchOn) {
 // ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with x/y coords:
 // ###########################################################################################################################################
-void setLEDXY(int coordX, int coordY, int numCols, int switchOn) {
+void switchLEDXY(int coordX, int coordY, int numCols, int switchOn) {
   uint32_t color = strip.Color(redVal_time, greenVal_time, blueVal_time);
   if (switchOn == 0)
     color = strip.Color(0, 0, 0);

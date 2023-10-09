@@ -93,9 +93,12 @@ void show_time(int hours, int minutes) {
     iMinute = test_minute;
   }
 
-  if (usesinglemin == 1) showMinutes(iMinute);
-
   showTime(iHour, iMinute);
+
+  if (usesinglemin == 1) 
+    showMinutes(iMinute);
+
+  strip.show();
 }
 
 
@@ -818,8 +821,6 @@ void showTime(const int iHour, const int iMinute)
         }
     }
   }
-
-  strip.show();
 }
   
   
