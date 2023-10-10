@@ -130,7 +130,14 @@ void explosionEffect() {
 void blinkingHour() {
   for (int i = 0; i < 5; ++i)
   {
-    showNumber(iHour, 1, getRandomColor());
+    int segment = 1;
+    uint32_t color = getRandomColor();
+    if (iHour > 9)
+    {
+      showNumber(1, segment, color);
+      ++segment;
+    }
+    showNumber(iHour % 10, segment, color);
     strip.show();
     delay(500);
     ClearDisplay();
