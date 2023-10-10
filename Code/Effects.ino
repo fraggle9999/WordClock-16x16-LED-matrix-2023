@@ -101,13 +101,11 @@ void drawRectangle(int x1, int y1, int x2, int y2, uint32_t color) {
 // ###########################################################################################################################################
 void explosionEffect() {
 
-  int start_x = 7;
-  int end_x = 8;
+  int start_x = 6;
+  int end_x = 9;
   int start_y = 3;
   int end_y = 4;
 
-  // proportional zum Abstand bis zum Rand die Rechtecke vergrößern
-  float factor = max_rows / max_cols; // < 1
   while ((start_x >= 0) && (end_x < max_cols) && (start_y >= 0) && (end_y < max_rows))
   {
     drawRectangle(start_x, start_y, end_x, end_y, getRandomColor());
