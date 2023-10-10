@@ -107,7 +107,6 @@ bool WiFIsetup = false;
 // to be configured and stored
 int FixedHourColor = 1;
 int FixedMinuteColors = 1;
-int TextAnimation = 1;
 int AnimationDelay = 20;
 
 const int max_cols = 16;
