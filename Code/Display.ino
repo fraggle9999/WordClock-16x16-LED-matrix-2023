@@ -93,16 +93,6 @@ void ShowIPaddress() {
   Serial.println("Show current IP-address on the display: " + IpAddress2String(WiFi.localIP()));
   int ipdelay = 2000;
 
-  // Testing the digits:
-  // for (int i = 0; i < 10; i++) {
-  //   ClearDisplay();
-  //   numbers(i, 3);
-  //   numbers(i, 2);
-  //   numbers(i, 1);
-  //   strip.show();
-  //   delay(ipdelay);
-  // }
-
   uint32_t ipColor = strip.Color(255, 0, 0);
 
   for (int octet = 0; octet < 4; ++octet) {
@@ -121,7 +111,7 @@ void ShowIPaddress() {
       Serial.print(" = ");
       Serial.println(DigitValue);
 
-      numbers(DigitValue, digit, ipColor);
+      showNumber(DigitValue, digit, ipColor);
     }
 
     if (octet < 3)                     // nicht beim letzten Wert
@@ -157,7 +147,7 @@ void showCharMatrix(const std::vector<std::string>& number, int coordX, int coor
 // ###########################################################################################################################################
 // # Set the numbers on the display in each single row:
 // ###########################################################################################################################################
-void numbers(int wert, int segment, uint32_t color) {
+void showNumber(int wert, int segment, uint32_t color) {
   static std::vector<std::vector<std::string>> numberVector = {
     { "XXXX",
       "X  X",

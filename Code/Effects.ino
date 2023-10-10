@@ -100,7 +100,6 @@ void drawRectangle(int x1, int y1, int x2, int y2, uint32_t color) {
 // # Show an explosion from the middle to the outer rim
 // ###########################################################################################################################################
 void explosionEffect() {
-
   int start_x = 6;
   int end_x = 9;
   int start_y = 3;
@@ -126,12 +125,32 @@ void explosionEffect() {
 
 
 // ###########################################################################################################################################
+// # Show the actual hour blinking on screen
+// ###########################################################################################################################################
+void blinkingHour() {
+  for (int i = 0; i < 5; ++i)
+  {
+    showNumber(iHour, 1, getRandomColor());
+    strip.show();
+    delay(500);
+    ClearDisplay();
+    strip.show();
+    delay(500);
+  }
+
+  ClearDisplay();
+  strip.show();
+}
+
+
+// ###########################################################################################################################################
 // # Create a list of all effects
 // ###########################################################################################################################################
 void initEffects() {
   effectList.push_back(circleEffect);
   effectList.push_back(horizontalLineEffect);
   effectList.push_back(explosionEffect);
+  effectList.push_back(blinkingHour);
 
   randomSeed(analogRead(0));
 }
