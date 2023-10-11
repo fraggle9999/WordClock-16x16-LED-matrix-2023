@@ -169,10 +169,10 @@ void snake() {
 
     while (x_start != x_end)
     {
-      setLEDcolXY(x_start, y, getRandomColor());
+      setLEDcolXY(x_start, y, 1, getRandomColor());
       strip.show();
       delay(10);
-      setLEDcolXY(x_start, y, color_black);
+      setLEDcolXY(x_start, y, 1, color_black);
       strip.show();
       delay(10);
 
