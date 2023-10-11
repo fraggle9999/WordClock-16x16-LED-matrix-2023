@@ -134,8 +134,8 @@ void blinkingHour() {
     uint32_t color = getRandomColor();
     if (iHour > 9)
     {
-      showNumber(1, segment, color);
-      ++segment;
+      showNumber(iHour / 10, segment, color);
+      --segment;
     }
     showNumber(iHour % 10, segment, color);
     strip.show();
