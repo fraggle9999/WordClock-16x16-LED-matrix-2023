@@ -151,6 +151,25 @@ void blinkingHour() {
 
 
 // ###########################################################################################################################################
+// # Show a snake running from top right down to bottom right
+// ###########################################################################################################################################
+void snake() {
+  for (int i = 0; i < 256; ++i)
+  {
+    strip.setPixelColor(i, getRandomColor());
+    strip.show();
+    delay(20);
+    strip.setPixelColor(i, color_black);
+    strip.show();
+    delay(20);
+  }
+
+  ClearDisplay();
+  strip.show();
+}
+
+
+// ###########################################################################################################################################
 // # Create a list of all effects
 // ###########################################################################################################################################
 void initEffects() {
@@ -158,6 +177,7 @@ void initEffects() {
   effectList.push_back(horizontalLineEffect);
   effectList.push_back(explosionEffect);
   effectList.push_back(blinkingHour);
+  effectList.push_back(snake);
 
   randomSeed(analogRead(0));
 }
