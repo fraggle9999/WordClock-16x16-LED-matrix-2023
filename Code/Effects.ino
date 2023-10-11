@@ -154,7 +154,7 @@ void blinkingHour() {
 // # Show a snake running from top right down to bottom right
 // ###########################################################################################################################################
 void snake() {
-  for (y = 0; y < 8; ++y)
+  for (int y = 0; y < 8; ++y)
   {
     int x_start = 0;
     int x_end = 16;
@@ -172,7 +172,7 @@ void snake() {
       setLEDcolXY(x_start, y, getRandomColor());
       strip.show();
       delay(10);
-      strip.setLEDcolXY(x_start, y, color_black);
+      setLEDcolXY(x_start, y, color_black);
       strip.show();
       delay(10);
 
