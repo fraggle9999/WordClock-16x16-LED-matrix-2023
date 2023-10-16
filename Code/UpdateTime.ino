@@ -1,6 +1,7 @@
 uint32_t colorRGB;
 static int lastHourSet = -1;
 static int lastMinutesSet = -1;
+static int lastSecondSet = -1;
 
 // ###########################################################################################################################################
 // # Get a random color, avoid black and very light colors
@@ -23,9 +24,46 @@ uint32_t getRandomColor() {
 
 
 // ###########################################################################################################################################
+// # Do something every second:
+// ###########################################################################################################################################
+void handleWithSeconds() {
+  int currentSecond = iSecond;
+
+  if (currentSecond == lastSecondSet)
+    return;
+
+  lastSecondSet = currentSecond;
+
+  int coordY = -1;
+  int plus_coordX = -1;
+  int minuteVal_offsetX = -1;
+  int minuteText_coordX = -1;
+  int minuteText_len = -1;
+
+  getMinuteCoordsAndOffsets(0, plus_coordX, coordY, minuteVal_offsetX, minuteText_coordX, minuteText_len);
+  
+  uint32_t c = color_green;
+  if (currentSecond % 2 == 0)
+    c = color_black;
+
+  setLEDcolXY(plus_coordX, coordY, 1, c);
+
+  if ((currentSecond >= 56) && (currentSecond <= 59))
+  {
+    // shut off all minute values
+    switchLEDXY(minuteVal_offsetX + 1, coordY, 4, 0);
+
+    // set remaining seconds as actual minute value
+    setLEDcolXY(minuteVal_offsetX + (60 - currentSecond), coordY, 1, color_green);
+  }
+}
+
+
+// ###########################################################################################################################################
 // # Display hours and minutes text function:
 // ###########################################################################################################################################
 void show_time(int hours, int minutes) {
+  handleWithSeconds();
 
   if ((lastHourSet == hours && lastMinutesSet == minutes) && updatenow == false) {  // Reduce display updates to new minutes and new config updates
     return;
@@ -825,21 +863,10 @@ void showTime(const int iHour, const int iMinute)
   
   
 // ###########################################################################################################################################
-// # Display extra minutes function:
+// # Get coords and offsets for showing minutes:
 // ###########################################################################################################################################
-void showMinutes(int minutes) {
-  int minMod = (minutes % 5);
-  if (minMod == 0)
-    return;
-  
-  // Serial.println(minMod);
-  
-  int coordY = 7;
-
-  int plus_coordX = -1;
-  int minuteVal_offsetX = -1;
-  int minuteText_coordX = -1;
-  int minuteText_len = -1;
+void getMinuteCoordsAndOffsets(const int minMod, int& plus_coordX, int& coordY, int& minuteVal_offsetX, int& minuteText_coordX, int& minuteText_len) {
+  coordY = 7;
 
   switch (langLEDlayout)
   {
@@ -884,6 +911,26 @@ void showMinutes(int minutes) {
       minuteText_len = 1;
       break;
   }
+}
+
+
+// ###########################################################################################################################################
+// # Display extra minutes function:
+// ###########################################################################################################################################
+void showMinutes(int minutes) {
+  int minMod = (minutes % 5);
+  if (minMod == 0)
+    return;
+  
+  // Serial.println(minMod);
+  
+  int plus_coordX = -1;
+  int coordY = -1;
+  int minuteVal_offsetX = -1;
+  int minuteText_coordX = -1;
+  int minuteText_len = -1;
+
+  getMinuteCoordsAndOffsets(minMod, plus_coordX, coordY, minuteVal_offsetX, minuteText_coordX, minuteText_len);
   
   uint32_t colorRGBforMinute = colorRGB;
   
