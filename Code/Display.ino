@@ -1,3 +1,169 @@
+static std::vector<std::vector<std::string>> numberVector = {
+  { "XXXX",
+    "X  X",
+    "X  X",
+    "X  X",
+    "XXXX" },
+
+  { "   X",
+    "   X",
+    "   X",
+    "   X",
+    "   X" },
+
+  { "XXXX",
+    "   X",
+    "XXXX",
+    "X",
+    "XXXX" },
+
+  { "XXXX",
+    "   X",
+    "XXXX",
+    "   X",
+    "XXXX" },
+
+  { "X  X",
+    "X  X",
+    "XXXX",
+    "   X",
+    "   X" },
+
+  { "XXXX",
+    "X",
+    "XXXX",
+    "   X",
+    "XXXX" },
+
+  { "XXXX",
+    "X",
+    "XXXX",
+    "X  X",
+    "XXXX" },
+
+  { "XXXX",
+    "   X",
+    "   X",
+    "   X",
+    "   X" },
+
+  { "XXXX",
+    "X  X",
+    "XXXX",
+    "X  X",
+    "XXXX" },
+
+  { "XXXX",
+    "X  X",
+    "XXXX",
+    "   X",
+    "XXXX" }
+};
+
+static std::map<char, std::vector<std::string>> charMap = 
+  { { 'W', { "X    X",
+             "X    X",
+             "X XX X",
+             "X XX X",
+             "XXXXXX" } },
+
+    { 'o', { "",
+             "XXXXXX",
+             "X    X",
+             "X    X",
+             "XXXXXX" } },
+
+    { 'r', { "",
+             "XXXXXX",
+             "X",
+             "X",
+             "X" } },
+
+    { 'd', { "     X",
+             "     X",
+             "XXXXXX",
+             "X    X",
+             "XXXXXX" } },
+
+    { 'C', { "XXXXXX",
+             "X",
+             "X",
+             "X",
+             "XXXXXX" } },
+
+    { 'l', { "X",
+             "X",
+             "X",
+             "X",
+             "X" } },
+
+    { 'c', { "",
+             "XXXXX",
+             "X",
+             "X",
+             "XXXXX" } },
+
+    { 'k', { "X",
+             "X  X",
+             "XXX",
+             "X  X",
+             "X   X" } },
+
+    { 'S', { " XXXX",
+             "X",
+             " XXXX",
+             "     X",
+             " XXXX" } },
+
+    { 'E', { "XXXXXX",
+             "X",
+             "XXXX",
+             "X",
+             "XXXXXX" } },
+
+    { 'T', { "XXXXXX",
+             "  XX",
+             "  XX",
+             "  XX",
+             "  XX" } },
+
+    { 'I', { " XXXX",
+             "  XX",
+             "  XX",
+             "  XX",
+             " XXXX" } },
+
+    { 'F', { "XXXXXX",
+             "X",
+             "XXXX",
+             "X",
+             "X" } },
+
+    { 'U', { "X    X",
+             "X    X",
+             "X    X",
+             "X    X",
+             " XXXX" } },
+
+    { 'P', { "XXXXX",
+             "X    X",
+             "XXXXX",
+             "X",
+             "X" } },
+
+    { 'D', { "XXXX",
+             "X   X",
+             "X    X",
+             "X   X",
+             "XXXX" } },
+
+    { 'A', { "  XX",
+             " X  X",
+             "XXXXXX",
+             "X    X",
+             "X    X" } }
+  };
+
 // ###########################################################################################################################################
 // # Clear the display:
 // ###########################################################################################################################################
@@ -148,68 +314,6 @@ void showCharMatrix(const std::vector<std::string>& number, int coordX, int coor
 // # Set the numbers on the display in each single row:
 // ###########################################################################################################################################
 void showNumber(int wert, int segment, uint32_t color) {
-  static std::vector<std::vector<std::string>> numberVector = {
-    { "XXXX",
-      "X  X",
-      "X  X",
-      "X  X",
-      "XXXX" },
-
-    { "   X",
-      "   X",
-      "   X",
-      "   X",
-      "   X" },
-
-    { "XXXX",
-      "   X",
-      "XXXX",
-      "X",
-      "XXXX" },
-
-    { "XXXX",
-      "   X",
-      "XXXX",
-      "   X",
-      "XXXX" },
-
-    { "X  X",
-      "X  X",
-      "XXXX",
-      "   X",
-      "   X" },
-
-    { "XXXX",
-      "X",
-      "XXXX",
-      "   X",
-      "XXXX" },
-
-    { "XXXX",
-      "X",
-      "XXXX",
-      "X  X",
-      "XXXX" },
-
-    { "XXXX",
-      "   X",
-      "   X",
-      "   X",
-      "   X" },
-
-    { "XXXX",
-      "X  X",
-      "XXXX",
-      "X  X",
-      "XXXX" },
-
-    { "XXXX",
-      "X  X",
-      "XXXX",
-      "   X",
-      "XXXX" }
-  };
-
   showCharMatrix(numberVector[wert], (2 - segment) * 5, 1, color);
 }
 
@@ -219,110 +323,6 @@ void showNumber(int wert, int segment, uint32_t color) {
 // ###########################################################################################################################################
 void showChar(char letter, int wait, uint32_t c) {
   ClearDisplay();
-
-  static std::map<char, std::vector<std::string>> charMap = 
-    { { 'W', { "X    X",
-               "X    X",
-               "X XX X",
-               "X XX X",
-               "XXXXXX" } },
-
-      { 'o', { "",
-               "XXXXXX",
-               "X    X",
-               "X    X",
-               "XXXXXX" } },
-
-      { 'r', { "",
-               "XXXXXX",
-               "X",
-               "X",
-               "X" } },
-
-      { 'd', { "     X",
-               "     X",
-               "XXXXXX",
-               "X    X",
-               "XXXXXX" } },
-
-      { 'C', { "XXXXXX",
-               "X",
-               "X",
-               "X",
-               "XXXXXX" } },
-
-      { 'l', { "X",
-               "X",
-               "X",
-               "X",
-               "X" } },
-
-      { 'c', { "",
-               "XXXXX",
-               "X",
-               "X",
-               "XXXXX" } },
-
-      { 'k', { "X",
-               "X  X",
-               "XXX",
-               "X  X",
-               "X   X" } },
-
-      { 'S', { " XXXX",
-               "X",
-               " XXXX",
-               "     X",
-               " XXXX" } },
-
-      { 'E', { "XXXXXX",
-               "X",
-               "XXXX",
-               "X",
-               "XXXXXX" } },
-
-      { 'T', { "XXXXXX",
-               "  XX",
-               "  XX",
-               "  XX",
-               "  XX" } },
-
-      { 'I', { " XXXX",
-               "  XX",
-               "  XX",
-               "  XX",
-               " XXXX" } },
-
-      { 'F', { "XXXXXX",
-               "X",
-               "XXXX",
-               "X",
-               "X" } },
-
-      { 'U', { "X    X",
-               "X    X",
-               "X    X",
-               "X    X",
-               " XXXX" } },
-
-      { 'P', { "XXXXX",
-               "X    X",
-               "XXXXX",
-               "X",
-               "X" } },
-
-      { 'D', { "XXXX",
-               "X   X",
-               "X    X",
-               "X   X",
-               "XXXX" } },
-
-      { 'A', { "  XX",
-               " X  X",
-               "XXXXXX",
-               "X    X",
-               "X    X" } }
-    };
 
   const auto Index = charMap.find(letter);
   if (Index != charMap.end())

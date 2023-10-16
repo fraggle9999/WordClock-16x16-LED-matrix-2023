@@ -115,24 +115,14 @@ void buttonUpdate(Control* sender, int type, void* param) {
     int32_t c = strip.Color(0, 0, 255);
     int TextWait = 500;
     showText("UPDATE", TextWait, c);
-    switchLED(0, 0, 1);
-    switchLED(31, 31, 1);  // 2nd row
-    switchLED(15, 15, 1);
-    switchLED(16, 16, 1);  // 2nd row
-    switchLED(239, 239, 1);
-    switchLED(240, 240, 1);  // 2nd row
-    switchLED(224, 224, 1);
-    switchLED(255, 255, 1);  // 2nd row
-    int myArray[50];
-    memset(myArray, 0, sizeof(myArray));
-    int myArray2[] = { 42, 53, 74, 85, 106, 117, 138, 149, 170, 181, 169, 182, 183, 168, 167, 184, 166, 185, 186, 165, 154, 133, 122, 101, 90, 69, 58, 37 };  // U
-    memcpy(myArray, myArray2, sizeof(myArray2));
-    for (int element : myArray) {
-      if (element != 0) {
-        strip.setPixelColor(element, c);
-      }
-    }
+    switchLEDXY(0, 0, 1, 1); // top left
+    switchLEDXY(15, 0, 1, 1); // top right
+    switchLEDXY(0, 7, 1, 1); // bottom left
+    switchLEDXY(15, 7, 1, 1); // bottom right
+    
+    showCharMatrix(charMap['U'], 5, 2, c);
     strip.show();
+
     Serial.println("Status: Update request");
   }
 }
