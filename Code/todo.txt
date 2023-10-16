@@ -1,0 +1,2 @@
+- show time in format hh:mm by scrolling from right to left (at ca. sec. 30)
+- countdown to full hour (4, 3, 2, 1)
