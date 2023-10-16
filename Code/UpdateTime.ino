@@ -527,8 +527,8 @@ void showTime(const int iHour, const int iMinute)
 
   uint32_t colorRGBForHour = colorRGB;
   
-  if (FixedHourColor == 1)
-    colorRGBForHour = strip.Color(255, 0, 0); // hour always in red
+  if (UseFixedHourColor == 1)
+    colorRGBForHour = strip.Color(FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal);
 
   if (one1_defined && (xHour == 1) && (iMinute < 5))
   {
@@ -887,31 +887,9 @@ void showMinutes(int minutes) {
   
   uint32_t colorRGBforMinute = colorRGB;
   
-  if (FixedMinuteColors == 1)
-  {
+  if (UseFixedMinuteColors == 1)
     // fixed colors for minutes
-    switch (minMod)
-    {
-        case 1:
-          colorRGBforMinute = strip.Color(255, 0, 0); // red
-          break;
-          
-        case 2:
-          colorRGBforMinute = strip.Color(255, 255, 255); // white
-          break;
-          
-        case 3:
-          colorRGBforMinute = strip.Color(0, 255, 0); // green
-          break;
-          
-        case 4:
-          colorRGBforMinute = strip.Color(255, 255, 0); // yellow
-          break;
-          
-        default:
-          break;
-    }
-  }
+    colorRGBforMinute = strip.Color(FixedMinuteColor_redVal[minMod - 1], FixedMinuteColor_greenVal[minMod - 1], FixedMinuteColor_blueVal[minMod - 1]);
 
   setLEDcolXY(plus_coordX, coordY, 1, colorRGB); // +
   setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute); // num minutes

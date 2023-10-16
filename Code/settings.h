@@ -87,6 +87,17 @@ int usenightmode_default = 1;     // Use the night mode to reduce LED intensity 
 int day_time_start_default = 7;   // Define day mode start --> time before is then night mode if used
 int day_time_stop_default = 22;   // Define day mode end --> time after is then night mode if used
 
+int UseFixedHourColor_default = 1;
+int FixedHourColor_redVal_default = 255; 
+int FixedHourColor_greenVal_default = 0; 
+int FixedHourColor_blueVal_default = 0; 
+
+int UseFixedMinuteColors_default = 1;
+int FixedMinuteColor_redVal_default[4] = { 255, 255, 0, 255 }; 
+int FixedMinuteColor_greenVal_default[4] = { 0, 255, 255, 255 }; 
+int FixedMinuteColor_blueVal_default[4] = { 0, 255, 0, 0 }; 
+
+int AnimationDelay_default = 20;
 
 // ###########################################################################################################################################
 // # Various default settings:

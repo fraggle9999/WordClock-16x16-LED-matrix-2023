@@ -19,6 +19,23 @@ void getFlashValues() {
   useStartupText = preferences.getUInt("useStartupText", useStartupText_default);
   usesinglemin = preferences.getUInt("usesinglemin", usesinglemin_default);
   RandomColor = preferences.getUInt("RandomColor", RandomColor_default);
+
+  UseFixedHourColor = preferences.getUInt("UseFixedHourColor", UseFixedHourColor_default);
+  FixedHourColor_redVal = preferences.getUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
+  FixedHourColor_greenVal = preferences.getUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
+  FixedHourColor_blueVal = preferences.getUInt("FixedHourColor_blueVal", FixedHourColor_blueVal_default);
+
+  UseFixedMinuteColors = preferences.getUInt("UseFixedMinuteColors", UseFixedMinuteColors_default);
+  for (int i = 0; i < 4; ++i)
+  {
+    std::string Prefix = "FixedMinuteColor" + std::to_string(i);
+    FixedMinuteColor_redVal[i] = preferences.getUInt(std::string(Prefix + "_redVal").c_str(), FixedMinuteColor_redVal_default[i]); 
+    FixedMinuteColor_greenVal[i] = preferences.getUInt(std::string(Prefix + "_greenVal").c_str(), FixedMinuteColor_greenVal_default[i]); 
+    FixedMinuteColor_blueVal[i] = preferences.getUInt(std::string(Prefix + "_blueVal").c_str(), FixedMinuteColor_blueVal_default[i]);  
+  }
+
+  AnimationDelay = preferences.getUInt("AnimationDelay", AnimationDelay_default);
+  
   if (debugtexts == 1) Serial.println("Read settings from flash: END");
 }
 
@@ -45,6 +62,23 @@ void setFlashValues() {
   preferences.putUInt("useStartupText", useStartupText);
   preferences.putUInt("usesinglemin", usesinglemin);
   preferences.putUInt("RandomColor", RandomColor);
+
+  preferences.putUInt("UseFixedHourColor", UseFixedHourColor);
+  preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal);
+  preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal);
+  preferences.putUInt("FixedHourColor_blueVal", FixedHourColor_blueVal);
+
+  preferences.putUInt("UseFixedMinuteColors", UseFixedMinuteColors);
+  for (int i = 0; i < 4; ++i)
+  {
+    std::string Prefix = "FixedMinuteColor" + std::to_string(i);
+    preferences.putUInt(std::string(Prefix + "_redVal").c_str(), FixedMinuteColor_redVal[i]); 
+    preferences.putUInt(std::string(Prefix + "_greenVal").c_str(), FixedMinuteColor_greenVal[i]); 
+    preferences.putUInt(std::string(Prefix + "_blueVal").c_str(), FixedMinuteColor_blueVal[i]); 
+  }
+
+  preferences.putUInt("AnimationDelay", AnimationDelay);
+
   if (debugtexts == 1) Serial.println("Write settings to flash: END");
   if (usenightmode == 1) {
     if ((iHour >= day_time_start) && (iHour <= day_time_stop)) {
