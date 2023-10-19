@@ -56,6 +56,8 @@ void handleWithSeconds() {
     // set remaining seconds as actual minute value
     setLEDcolXY(minuteVal_offsetX + (60 - currentSecond), coordY, 1, color_green);
   }
+
+  strip.show();
 }
 
 
