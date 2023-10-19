@@ -26,7 +26,7 @@ uint32_t getRandomColor() {
 // ###########################################################################################################################################
 // # Do something every second:
 // ###########################################################################################################################################
-void handleWithSeconds() {
+void handleWithSeconds(const int hours, const int minutes) {
   int currentSecond = iSecond;
 
   if (currentSecond == lastSecondSet)
@@ -34,6 +34,7 @@ void handleWithSeconds() {
 
   lastSecondSet = currentSecond;
 
+  // show blinking plus sign every second
   int coordY = -1;
   int plus_coordX = -1;
   int minuteVal_offsetX = -1;
@@ -48,6 +49,7 @@ void handleWithSeconds() {
 
   setLEDcolXY(plus_coordX, coordY, 1, c);
 
+  // show countdown to next minute
   if ((currentSecond >= 56) && (currentSecond <= 59))
   {
     // shut off all minute values
@@ -65,7 +67,7 @@ void handleWithSeconds() {
 // # Display hours and minutes text function:
 // ###########################################################################################################################################
 void show_time(int hours, int minutes) {
-  handleWithSeconds();
+  handleWithSeconds(hours, minutes);
 
   if ((lastHourSet == hours && lastMinutesSet == minutes) && updatenow == false) {  // Reduce display updates to new minutes and new config updates
     return;
@@ -132,6 +134,9 @@ void show_time(int hours, int minutes) {
     iHour = test_hour;
     iMinute = test_minute;
   }
+
+  // show current time as text
+  showCurrentTimeAsScrollingText(iHour, iMinute);
 
   showTime(iHour, iMinute);
 
@@ -943,4 +948,91 @@ void showMinutes(int minutes) {
   setLEDcolXY(plus_coordX, coordY, 1, colorRGB); // +
   setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute); // num minutes
   setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB, AnimationDelay); // "MINUTEN"
+}
+
+
+// ###########################################################################################################################################
+// # Get the longest string len of vector:
+// ###########################################################################################################################################
+int getLongestStringLen(const std::vector<std::string>& stringVec) {
+  int result = 0;
+
+  for (int i = 0; i < stringVec.size(); ++i)
+    if (stringVec[i].size() > result)
+      result = stringVec[i].size();
+
+  return result;
+}
+
+
+// ###########################################################################################################################################
+// # Append string with blanks:
+// ###########################################################################################################################################
+std::string padTo(const std::string &str, const size_t num)
+{
+  std::string result = str;
+
+  if (num > result.size())
+    result += std::string(num - str.size(), ' ');
+
+  return result;
+}
+
+
+// ###########################################################################################################################################
+// # Display current time as scrolling text:
+// ###########################################################################################################################################
+void showCurrentTimeAsScrollingText(const int hours, const int minutes) {
+  auto hours10 = numberVector[hours / 10];
+  auto hours1 = numberVector[hours % 10];
+  std::vector<std::string> colon{ 
+    "",
+    "X",
+    "",
+    "X",
+    "" };
+  auto minutes10 = numberVector[minutes / 10];
+  auto minutes1 = numberVector[minutes % 10];
+
+  auto hours10len = getLongestStringLen(hours10);
+  auto hours1len = getLongestStringLen(hours1);
+  auto colonlen = getLongestStringLen(colon);
+  auto minutes10len = getLongestStringLen(minutes10);
+  auto minutes1len = getLongestStringLen(minutes1);
+  
+  const auto numberHeight = hours10.size();
+
+  std::vector<std::string> fullTime;
+  for (auto row = 0; row < numberHeight; ++row)
+  {
+    fullTime.push_back(padTo(hours10[row], hours10len) + " " + padTo(hours1[row], hours1len) + " " + 
+        padTo(colon[row], colonlen) + " " + padTo(minutes10[row], minutes10len) + " " + padTo(minutes1[row], minutes1len));    
+  }
+
+  ClearDisplay();
+
+  const auto lineLen = fullTime[0].size();
+  const int startY = 1;
+
+  for (auto col = 0; col < lineLen + 16; ++col) // +16 to scroll completely out of view
+  {
+    // copy columns to the left
+    for (auto row = 0; row < numberHeight; ++row)
+      for (auto X = 1; X < 16; ++X)
+        setLEDcolXY(X - 1, startY + row, 1, getLEDcolXY(X, startY + row));
+
+    // show new column
+    for (auto row = 0; row < numberHeight; ++row)
+    {
+      uint32_t c = color_black;
+
+      if ((col < lineLen) && (fullTime[row][col] != ' '))
+        c = color_red;
+
+      setLEDcolXY(15, startY + row, 1, c);
+    }
+
+    strip.show(); 
+    delay(100);  
+  }
 }

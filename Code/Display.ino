@@ -217,6 +217,16 @@ void coords2Pixel(int coordX, int coordY, int& firstRow, int& secondRow) {
 
 
 // ###########################################################################################################################################
+// # Get color at coordinate:
+// ###########################################################################################################################################
+uint32_t getLEDcolXY(int coordX, int coordY) {
+  int firstRow, secondRow;
+  coords2Pixel(coordX, coordY, firstRow, secondRow);
+  return strip.getPixelColor(firstRow);
+}
+
+
+// ###########################################################################################################################################
 // # Actual function, which controls 1/0 of the LED with X/Y position and color value:
 // ###########################################################################################################################################
 void setLEDcolXY(int coordX, int coordY, int numCols, uint32_t color, const int CharDelay = 0) {
