@@ -56,7 +56,7 @@ void WIFI_SETUP() {
       Serial.println("Show SET WIFI...");
       uint32_t c = strip.Color(0, 255, 255);
       int TextWait = 500;
-      showText("SET WIFI ", TextWait, c);
+      showTextCharByChar("SET WIFI ", TextWait, c);
       ShowWLAN(strip.Color(0, 255, 255));
       CaptivePortalSetup();
     } else {

@@ -112,6 +112,7 @@ int UseFixedMinuteColors,
     FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 
 
 int AnimationDelay;
+int TextScrollDelay;
 
 const int max_cols = 16;
 const int max_rows = 8;

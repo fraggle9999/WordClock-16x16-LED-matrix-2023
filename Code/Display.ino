@@ -161,7 +161,19 @@ static std::map<char, std::vector<std::string>> charMap =
              " X  X",
              "XXXXXX",
              "X    X",
-             "X    X" } }
+             "X    X" } },
+
+    { ':', { "",
+             "X",
+             "",
+             "X",
+             "" } },
+
+    { '?', { " XXXX",
+             "     X",
+             "   X",
+             "",
+             "   X" } }
   };
 
 // ###########################################################################################################################################
@@ -448,7 +460,7 @@ void update_display() {
     usenightmode = 0;
     uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
     int TextWait = 500;
-    showText("TEST", TextWait, c);
+    showTextCharByChar("TEST", TextWait, c);
     for (int i = 1; i <= 12; i++) {  // 12 hours only:
       show_time(i, 0);
       delay(3000);
@@ -523,15 +535,14 @@ void switchLEDXY(int coordX, int coordY, int numCols, int switchOn) {
 void callStartText() {
   Serial.println("Show 'WordClock' startup text...");
   uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
-  int TextWait = 500;
-  showText("WordClock", TextWait, c);
+  showScrollingText("WordClock", c);
 }
 
 
 // ###########################################################################################################################################
 // # Text output function:
 // ###########################################################################################################################################
-void showText(String text, int wait, uint32_t c) {
+void showTextCharByChar(String text, int wait, uint32_t c) {
   for (const char ch : text)
     showChar(ch, wait, c);
 }
@@ -636,4 +647,94 @@ void RestoreDisplay() {
     strip.setPixelColor(i, PixelValues[i]);
 
   strip.show();
+}
+
+
+// ###########################################################################################################################################
+// # Get the longest string len of vector:
+// ###########################################################################################################################################
+int getLongestStringLen(const std::vector<std::string>& stringVec) {
+  int result = 0;
+
+  for (int i = 0; i < stringVec.size(); ++i)
+    if (stringVec[i].size() > result)
+      result = stringVec[i].size();
+
+  return result;
+}
+
+
+// ###########################################################################################################################################
+// # Append string with blanks:
+// ###########################################################################################################################################
+std::string padTo(const std::string &str, const size_t num)
+{
+  std::string result = str;
+
+  if (num > result.size())
+    result += std::string(num - str.size(), ' ');
+
+  return result;
+}
+
+
+// ###########################################################################################################################################
+// # Display scrolling text:
+// ###########################################################################################################################################
+void showScrollingText(const std::string& Text, uint32_t color) {
+  int maxHeight = 5;
+
+  std::vector<std::string> fullMatrix;
+  for (auto row = 0; row < maxHeight; ++row)
+  {
+    std::string singleLine;
+
+    for (const auto singleChar : Text)
+    {
+      std::vector<std::string> charMatrix;
+
+      if (isdigit(singleChar))
+        charMatrix = numberVector[singleChar - '0'];
+      else
+      {
+        auto mapIndex = charMap.find(singleChar);
+        if (mapIndex == charMap.end()) // char not found?
+          mapIndex = charMap.find('?');
+
+        charMatrix = mapIndex->second;
+      }
+
+      const auto longestStringLen = getLongestStringLen(charMatrix);
+      singleLine += padTo(charMatrix[row], longestStringLen) + " ";
+    }
+
+    fullMatrix.push_back(singleLine.substr(0, singleLine.size() - 1)); // strip last blank
+  }
+
+  ClearDisplay();
+
+  const auto lineLen = fullMatrix[0].size();
+  const int startY = 1;
+
+  for (auto col = 0; col < lineLen + 16; ++col) // +16 to scroll completely out of view
+  {
+    // copy columns to the left
+    for (auto row = 0; row < maxHeight; ++row)
+      for (auto X = 1; X < 16; ++X)
+        setLEDcolXY(X - 1, startY + row, 1, getLEDcolXY(X, startY + row));
+
+    // show new column
+    for (auto row = 0; row < maxHeight; ++row)
+    {
+      uint32_t c = color_black;
+
+      if ((col < lineLen) && (fullMatrix[row][col] != ' '))
+        c = color;
+
+      setLEDcolXY(15, startY + row, 1, c);
+    }
+
+    strip.show(); 
+    delay(TextScrollDelay);  
+  }
 }

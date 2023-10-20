@@ -35,6 +35,7 @@ void getFlashValues() {
   }
 
   AnimationDelay = preferences.getUInt("AnimationDelay", AnimationDelay_default);
+  TextScrollDelay = preferences.getUInt("TextScrollDelay", TextScrollDelay_default);
   
   if (debugtexts == 1) Serial.println("Read settings from flash: END");
 }
@@ -78,6 +79,7 @@ void setFlashValues() {
   }
 
   preferences.putUInt("AnimationDelay", AnimationDelay);
+  preferences.putUInt("TextScrollDelay", TextScrollDelay);
 
   if (debugtexts == 1) Serial.println("Write settings to flash: END");
   if (usenightmode == 1) {

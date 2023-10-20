@@ -113,8 +113,7 @@ void buttonUpdate(Control* sender, int type, void* param) {
   if (updatemode == false) {
     updatemode = true;
     int32_t c = strip.Color(0, 0, 255);
-    int TextWait = 500;
-    showText("UPDATE", TextWait, c);
+    showScrollingText("UPDATE", c);
     switchLEDXY(0, 0, 1, 1); // top left
     switchLEDXY(15, 0, 1, 1); // top right
     switchLEDXY(0, 7, 1, 1); // bottom left

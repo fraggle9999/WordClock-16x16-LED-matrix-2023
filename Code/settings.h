@@ -98,6 +98,7 @@ int FixedMinuteColor_greenVal_default[4] = { 0, 255, 255, 255 };
 int FixedMinuteColor_blueVal_default[4] = { 0, 255, 0, 0 }; 
 
 int AnimationDelay_default = 20;
+int TextScrollDelay_default = 100;
 
 // ###########################################################################################################################################
 // # Various default settings:
