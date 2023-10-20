@@ -1,5 +1,5 @@
 - DONE: show time in format hh:mm by scrolling from right to left (at ca. sec. 30)
 - DONE: countdown to full hour (4, 3, 2, 1)
 - DONE: blinking plus symbol every second
-- generic show scrolling text
+- DONE: generic show scrolling text
 - choose randomly between "ZWANZIG VOR/NACH" and "ZEHN VOR/NACH HALB"

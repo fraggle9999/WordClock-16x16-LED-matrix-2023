@@ -947,10 +947,10 @@ void showMinutes(int minutes) {
 // # Display current time as scrolling text:
 // ###########################################################################################################################################
 void showCurrentTimeAsScrollingText(const int hours, const int minutes) {
-  const auto hours10 = hours / 10;
-  const auto hours1 = hours % 10;
-  const auto minutes10 = minutes / 10;
-  const auto minutes1 = minutes % 10;
+  const int hours10 = hours / 10;
+  const int hours1 = hours % 10;
+  const int minutes10 = minutes / 10;
+  const int minutes1 = minutes % 10;
 
   const auto TimeString = std::to_string(hours10) + std::to_string(hours1) + ":" + std::to_string(minutes10) + std::to_string(minutes1);
   showScrollingText(TimeString, color_red); 
