@@ -617,11 +617,11 @@ static std::vector<uint32_t> PixelValues;
 // # Save the display internally.
 // ###########################################################################################################################################
 void SaveDisplay() {
-  if (PixelValues.empty())
-    PixelValues.reserve(256);
-    
+  PixelValues.clear();
+  PixelValues.reserve(256);
+
   for (auto i = 0; i < 256; ++i)
-    PixelValues[i] = strip.getPixelColor(i);
+    PixelValues.push_back(strip.getPixelColor(i));
 }
 
 
