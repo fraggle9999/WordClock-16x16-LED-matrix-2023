@@ -43,6 +43,9 @@ void setupWebInterface() {
   // Show single minutes to display the minute exact time:
   switchSingleMinutesID = ESPUI.switcher("Show single minutes to display the minute exact time", &switchSingleMinutes, ControlColor::Dark, usesinglemin);
 
+  // Show scrolling time on display every minute:
+  switchShowScrollingTimeEveryMinuteID = ESPUI.switcher("Show scrolling time every minute", &switchShowScrollingTimeEveryMinute, ControlColor::Dark, ShowScrollingTimeEveryMinute);
+
   // Show note when intensity is currently controlled via web-url usage and these internal settings get disabled:
   intensity_web_HintID = ESPUI.label("Manual settings disabled due to web URL usage:", ControlColor::Alizarin, "Restart WordClock or deactivate web control usage via http://" + IpAddress2String(WiFi.localIP()) + ":2023/config?LEDs=1");
   ESPUI.updateVisibility(intensity_web_HintID, false);
@@ -262,6 +265,7 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(switchRandomColorID, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
           ESPUI.updateVisibility(switchSingleMinutesID, false);
+          ESPUI.updateVisibility(switchShowScrollingTimeEveryMinuteID, false);
           ESPUI.jsonReload();
         }
         if ((String(p->name()) == "LEDs") && (p->value().toInt() == 1)) {
@@ -279,6 +283,7 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(switchRandomColorID, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
           ESPUI.updateVisibility(switchSingleMinutesID, true);
+          ESPUI.updateVisibility(switchShowScrollingTimeEveryMinuteID, true);
         }
         changedvalues = true;
         updatenow = true;

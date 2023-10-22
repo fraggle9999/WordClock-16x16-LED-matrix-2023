@@ -114,7 +114,7 @@ int UseFixedMinuteColors,
 int AnimationDelay;
 int TextScrollDelay;
 
-int ShowScrollingTimeEveryMinute;
+int ShowScrollingTimeEveryMinute, switchShowScrollingTimeEveryMinuteID;
 
 // fixed values
 const int max_cols = 16;

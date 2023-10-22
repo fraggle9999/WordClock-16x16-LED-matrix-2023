@@ -193,6 +193,25 @@ void switchSingleMinutes(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
+// # GUI: Scroll time switch:
+// ###########################################################################################################################################
+void switchShowScrollingTimeEveryMinute(Control* sender, int value) {
+  updatedevice = false;
+  delay(1000);
+  switch (value) {
+    case S_ACTIVE:
+      ShowScrollingTimeEveryMinute = 1;
+      break;
+    case S_INACTIVE:
+      ShowScrollingTimeEveryMinute = 0;
+      break;
+  }
+  changedvalues = true;
+  updatedevice = true;
+}
+
+
+// ###########################################################################################################################################
 // # GUI: Use random color mode:
 // ###########################################################################################################################################
 void switchRandomColor(Control* sender, int value) {
