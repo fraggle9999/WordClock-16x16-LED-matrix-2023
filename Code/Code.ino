@@ -114,6 +114,9 @@ int UseFixedMinuteColors,
 int AnimationDelay;
 int TextScrollDelay;
 
+int ShowScrollingTimeEveryMinute;
+
+// fixed values
 const int max_cols = 16;
 const int max_rows = 8;
 const int effects_delay = 50;

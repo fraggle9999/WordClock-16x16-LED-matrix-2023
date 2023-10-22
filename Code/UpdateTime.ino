@@ -136,7 +136,8 @@ void show_time(int hours, int minutes) {
   }
 
   // show current time as text
-  showCurrentTimeAsScrollingText(iHour, iMinute);
+  if (ShowScrollingTimeEveryMinute == 1)
+    showCurrentTimeAsScrollingText(iHour, iMinute);
 
   showTime(iHour, iMinute);
 
