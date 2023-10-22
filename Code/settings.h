@@ -100,6 +100,9 @@ int FixedMinuteColor_blueVal_default[4] = { 0, 255, 0, 0 };
 int AnimationDelay_default = 20;
 int TextScrollDelay_default = 100;
 
+int BlinkingSecond_default = 1;
+int MinuteCountdown_default = 1;
+
 int ShowScrollingTimeEveryMinute_default = 1;
 
 // ###########################################################################################################################################

@@ -54,6 +54,9 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putUInt("AnimationDelay", AnimationDelay_default);
         preferences.putUInt("TextScrollDelay", TextScrollDelay_default);
 
+        preferences.putUInt("BlinkingSecond", BlinkingSecond_default);
+        preferences.putUInt("MinuteCountdown", MinuteCountdown_default);
+
         preferences.putUInt("ShowScrollingTimeEveryMinute", ShowScrollingTimeEveryMinute_default);
 
         delay(100);

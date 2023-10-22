@@ -34,7 +34,6 @@ void handleWithSeconds(const int hours, const int minutes) {
 
   lastSecondSet = currentSecond;
 
-  // show blinking plus sign every second
   int coordY = -1;
   int plus_coordX = -1;
   int minuteVal_offsetX = -1;
@@ -43,20 +42,27 @@ void handleWithSeconds(const int hours, const int minutes) {
 
   getMinuteCoordsAndOffsets(0, plus_coordX, coordY, minuteVal_offsetX, minuteText_coordX, minuteText_len);
   
-  uint32_t c = color_green;
-  if (currentSecond % 2 == 0)
-    c = color_black;
-
-  setLEDcolXY(plus_coordX, coordY, 1, c);
-
-  // show countdown to next minute
-  if ((currentSecond >= 56) && (currentSecond <= 59))
+  if (BlinkingSecond == 1)
   {
-    // shut off all minute values
-    switchLEDXY(minuteVal_offsetX + 1, coordY, 4, 0);
+    uint32_t c = color_green;
+    if (currentSecond % 2 == 0)
+      c = color_black;
 
-    // set remaining seconds as actual minute value
-    setLEDcolXY(minuteVal_offsetX + (60 - currentSecond), coordY, 1, color_green);
+    // show blinking plus sign every second
+    setLEDcolXY(plus_coordX, coordY, 1, c);
+  }
+
+  if (MinuteCountdown == 1)
+  {
+    // show countdown to next minute
+    if ((currentSecond >= 56) && (currentSecond <= 59))
+    {
+      // shut off all minute values
+      switchLEDXY(minuteVal_offsetX + 1, coordY, 4, 0);
+
+      // set remaining seconds as actual minute value
+      setLEDcolXY(minuteVal_offsetX + (60 - currentSecond), coordY, 1, color_green);
+    }
   }
 
   strip.show();

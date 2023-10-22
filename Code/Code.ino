@@ -114,6 +114,9 @@ int UseFixedMinuteColors,
 int AnimationDelay;
 int TextScrollDelay;
 
+int BlinkingSecond;
+int MinuteCountdown;
+
 int ShowScrollingTimeEveryMinute, switchShowScrollingTimeEveryMinuteID;
 
 // fixed values
