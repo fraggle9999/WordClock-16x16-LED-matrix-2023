@@ -82,7 +82,7 @@ void show_time(int hours, int minutes) {
 
   // Night/Day mode intensity setting:
   if ((usenightmode == 1) && (set_web_intensity == 0)) {
-    if ((iHour >= day_time_start) && (iHour <= day_time_stop)) {
+    if ((iHour >= day_time_start) && (iHour < day_time_stop)) {
       intensity = intensity_day;
       if ((iHour == 0) && (day_time_stop == 23)) intensity = intensity_night;  // Special function if day_time_stop set to 23 and time is 24, so 0...
     } else {
@@ -94,7 +94,7 @@ void show_time(int hours, int minutes) {
       Serial.println("Current settings: day_time_start: " + String(day_time_start) + " day_time_stop: " + String(day_time_stop));
       for (int i = 0; i < 24; i++) {
         String daynightvar = "-";
-        if ((i >= day_time_start) && (i <= day_time_stop)) {
+        if ((i >= day_time_start) && (i < day_time_stop)) {
           daynightvar = "Day time";
           if ((i == 0) && (day_time_stop == 23)) daynightvar = "Night time";
         } else {

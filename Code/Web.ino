@@ -69,7 +69,7 @@ void setupWebInterface() {
   call_day_time_startID = ESPUI.number("Day time starts at", call_day_time_start, ControlColor::Dark, day_time_start, 0, 11);
 
   // Day mode stop time:
-  call_day_time_stopID = ESPUI.number("Day time ends after", call_day_time_stop, ControlColor::Dark, day_time_stop, 12, 23);
+  call_day_time_stopID = ESPUI.number("Day time ends at", call_day_time_stop, ControlColor::Dark, day_time_stop, 12, 23);
 
 
 
