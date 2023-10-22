@@ -488,6 +488,9 @@ void showTime(const int iHour, const int iMinute)
   if (xHour == 0)
     xHour = 12;
 
+  static bool randomize_twenty = true;
+  static bool use_twenty = false;
+
   // ES IST:
   if ((langLEDlayout != 4) || (xHour > 1)) {  // IT:
     setLEDtimePart(timeParts, time_parts::prefix1, colorRGB);
@@ -499,50 +502,59 @@ void showTime(const int iHour, const int iMinute)
     setLEDtimePart(timeParts, time_parts::five_min, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("FÜNF ");
   }
+
   // VIERTEL:
   if ((minDiv == 3) || (minDiv == 9)) {
     setLEDtimePart(timeParts, time_parts::quarter_prefix, colorRGB);
     setLEDtimePart(timeParts, time_parts::quarter, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("VIERTEL ");
   }
-  // ZEHN: (Minuten)
-  if ((minDiv == 2) || (minDiv == 10)) {
-    setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
-    if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
-  }
+
   // ZWANZIG:
   if ((minDiv == 4) || (minDiv == 8)) {
-    // test, if twenty is defined, otherwise use ten to/ten after
-    if (twenty_defined)
-      setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
-    else
+    if (twenty_defined && randomize_twenty) // use same randomization for next 5 minutes
     {
-      setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
-      if (minDiv == 4)
-        setLEDtimePart(timeParts, time_parts::to, colorRGB);
-      else
-        setLEDtimePart(timeParts, time_parts::past, colorRGB);
+      const auto random_value = random(10);
+      use_twenty = (random_value % 2 == 0);
+      randomize_twenty = false;
     }
+
+    // test, if twenty is defined, otherwise use ten to/ten after
+    if (use_twenty && twenty_defined)
+      setLEDtimePart(timeParts, time_parts::twenty, colorRGB);
 
     if (testPrintTimeTexts == 1) Serial.print("ZWANZIG ");
   }
+  else
+    randomize_twenty = true;
+
+  // ZEHN: (Minuten)
+  if ((minDiv == 2) || (minDiv == 10) ||
+      (((minDiv == 4) || (minDiv == 8)) && !use_twenty)) {
+    setLEDtimePart(timeParts, time_parts::ten_min, colorRGB);
+    if (testPrintTimeTexts == 1) Serial.print("ZEHN ");
+  }
+
   // NACH:
-  if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4) || (minDiv == 7)) {
+  if ((minDiv == 1) || (minDiv == 2) || (minDiv == 3) || (minDiv == 4 && use_twenty) || (minDiv == 7) || (minDiv == 8 && !use_twenty)) {
     setLEDtimePart(timeParts, time_parts::past, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("NACH ");
   }
+
   // VOR:
-  if ((minDiv == 5) || (minDiv == 8) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
+  if ((minDiv == 4 && !use_twenty) || (minDiv == 5) || (minDiv == 8 && use_twenty) || (minDiv == 9) || (minDiv == 10) || (minDiv == 11)) {
     if ((minDiv != 9) || !three_quarters_defined)
       setLEDtimePart(timeParts, time_parts::to, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("VOR ");
   }
+
   // HALB:
-  if ((minDiv == 4) || (minDiv == 8) || (minDiv == 5) || (minDiv == 6) || (minDiv == 7)) {
-    if (((minDiv != 4) && (minDiv != 8)) || !twenty_defined)
-      setLEDtimePart(timeParts, time_parts::half, colorRGB);
+  if ((minDiv == 5) || (minDiv == 6) || (minDiv == 7) ||
+       (((minDiv == 4) || (minDiv == 8)) && !use_twenty)) {
+     setLEDtimePart(timeParts, time_parts::half, colorRGB);
     if (testPrintTimeTexts == 1) Serial.print("HALB ");
   }
+
   // DREIVIERTEL:
   if (minDiv == 9) {
     if (three_quarters_defined)
@@ -551,7 +563,11 @@ void showTime(const int iHour, const int iMinute)
 
   // at minute 25 hour needs to be counted up:
   // fuenf vor halb 2 = 13:25
-  const auto hourThreshold = hourThresholds[langLEDlayout];
+  auto hourThreshold = hourThresholds[langLEDlayout];
+
+  if (twenty_defined && !use_twenty)
+    hourThreshold = 20;
+
   if (hourThreshold > 0)
   {
     if (iMinute >= hourThreshold) {
