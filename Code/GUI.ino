@@ -36,6 +36,26 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putUInt("day_time_stop", day_time_stop_default);
         preferences.putUInt("usesinglemin", usesinglemin_default);
         preferences.putUInt("RandomColor", RandomColor_default);
+
+        preferences.putUInt("UseFixedHourColor", UseFixedHourColor_default);
+        preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
+        preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
+        preferences.putUInt("FixedHourColor_blueVal", FixedHourColor_blueVal_default);
+
+        preferences.putUInt("UseFixedMinuteColors", UseFixedMinuteColors_default);
+        for (int i = 0; i < 4; ++i)
+        {
+          std::string Prefix = "FixedMinuteColor" + std::to_string(i);
+          preferences.putUInt(std::string(Prefix + "_redVal").c_str(), FixedMinuteColor_redVal_default[i]); 
+          preferences.putUInt(std::string(Prefix + "_greenVal").c_str(), FixedMinuteColor_greenVal_default[i]); 
+          preferences.putUInt(std::string(Prefix + "_blueVal").c_str(), FixedMinuteColor_blueVal_default[i]); 
+        }
+
+        preferences.putUInt("AnimationDelay", AnimationDelay_default);
+        preferences.putUInt("TextScrollDelay", TextScrollDelay_default);
+
+        preferences.putUInt("ShowScrollingTimeEveryMinute", ShowScrollingTimeEveryMinute_default);
+
         delay(100);
         preferences.end();
         Serial.println("####################################################################################################");
@@ -200,7 +220,7 @@ void switchRandomColor(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
-// # GUI: Show IP-ADdress switch:
+// # GUI: Show IP-Address switch:
 // ###########################################################################################################################################
 void switchShowIP(Control* sender, int value) {
   updatedevice = false;
