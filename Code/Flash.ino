@@ -1,12 +1,12 @@
 struct setting
 {
     int val{};
-    int default{};
+    int default_val{};
 };
 
-std::map<std::string, setting> all_settings = { 
-    { "langLEDlayout", { 0, langLEDlayout_default} } 
-};
+std::map<std::string, setting> all_settings; // = { 
+//    { "langLEDlayout", { 0, langLEDlayout_default} } 
+//};
 
 
 // ###########################################################################################################################################
@@ -15,8 +15,10 @@ std::map<std::string, setting> all_settings = {
 void getFlashValues() {
   if (debugtexts == 1) Serial.println("Read settings from flash: START");
   
-  for (auto& [setting_name, single_setting] : all_settings)
-    single_setting.val = preferences.getUInt(setting_name, single_setting.default);
+//  for (auto& [setting_name, single_setting] : all_settings)
+//    single_setting.val = preferences.getUInt(setting_name, single_setting.default_val);
+  for (auto& single_setting : all_settings)
+    single_setting.second.val = preferences.getUInt(single_setting.first.c_str(), single_setting.second.default_val);
   
   langLEDlayout = preferences.getUInt("langLEDlayout", langLEDlayout_default);
   redVal_time = preferences.getUInt("redVal_time", redVal_time_default);
@@ -68,8 +70,8 @@ void setFlashValues() {
   if (debugtexts == 1) Serial.println("Write settings to flash: START");
   changedvalues = false;
 
-  for (const auto& [setting_name, single_setting] : all_settings)
-    preferences.putUInt(setting_name, single_setting.val);
+  for (const auto& single_setting : all_settings)
+    preferences.putUInt(single_setting.first.c_str(), single_setting.second.val);
 
   preferences.putUInt("langLEDlayout", langLEDlayout);
   preferences.putUInt("redVal_time", redVal_time);
