@@ -1,8 +1,23 @@
+struct setting
+{
+    int val{};
+    int default{};
+};
+
+std::map<std::string, setting> all_settings = { 
+    { "langLEDlayout", { 0, langLEDlayout_default} } 
+};
+
+
 // ###########################################################################################################################################
 // # Read settings from flash:
 // ###########################################################################################################################################
 void getFlashValues() {
   if (debugtexts == 1) Serial.println("Read settings from flash: START");
+  
+  for (auto& [setting_name, single_setting] : all_settings)
+    single_setting.val = preferences.getUInt(setting_name, single_setting.default);
+  
   langLEDlayout = preferences.getUInt("langLEDlayout", langLEDlayout_default);
   redVal_time = preferences.getUInt("redVal_time", redVal_time_default);
   greenVal_time = preferences.getUInt("greenVal_time", greenVal_time_default);
@@ -52,6 +67,10 @@ void getFlashValues() {
 void setFlashValues() {
   if (debugtexts == 1) Serial.println("Write settings to flash: START");
   changedvalues = false;
+
+  for (const auto& [setting_name, single_setting] : all_settings)
+    preferences.putUInt(setting_name, single_setting.val);
+
   preferences.putUInt("langLEDlayout", langLEDlayout);
   preferences.putUInt("redVal_time", redVal_time);
   preferences.putUInt("greenVal_time", greenVal_time);
