@@ -31,9 +31,8 @@
 
 
 // ###########################################################################################################################################
-// # LED language layout default: !!! SET YOUR DEFAULT LANGUAGE HERE !!!
+// # LED language layout default: !!! SET YOUR DEFAULT LANGUAGE in map beyond !!!
 // ###########################################################################################################################################
-int langLEDlayout_default = 0;
 // Available languages:
 // ####################
 // 0 = DE   - GERMAN
@@ -141,6 +140,36 @@ int testspecialtime = 0;  // Use test a special time function
 int test_hour = 9;       // Test a special time: hour
 int test_minute = 38;     // Test a special time: minute
 
+
+// ###########################################################################################################################################
+
+enum struct setting_type { langLEDlayout };
+
+struct setting
+{
+    std::string name;
+    int val;
+    int default_val;
+};
+
+std::map<setting_type, setting> all_settings = { 
+    { setting_type::langLEDlayout, { "langLEDlayout", {}, 0 } } 
+};
+
+// ###########################################################################################################################################
+// # Get setting from map:
+// ###########################################################################################################################################
+inline int getSetting(const setting_type type) {
+  return all_settings[type].val;
+}
+
+
+// ###########################################################################################################################################
+// # Put setting to map:
+// ###########################################################################################################################################
+inline void putSetting(const setting_type type, const int val) {
+  all_settings[type].val = val;
+}
 
 // ###########################################################################################################################################
 // # EOF - You have successfully reached the end of the code - well done ;-)

@@ -372,7 +372,7 @@ void ShowReset(uint32_t color) {
   delay(1000);
   ClearDisplay();
 
-  switch (langLEDlayout) {
+  switch (getSetting(setting_type::langLEDlayout)) {
     case 0:                          // DE:
       setLEDcolXY(5, 4, 2, color);   // RE
       setLEDcolXY(7, 5, 2, color);   // SE
@@ -557,7 +557,7 @@ void ShowWLAN(uint32_t color) {
 
   int coordX = -1, coordY = -1;
 
-  switch (langLEDlayout) {
+  switch (getSetting(setting_type::langLEDlayout)) {
     case 0:  // DE
       coordX = 7;
       coordY = 0;

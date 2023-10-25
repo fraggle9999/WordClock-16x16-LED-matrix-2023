@@ -1,14 +1,3 @@
-struct setting
-{
-    int val{};
-    int default_val{};
-};
-
-std::map<std::string, setting> all_settings; // = { 
-//    { "langLEDlayout", { 0, langLEDlayout_default} } 
-//};
-
-
 // ###########################################################################################################################################
 // # Read settings from flash:
 // ###########################################################################################################################################
@@ -18,9 +7,8 @@ void getFlashValues() {
 //  for (auto& [setting_name, single_setting] : all_settings)
 //    single_setting.val = preferences.getUInt(setting_name, single_setting.default_val);
   for (auto& single_setting : all_settings)
-    single_setting.second.val = preferences.getUInt(single_setting.first.c_str(), single_setting.second.default_val);
+    single_setting.second.val = preferences.getUInt(single_setting.second.name.c_str(), single_setting.second.default_val);
   
-  langLEDlayout = preferences.getUInt("langLEDlayout", langLEDlayout_default);
   redVal_time = preferences.getUInt("redVal_time", redVal_time_default);
   greenVal_time = preferences.getUInt("greenVal_time", greenVal_time_default);
   blueVal_time = preferences.getUInt("blueVal_time", blueVal_time_default);
@@ -71,9 +59,8 @@ void setFlashValues() {
   changedvalues = false;
 
   for (const auto& single_setting : all_settings)
-    preferences.putUInt(single_setting.first.c_str(), single_setting.second.val);
+    preferences.putUInt(single_setting.second.name.c_str(), single_setting.second.val);
 
-  preferences.putUInt("langLEDlayout", langLEDlayout);
   preferences.putUInt("redVal_time", redVal_time);
   preferences.putUInt("greenVal_time", greenVal_time);
   preferences.putUInt("blueVal_time", blueVal_time);
@@ -125,5 +112,3 @@ void setFlashValues() {
   }
   updatenow = true;  // Update display now...
 }
-
-

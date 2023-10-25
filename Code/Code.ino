@@ -77,7 +77,6 @@ DNSServer dnsServer;
 // # Declarations and variables used in the functions:
 // ###########################################################################################################################################
 Preferences preferences;
-int langLEDlayout;
 int iHour = 0;
 int iMinute = 0;
 int iSecond = 0;

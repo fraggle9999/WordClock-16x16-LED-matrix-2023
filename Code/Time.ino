@@ -17,7 +17,7 @@ void setTimezone(String timezone) {
 
 // ###########################################################################################################################################
 void showTimeText(uint32_t color) {
-  switch (langLEDlayout) {
+  switch (getSetting(setting_type::langLEDlayout)) {
     case 0:  // DE:
       setLEDcolXY(11, 0, 4, color);
       break;

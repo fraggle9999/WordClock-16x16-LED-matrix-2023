@@ -469,6 +469,8 @@ void showTime(const int iHour, const int iMinute)
   static std::vector<int> hourThresholds =
       { 25, 35, 20, 25, 40, 35, 25, 0, 15, 25 }; 
 
+  int langLEDlayout = getSetting(setting_type::langLEDlayout);
+
   const auto Index = timePartsMap.find(langLEDlayout);
   if (Index == timePartsMap.end())
   {
@@ -890,7 +892,7 @@ void showTime(const int iHour, const int iMinute)
 void getMinuteCoordsAndOffsets(const int minMod, int& plus_coordX, int& coordY, int& minuteVal_offsetX, int& minuteText_coordX, int& minuteText_len) {
   coordY = 7;
 
-  switch (langLEDlayout)
+  switch (getSetting(setting_type::langLEDlayout))
   {
     case 0:  // DE:
     case 1:  // EN:

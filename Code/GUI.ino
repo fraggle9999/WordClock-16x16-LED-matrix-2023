@@ -18,9 +18,13 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         String tempDelWiFiPASS = preferences.getString("WIFIpass");
         preferences.clear();
         delay(100);
+
         preferences.putString("WIFIssid", tempDelWiFiSSID);  // Restore entered WiFi SSID
         preferences.putString("WIFIpass", tempDelWiFiPASS);  // Restore entered WiFi password
-        preferences.putUInt("langLEDlayout", langLEDlayout_default);
+
+        for (const auto& single_setting : all_settings)
+          preferences.putUInt(single_setting.second.name.c_str(), single_setting.second.default_val);
+
         preferences.putUInt("redVal_time", redVal_time_default);
         preferences.putUInt("greenVal_time", greenVal_time_default);
         preferences.putUInt("blueVal_time", blueVal_time_default);
@@ -85,7 +89,9 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
 void call_langauge_select(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
-  langLEDlayout = sender->value.toInt();
+  int langLEDlayout = sender->value.toInt();
+  putSetting(setting_type::langLEDlayout, langLEDlayout);
+
   // Set layout language text in gui:
   if (langLEDlayout == 0) selectLang = "German";
   if (langLEDlayout == 1) selectLang = "English";
