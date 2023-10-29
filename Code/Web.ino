@@ -1,3 +1,9 @@
+void setupNumber(const setting_type type, const std::string& caption, void (*callback)(Control*, int), const int min, const int max)
+{
+  all_settings[type].UI_ID = ESPUI.number(caption.c_str(), callback, ControlColor::Dark, all_settings[type].val, min, max);
+}
+
+
 // ###########################################################################################################################################
 // # Setup the internal web server configuration page:
 // ###########################################################################################################################################
@@ -43,8 +49,7 @@ void setupWebInterface() {
   // Show single minutes to display the minute exact time:
   switchSingleMinutesID = ESPUI.switcher("Show single minutes to display the minute exact time", &switchSingleMinutes, ControlColor::Dark, usesinglemin);
 
-  // Show scrolling time on display every minute:
-  switchShowScrollingTimeEveryMinuteID = ESPUI.switcher("Show scrolling time every minute", &switchShowScrollingTimeEveryMinute, ControlColor::Dark, ShowScrollingTimeEveryMinute);
+  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_scroll_time, -1, 7);
 
   // Show note when intensity is currently controlled via web-url usage and these internal settings get disabled:
   intensity_web_HintID = ESPUI.label("Manual settings disabled due to web URL usage:", ControlColor::Alizarin, "Restart WordClock or deactivate web control usage via http://" + IpAddress2String(WiFi.localIP()) + ":2023/config?LEDs=1");
@@ -256,6 +261,15 @@ void handleLEDupdate() {  // LED server pages urls:
           set_web_intensity = 1;
           ledstatus = "OFF";
           ESPUI.updateVisibility(intensity_web_HintID, true);
+
+          for (const auto& single_setting : all_settings)
+          {
+            const auto ID = single_setting.second.UI_ID;
+
+            if (ID != 0)
+              ESPUI.updateVisibility(ID, false);
+          }
+
           ESPUI.updateVisibility(statusNightModeID, false);
           ESPUI.updateVisibility(sliderBrightnessDayID, false);
           ESPUI.updateVisibility(switchNightModeID, false);
@@ -267,13 +281,21 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(switchRandomColorID, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
           ESPUI.updateVisibility(switchSingleMinutesID, false);
-          ESPUI.updateVisibility(switchShowScrollingTimeEveryMinuteID, false);
           ESPUI.jsonReload();
         }
         if ((String(p->name()) == "LEDs") && (p->value().toInt() == 1)) {
           set_web_intensity = 0;
           ledstatus = "ON";
           ESPUI.updateVisibility(intensity_web_HintID, false);
+
+          for (const auto& single_setting : all_settings)
+          {
+            const auto ID = single_setting.second.UI_ID;
+
+            if (ID != 0)
+              ESPUI.updateVisibility(ID, true);
+          }
+
           ESPUI.updateVisibility(statusNightModeID, true);
           ESPUI.updateVisibility(sliderBrightnessDayID, true);
           ESPUI.updateVisibility(switchNightModeID, true);
@@ -285,7 +307,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(switchRandomColorID, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
           ESPUI.updateVisibility(switchSingleMinutesID, true);
-          ESPUI.updateVisibility(switchShowScrollingTimeEveryMinuteID, true);
         }
         changedvalues = true;
         updatenow = true;

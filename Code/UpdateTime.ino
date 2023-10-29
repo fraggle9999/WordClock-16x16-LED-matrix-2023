@@ -146,7 +146,8 @@ void show_time(int hours, int minutes) {
   {
     if (minuteCountDown > 0)
       --minuteCountDown;
-    else
+
+    if (minuteCountDown == 0)
     {
       showCurrentTimeAsScrollingText(iHour, iMinute);
 

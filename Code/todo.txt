@@ -3,3 +3,8 @@
 - DONE: blinking plus symbol every second
 - DONE: generic show scrolling text
 - choose randomly between "ZWANZIG VOR/NACH" and "ZEHN VOR/NACH HALB"
+
+https://www.printables.com/model/450556-wordclock-16x16-led-matrix-2023-v3#preview
+http://192.168.178.83/
+http://192.168.178.83:8080/update
+https://github.com/s00500/ESPUI/blob/master/README.md#number-input

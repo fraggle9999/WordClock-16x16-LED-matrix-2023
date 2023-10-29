@@ -143,7 +143,7 @@ int test_minute = 38;     // Test a special time: minute
 
 // ###########################################################################################################################################
 
-enum struct setting_type { langLEDlayout };
+enum struct setting_type { langLEDlayout, showScrollingTimeEveryXMinutes };
 
 struct setting
 {
@@ -154,7 +154,8 @@ struct setting
 };
 
 std::map<setting_type, setting> all_settings = { 
-    { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } } 
+    { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } },
+    { setting_type::showScrollingTimeEveryXMinutes, { "showScrollingTimeEveryXMinutes", {}, 0, {} } } 
 };
 
 // ###########################################################################################################################################

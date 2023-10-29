@@ -202,19 +202,12 @@ void switchSingleMinutes(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
-// # GUI: Scroll time switch:
+// # GUI: Set interval for scrolling time
 // ###########################################################################################################################################
-void switchShowScrollingTimeEveryMinute(Control* sender, int value) {
+void call_scroll_time(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      ShowScrollingTimeEveryMinute = 1;
-      break;
-    case S_INACTIVE:
-      ShowScrollingTimeEveryMinute = 0;
-      break;
-  }
+  all_settings[setting_type::showScrollingTimeEveryXMinutes].val = sender->value.toInt();
   changedvalues = true;
   updatedevice = true;
 }

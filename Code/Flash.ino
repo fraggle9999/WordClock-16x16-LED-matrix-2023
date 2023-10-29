@@ -45,8 +45,6 @@ void getFlashValues() {
   BlinkingSecond = preferences.getUInt("BlinkingSecond", BlinkingSecond_default);
   MinuteCountdown = preferences.getUInt("MinuteCountdown", MinuteCountdown_default);
 
-  ShowScrollingTimeEveryMinute = preferences.getUInt("ShowScrollingTimeEveryMinute", ShowScrollingTimeEveryMinute_default);
-  
   if (debugtexts == 1) Serial.println("Read settings from flash: END");
 }
 
@@ -96,8 +94,6 @@ void setFlashValues() {
 
   preferences.putUInt("BlinkingSecond", BlinkingSecond);
   preferences.putUInt("MinuteCountdown", MinuteCountdown);
-
-  preferences.putUInt("ShowScrollingTimeEveryMinute", ShowScrollingTimeEveryMinute);
 
   if (debugtexts == 1) Serial.println("Write settings to flash: END");
   if (usenightmode == 1) {

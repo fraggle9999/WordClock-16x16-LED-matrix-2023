@@ -117,7 +117,6 @@ int BlinkingSecond;
 int MinuteCountdown;
 
 int minuteCountDown = 0;
-int ShowScrollingTimeEveryMinute, switchShowScrollingTimeEveryMinuteID;
 int ShowScrollingTimeEveryXMinutes = -1;
 
 // fixed values
