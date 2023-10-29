@@ -150,10 +150,11 @@ struct setting
     std::string name;
     int val;
     int default_val;
+    int UI_ID; // for GUI
 };
 
 std::map<setting_type, setting> all_settings = { 
-    { setting_type::langLEDlayout, { "langLEDlayout", {}, 0 } } 
+    { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } } 
 };
 
 // ###########################################################################################################################################

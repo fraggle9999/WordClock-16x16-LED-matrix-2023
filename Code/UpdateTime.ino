@@ -142,8 +142,19 @@ void show_time(int hours, int minutes) {
   }
 
   // show current time as text
-  if (ShowScrollingTimeEveryMinute == 1)
-    showCurrentTimeAsScrollingText(iHour, iMinute);
+  if (ShowScrollingTimeEveryXMinutes != 0)
+  {
+    if (minuteCountDown > 0)
+      --minuteCountDown;
+    else
+    {
+      showCurrentTimeAsScrollingText(iHour, iMinute);
+
+      minuteCountDown = ShowScrollingTimeEveryXMinutes; 
+      if (minuteCountDown < 0)
+        minuteCountDown = random(1, 7);
+    }
+  }
 
   showTime(iHour, iMinute);
 

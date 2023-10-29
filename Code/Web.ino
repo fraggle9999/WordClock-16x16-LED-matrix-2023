@@ -176,7 +176,7 @@ void setupWebInterface() {
   ESPUI.addControl(ControlType::Label, "Available languages", "<center><table border='3' class='center' width='100%'><tr><th>Value:</th><th>Language:</th><th>Value:</th><th>Language:</th></tr><tr align='center'><td>0</td><td>German</td><td>1</td><td>English</td></tr><tr align='center'><td>2</td><td>Dutch</td><td>3</td><td>Swedish</td></tr><tr align='center'><td>4</td><td>Italian</td><td>5</td><td>French</td></tr><tr align='center'><td>6</td><td>Swiss German</td><td>7</td><td>Chinese</td></tr><tr align='center'><td>8</td><td>Swabian German</td><td>9</td><td>Bavarian</td></tr></table>", ControlColor::Dark, Control::noParent, 0);
 
   // Change language:
-  ESPUI.number("Select your language", call_langauge_select, ControlColor::Dark, all_settings[setting_type::langLEDlayout].val, 0, 9);
+  ESPUI.number("Select your language", call_language_select, ControlColor::Dark, all_settings[setting_type::langLEDlayout].val, 0, 9);
 
   // Current language:
   statusLanguageID = ESPUI.label("Current layout language", ControlColor::Dark, selectLang);

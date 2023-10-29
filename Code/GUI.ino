@@ -86,7 +86,7 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
 // ###########################################################################################################################################
 // # GUI: Language selection
 // ###########################################################################################################################################
-void call_langauge_select(Control* sender, int type) {
+void call_language_select(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
   int langLEDlayout = sender->value.toInt();
