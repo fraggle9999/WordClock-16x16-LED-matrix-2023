@@ -23,7 +23,7 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putString("WIFIpass", tempDelWiFiPASS);  // Restore entered WiFi password
 
         for (const auto& single_setting : all_settings)
-          preferences.putUInt(single_setting.second.name.c_str(), single_setting.second.default_val);
+          preferences.putInt(single_setting.second.name.c_str(), single_setting.second.default_val);
 
         preferences.putUInt("redVal_time", redVal_time_default);
         preferences.putUInt("greenVal_time", greenVal_time_default);

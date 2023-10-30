@@ -7,7 +7,7 @@ void getFlashValues() {
 //  for (auto& [setting_name, single_setting] : all_settings)
 //    single_setting.val = preferences.getUInt(setting_name, single_setting.default_val);
   for (auto& single_setting : all_settings)
-    single_setting.second.val = preferences.getUInt(single_setting.second.name.c_str(), single_setting.second.default_val);
+    single_setting.second.val = preferences.getInt(single_setting.second.name.c_str(), single_setting.second.default_val);
   
   redVal_time = preferences.getUInt("redVal_time", redVal_time_default);
   greenVal_time = preferences.getUInt("greenVal_time", greenVal_time_default);
@@ -57,7 +57,7 @@ void setFlashValues() {
   changedvalues = false;
 
   for (const auto& single_setting : all_settings)
-    preferences.putUInt(single_setting.second.name.c_str(), single_setting.second.val);
+    preferences.putInt(single_setting.second.name.c_str(), single_setting.second.val);
 
   preferences.putUInt("redVal_time", redVal_time);
   preferences.putUInt("greenVal_time", greenVal_time);
