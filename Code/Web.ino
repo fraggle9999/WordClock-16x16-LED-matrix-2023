@@ -1,6 +1,6 @@
-void setupNumber(const setting_type type, const std::string& caption, void (*callback)(Control*, int), const int min, const int max)
+void setupNumber(const setting_type type, const char* caption, void (*callback)(Control*, int), const int min, const int max)
 {
-  all_settings[type].UI_ID = ESPUI.number(caption.c_str(), callback, ControlColor::Dark, all_settings[type].val, min, max);
+  all_settings[type].UI_ID = ESPUI.number(caption, callback, ControlColor::Dark, all_settings[type].val, min, max);
 }
 
 
@@ -49,8 +49,6 @@ void setupWebInterface() {
   // Show single minutes to display the minute exact time:
   switchSingleMinutesID = ESPUI.switcher("Show single minutes to display the minute exact time", &switchSingleMinutes, ControlColor::Dark, usesinglemin);
 
-  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_scroll_time, -1, 7);
-
   // Show note when intensity is currently controlled via web-url usage and these internal settings get disabled:
   intensity_web_HintID = ESPUI.label("Manual settings disabled due to web URL usage:", ControlColor::Alizarin, "Restart WordClock or deactivate web control usage via http://" + IpAddress2String(WiFi.localIP()) + ":2023/config?LEDs=1");
   ESPUI.updateVisibility(intensity_web_HintID, false);
@@ -92,6 +90,12 @@ void setupWebInterface() {
   ESPUI.switcher("Show IP-address on startup", &switchShowIP, ControlColor::Dark, useshowip);
 
 
+
+  // Special functions:
+  // ################
+  ESPUI.separator("Special functions:");
+
+  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_scroll_time, -1, 7);
 
   // Section WiFi:
   // #############

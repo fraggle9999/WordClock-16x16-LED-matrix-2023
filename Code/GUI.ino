@@ -208,6 +208,7 @@ void call_scroll_time(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
   all_settings[setting_type::showScrollingTimeEveryXMinutes].val = sender->value.toInt();
+  minuteCountDown = 0;
   changedvalues = true;
   updatedevice = true;
 }
