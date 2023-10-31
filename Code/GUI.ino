@@ -202,6 +202,53 @@ void switchSingleMinutes(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
+// # GUI: Use fixed hour color:
+// ###########################################################################################################################################
+void call_generic_switcher(Control* sender, int value) {
+  updatedevice = false;
+  delay(1000);
+  const auto setting = UI2settingMap[sender->id];
+  switch (value) {
+    case S_ACTIVE:
+      all_settings[setting].val = 1;
+      break;
+    case S_INACTIVE:
+      all_settings[setting].val = 0;
+      break;
+  }
+  changedvalues = true;
+  updatedevice = true;
+}
+
+
+// ###########################################################################################################################################
+// # GUI: Use fixed hour color:
+// ###########################################################################################################################################
+void call_use_fixed_hour_color(Control* sender, int value) {
+  updatedevice = false;
+  delay(1000);
+  switch (value) {
+    case S_ACTIVE:
+      all_settings[setting_type::useFixedHourColor].val = 1;
+//      ESPUI.updateVisibility(text_colour_background, false);
+//      ESPUI.updateVisibility(text_colour_time, false);
+//      redVal_back = 0;
+//      greenVal_back = 0;
+//      blueVal_back = 0;
+      break;
+    case S_INACTIVE:
+      all_settings[setting_type::useFixedHourColor].val = 0;
+//      ESPUI.updateVisibility(text_colour_background, true);
+//      ESPUI.updateVisibility(text_colour_time, true);
+//      ESPUI.jsonReload();
+      break;
+  }
+  changedvalues = true;
+  updatedevice = true;
+}
+
+
+// ###########################################################################################################################################
 // # GUI: Set interval for scrolling time
 // ###########################################################################################################################################
 void call_scroll_time(Control* sender, int type) {

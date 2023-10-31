@@ -1,6 +1,22 @@
+// ###########################################################################################################################################
+// # Setup a number field:
+// ###########################################################################################################################################
 void setupNumber(const setting_type type, const char* caption, void (*callback)(Control*, int), const int min, const int max)
 {
-  all_settings[type].UI_ID = ESPUI.number(caption, callback, ControlColor::Dark, all_settings[type].val, min, max);
+  const auto ID = ESPUI.number(caption, callback, ControlColor::Dark, all_settings[type].val, min, max);
+  all_settings[type].UI_ID = ID;
+  UI2settingMap[ID] = type;
+}
+
+
+// ###########################################################################################################################################
+// # Setup a switch field:
+// ###########################################################################################################################################
+void setupSwitcher(const setting_type type, const char* caption)
+{
+  const auto ID = ESPUI.switcher(caption, call_generic_switcher, ControlColor::Dark, all_settings[type].val);
+  all_settings[type].UI_ID = ID;
+  UI2settingMap[ID] = type;
 }
 
 
@@ -90,12 +106,13 @@ void setupWebInterface() {
   ESPUI.switcher("Show IP-address on startup", &switchShowIP, ControlColor::Dark, useshowip);
 
 
-
   // Special functions:
   // ################
   ESPUI.separator("Special functions:");
 
+  setupSwitcher(setting_type::useFixedHourColor, "Use fixed hour color");
   setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_scroll_time, -1, 7);
+
 
   // Section WiFi:
   // #############

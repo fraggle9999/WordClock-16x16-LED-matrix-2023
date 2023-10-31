@@ -59,7 +59,7 @@
 // ###########################################################################################################################################
 // # Version number of the code:
 // ###########################################################################################################################################
-const char* WORD_CLOCK_VERSION = "V2.6.LT";
+const char* WORD_CLOCK_VERSION = "V2023-10-31";
 
 
 // ###########################################################################################################################################
@@ -104,8 +104,7 @@ int switchRandomColorID, switchSingleMinutesID;
 bool WiFIsetup = false;
 
 // to be configured and stored
-int UseFixedHourColor, 
-    FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal; 
+int FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal; 
 
 int UseFixedMinuteColors, 
     FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 

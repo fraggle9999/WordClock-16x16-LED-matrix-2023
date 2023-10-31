@@ -25,7 +25,6 @@ void getFlashValues() {
   usesinglemin = preferences.getUInt("usesinglemin", usesinglemin_default);
   RandomColor = preferences.getUInt("RandomColor", RandomColor_default);
 
-  UseFixedHourColor = preferences.getUInt("UseFixedHourColor", UseFixedHourColor_default);
   FixedHourColor_redVal = preferences.getUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
   FixedHourColor_greenVal = preferences.getUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
   FixedHourColor_blueVal = preferences.getUInt("FixedHourColor_blueVal", FixedHourColor_blueVal_default);
@@ -75,7 +74,6 @@ void setFlashValues() {
   preferences.putUInt("usesinglemin", usesinglemin);
   preferences.putUInt("RandomColor", RandomColor);
 
-  preferences.putUInt("UseFixedHourColor", UseFixedHourColor);
   preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal);
   preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal);
   preferences.putUInt("FixedHourColor_blueVal", FixedHourColor_blueVal);
