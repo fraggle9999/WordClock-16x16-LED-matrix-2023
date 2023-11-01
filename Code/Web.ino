@@ -21,6 +21,19 @@ void setupSwitcher(const setting_type type, const char* caption)
 
 
 // ###########################################################################################################################################
+// # Setup a color field:
+// ###########################################################################################################################################
+void setupHexColor(const setting_type type, const char* caption)
+{
+  // Time color selector:
+  char hex_time[7] = { 0 };
+  sprintf(hex_time, "#%02X%02X%02X", redVal_time, greenVal_time, blueVal_time);
+  const auto ID = ESPUI.text("Time", call_generic_color, ControlColor::Dark, hex_time);
+  ESPUI.setInputType(ID, "color");
+}
+
+
+// ###########################################################################################################################################
 // # Setup the internal web server configuration page:
 // ###########################################################################################################################################
 void setupWebInterface() {
@@ -111,7 +124,7 @@ void setupWebInterface() {
   ESPUI.separator("Special functions:");
 
   setupSwitcher(setting_type::useFixedHourColor, "Use fixed hour color");
-  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_scroll_time, -1, 7);
+  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_generic_number, -1, 7);
 
 
   // Section WiFi:

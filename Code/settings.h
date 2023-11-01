@@ -155,7 +155,7 @@ struct setting
 
 std::map<setting_type, setting> all_settings = { 
     { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } },
-    { setting_type::useFixedHourColor, { "UseFixedHourColor", {}, 0, {} } },
+    { setting_type::useFixedHourColor, { "useFixedHourColor", {}, 0, {} } },
     { setting_type::showScrollingTimeEveryXMinutes, { "showScrollingTimeEveryXMinutes", {}, 0, {} } } 
 };
 

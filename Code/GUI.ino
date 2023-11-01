@@ -202,7 +202,15 @@ void switchSingleMinutes(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
-// # GUI: Use fixed hour color:
+// # GUI: Init variables:
+// ###########################################################################################################################################
+void __initVars() {
+  minuteCountDown = 0;
+}
+
+
+// ###########################################################################################################################################
+// # GUI: Generic switcher:
 // ###########################################################################################################################################
 void call_generic_switcher(Control* sender, int value) {
   updatedevice = false;
@@ -216,6 +224,35 @@ void call_generic_switcher(Control* sender, int value) {
       all_settings[setting].val = 0;
       break;
   }
+  __initVars();
+  changedvalues = true;
+  updatedevice = true;
+}
+
+
+// ###########################################################################################################################################
+// # GUI: Generic number:
+// ###########################################################################################################################################
+void call_generic_number(Control* sender, int value) {
+  updatedevice = false;
+  delay(1000);
+  const auto setting = UI2settingMap[sender->id];
+  all_settings[setting].val = sender->value.toInt();
+  __initVars();
+  changedvalues = true;
+  updatedevice = true;
+}
+
+
+// ###########################################################################################################################################
+// # GUI: Generic color:
+// ###########################################################################################################################################
+void call_generic_color(Control* sender, int value) {
+  updatedevice = false;
+  delay(1000);
+  const auto setting = UI2settingMap[sender->id];
+//  all_settings[setting].val = sender->value.toInt();
+  __initVars();
   changedvalues = true;
   updatedevice = true;
 }
@@ -243,19 +280,6 @@ void call_use_fixed_hour_color(Control* sender, int value) {
 //      ESPUI.jsonReload();
       break;
   }
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Set interval for scrolling time
-// ###########################################################################################################################################
-void call_scroll_time(Control* sender, int type) {
-  updatedevice = false;
-  delay(1000);
-  all_settings[setting_type::showScrollingTimeEveryXMinutes].val = sender->value.toInt();
-  minuteCountDown = 0;
   changedvalues = true;
   updatedevice = true;
 }
