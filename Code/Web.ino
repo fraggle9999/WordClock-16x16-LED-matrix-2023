@@ -76,7 +76,7 @@ void setupWebInterface() {
   }
 
   // Show single minutes to display the minute exact time:
-  switchSingleMinutesID = ESPUI.switcher("Show single minutes to display the minute exact time", &switchSingleMinutes, ControlColor::Dark, usesinglemin);
+  setupSwitcher(setting_type::usesinglemin, "Show single minutes to display the minute exact time");
 
   // Show note when intensity is currently controlled via web-url usage and these internal settings get disabled:
   intensity_web_HintID = ESPUI.label("Manual settings disabled due to web URL usage:", ControlColor::Alizarin, "Restart WordClock or deactivate web control usage via http://" + IpAddress2String(WiFi.localIP()) + ":2023/config?LEDs=1");
@@ -113,10 +113,10 @@ void setupWebInterface() {
   ESPUI.separator("Startup:");
 
   // Startup WordClock text function:
-  ESPUI.switcher("Show the 'WordClock' text on startup", &switchStartupText, ControlColor::Dark, useStartupText);
+  setupSwitcher(setting_type::useStartupText, "Show the 'WordClock' text on startup");
 
   // Show IP-address on startup:
-  ESPUI.switcher("Show IP-address on startup", &switchShowIP, ControlColor::Dark, useshowip);
+  setupSwitcher(setting_type::useshowip, "Show IP-address on startup");
 
 
   // Special functions:

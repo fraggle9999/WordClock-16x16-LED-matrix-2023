@@ -33,12 +33,9 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putUInt("blueVal_back", blueVal_back_default);
         preferences.putUInt("intensity_day", intensity_day_default);
         preferences.putUInt("intensity_night", intensity_night_default);
-        preferences.putUInt("useshowip", useshowip_default);
-        preferences.putUInt("useStartupText", useStartupText_default);
         preferences.putUInt("usenightmode", usenightmode_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
-        preferences.putUInt("usesinglemin", usesinglemin_default);
         preferences.putUInt("RandomColor", RandomColor_default);
 
         preferences.putUInt("UseFixedHourColor", UseFixedHourColor_default);
@@ -120,7 +117,7 @@ void buttonWiFiReset(Control* sender, int type, void* param) {
   delay(1000);
   preferences.putString("WIFIssid", "");                // Reset WiFi SSID
   preferences.putString("WIFIpass", "");                // Reste WiFi password
-  preferences.putUInt("useshowip", useshowip_default);  // Show IP-address again
+  preferences.putUInt(all_settings[setting_type::useshowip].name.c_str(), all_settings[setting_type::useshowip].default);  // Show IP-address again
   preferences.end();
   Serial.println("Status: WIFI SETTINGS RESET REQUEST EXECUTED");
   Serial.println("####################################################################################################");

@@ -96,8 +96,8 @@ void WIFI_SETUP() {
       ShowWLAN(strip.Color(0, 255, 0));
       delay(1000);
 
-      if (useStartupText == 1) callStartText();  // Show "WordClock" startup text
-      if (useshowip == 1) ShowIPaddress();       // Display the current IP-address
+      if (all_settings[setting_type::useStartupText].val == 1) callStartText();  // Show "WordClock" startup text
+      if (all_settings[setting_type::useshowip].val == 1) ShowIPaddress();       // Display the current IP-address
       configNTPTime();                           // NTP time setup
       setupWebInterface();                       // Generate the configuration page
       updatenow = true;                          // Update the display 1x after startup
