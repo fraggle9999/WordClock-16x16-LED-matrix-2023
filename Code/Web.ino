@@ -3,7 +3,7 @@
 // ###########################################################################################################################################
 void setupNumber(const setting_type type, const char* caption, void (*callback)(Control*, int), const int min, const int max)
 {
-  const auto ID = ESPUI.number(caption, callback, ControlColor::Dark, all_settings[type].val, min, max);
+  const auto ID = ESPUI.number(caption, callback, ControlColor::Dark, getSetting(type), min, max);
   all_settings[type].UI_ID = ID;
   UI2settingMap[ID] = type;
 }
@@ -14,7 +14,7 @@ void setupNumber(const setting_type type, const char* caption, void (*callback)(
 // ###########################################################################################################################################
 void setupSwitcher(const setting_type type, const char* caption)
 {
-  const auto ID = ESPUI.switcher(caption, call_generic_switcher, ControlColor::Dark, all_settings[type].val);
+  const auto ID = ESPUI.switcher(caption, call_generic_switcher, ControlColor::Dark, getSetting(type));
   all_settings[type].UI_ID = ID;
   UI2settingMap[ID] = type;
 }
@@ -215,7 +215,7 @@ void setupWebInterface() {
   ESPUI.addControl(ControlType::Label, "Available languages", "<center><table border='3' class='center' width='100%'><tr><th>Value:</th><th>Language:</th><th>Value:</th><th>Language:</th></tr><tr align='center'><td>0</td><td>German</td><td>1</td><td>English</td></tr><tr align='center'><td>2</td><td>Dutch</td><td>3</td><td>Swedish</td></tr><tr align='center'><td>4</td><td>Italian</td><td>5</td><td>French</td></tr><tr align='center'><td>6</td><td>Swiss German</td><td>7</td><td>Chinese</td></tr><tr align='center'><td>8</td><td>Swabian German</td><td>9</td><td>Bavarian</td></tr></table>", ControlColor::Dark, Control::noParent, 0);
 
   // Change language:
-  ESPUI.number("Select your language", call_language_select, ControlColor::Dark, all_settings[setting_type::langLEDlayout].val, 0, 9);
+  ESPUI.number("Select your language", call_language_select, ControlColor::Dark, getSetting(setting_type::langLEDlayout), 0, 9);
 
   // Current language:
   statusLanguageID = ESPUI.label("Current layout language", ControlColor::Dark, selectLang);
@@ -314,7 +314,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(text_colour_background, false);
           ESPUI.updateVisibility(switchRandomColorID, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
-          ESPUI.updateVisibility(switchSingleMinutesID, false);
           ESPUI.jsonReload();
         }
         if ((String(p->name()) == "LEDs") && (p->value().toInt() == 1)) {
@@ -340,7 +339,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(text_colour_background, true);
           ESPUI.updateVisibility(switchRandomColorID, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
-          ESPUI.updateVisibility(switchSingleMinutesID, true);
         }
         changedvalues = true;
         updatenow = true;

@@ -117,7 +117,7 @@ void buttonWiFiReset(Control* sender, int type, void* param) {
   delay(1000);
   preferences.putString("WIFIssid", "");                // Reset WiFi SSID
   preferences.putString("WIFIpass", "");                // Reste WiFi password
-  preferences.putUInt(all_settings[setting_type::useshowip].name.c_str(), all_settings[setting_type::useshowip].default);  // Show IP-address again
+  preferences.putUInt(all_settings[setting_type::useshowip].name.c_str(), all_settings[setting_type::useshowip].default_val);  // Show IP-address again
   preferences.end();
   Serial.println("Status: WIFI SETTINGS RESET REQUEST EXECUTED");
   Serial.println("####################################################################################################");
@@ -180,25 +180,6 @@ void switchNightMode(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
-// # GUI: Single minutes switch:
-// ###########################################################################################################################################
-void switchSingleMinutes(Control* sender, int value) {
-  updatedevice = false;
-  delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      usesinglemin = 1;
-      break;
-    case S_INACTIVE:
-      usesinglemin = 0;
-      break;
-  }
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
 // # GUI: Init variables:
 // ###########################################################################################################################################
 void __initVars() {
@@ -218,10 +199,10 @@ void call_generic_switcher(Control* sender, int value) {
   const auto setting = UI2settingMap[sender->id];
   switch (value) {
     case S_ACTIVE:
-      all_settings[setting].val = 1;
+      putSetting(setting, 1);
       break;
     case S_INACTIVE:
-      all_settings[setting].val = 0;
+      putSetting(setting, 0);
       break;
   }
   __initVars();
@@ -235,7 +216,7 @@ void call_generic_number(Control* sender, int value) {
   updatedevice = false;
   delay(1000);
   const auto setting = UI2settingMap[sender->id];
-  all_settings[setting].val = sender->value.toInt();
+  putSetting(setting, sender->value.toInt());
   __initVars();
 }
 
@@ -247,7 +228,7 @@ void call_generic_color(Control* sender, int value) {
   updatedevice = false;
   delay(1000);
   const auto setting = UI2settingMap[sender->id];
-//  all_settings[setting].val = sender->value.toInt();
+//  putSetting(setting, sender->value.toInt());
   __initVars();
 }
 
@@ -260,7 +241,7 @@ void call_use_fixed_hour_color(Control* sender, int value) {
   delay(1000);
   switch (value) {
     case S_ACTIVE:
-      all_settings[setting_type::useFixedHourColor].val = 1;
+      putSetting(setting_type::useFixedHourColor, 1);
 //      ESPUI.updateVisibility(text_colour_background, false);
 //      ESPUI.updateVisibility(text_colour_time, false);
 //      redVal_back = 0;
@@ -268,7 +249,7 @@ void call_use_fixed_hour_color(Control* sender, int value) {
 //      blueVal_back = 0;
       break;
     case S_INACTIVE:
-      all_settings[setting_type::useFixedHourColor].val = 0;
+      putSetting(setting_type::useFixedHourColor, 0);
 //      ESPUI.updateVisibility(text_colour_background, true);
 //      ESPUI.updateVisibility(text_colour_time, true);
 //      ESPUI.jsonReload();
@@ -299,44 +280,6 @@ void switchRandomColor(Control* sender, int value) {
       ESPUI.updateVisibility(text_colour_background, true);
       ESPUI.updateVisibility(text_colour_time, true);
       ESPUI.jsonReload();
-      break;
-  }
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Show IP-Address switch:
-// ###########################################################################################################################################
-void switchShowIP(Control* sender, int value) {
-  updatedevice = false;
-  delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      useshowip = 1;
-      break;
-    case S_INACTIVE:
-      useshowip = 0;
-      break;
-  }
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Show WordClock text switch:
-// ###########################################################################################################################################
-void switchStartupText(Control* sender, int value) {
-  updatedevice = false;
-  delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      useStartupText = 1;
-      break;
-    case S_INACTIVE:
-      useStartupText = 0;
       break;
   }
   changedvalues = true;

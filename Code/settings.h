@@ -47,6 +47,7 @@
 // 9 = BAY - BAVARIAN
 // NOTE: You may need to use the "Reset WordClock settings"-button to update the value on the device
 
+#pragma once
 
 // ###########################################################################################################################################
 // # Hardware settings:
@@ -175,6 +176,7 @@ inline int getSetting(const setting_type type) {
 inline void putSetting(const setting_type type, const int val) {
   all_settings[type].val = val;
 }
+
 
 // ###########################################################################################################################################
 // # EOF - You have successfully reached the end of the code - well done ;-)

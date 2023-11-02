@@ -159,7 +159,7 @@ void show_time(int hours, int minutes) {
 
   showTime(iHour, iMinute);
 
-  if (usesinglemin == 1) 
+  if (getSetting(setting_type::usesinglemin) == 1) 
     showMinutes(iMinute);
 
   strip.show();
@@ -601,7 +601,7 @@ void showTime(const int iHour, const int iMinute)
 
   uint32_t colorRGBForHour = colorRGB;
   
-  if (all_settings[setting_type::useFixedHourColor].val == 1)
+  if (getSetting(setting_type::useFixedHourColor) == 1)
     colorRGBForHour = strip.Color(FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal);
 
   if (one1_defined && (xHour == 1) && (iMinute < 5))

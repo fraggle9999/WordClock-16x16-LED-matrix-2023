@@ -99,7 +99,7 @@ char* selectLang;
 int RandomColor;
 uint16_t text_colour_background;
 uint16_t text_colour_time;
-int switchRandomColorID, switchSingleMinutesID;
+int switchRandomColorID;
 bool WiFIsetup = false;
 
 // to be configured and stored
