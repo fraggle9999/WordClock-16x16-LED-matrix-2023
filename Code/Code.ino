@@ -59,7 +59,7 @@
 // ###########################################################################################################################################
 // # Version number of the code:
 // ###########################################################################################################################################
-const char* WORD_CLOCK_VERSION = "V2023-10-31";
+const char* WORD_CLOCK_VERSION = "V2023.11";
 
 
 // ###########################################################################################################################################
@@ -93,7 +93,6 @@ int redVal_time, greenVal_time, blueVal_time;
 int intensity, intensity_day, intensity_night, intensity_web;
 int set_web_intensity = 0;
 int usenightmode, day_time_start, day_time_stop, statusNightMode;
-int useshowip, usesinglemin, useStartupText;
 int statusLabelID, statusNightModeID, statusLanguageID, intensity_web_HintID, DayNightSectionID, LEDsettingsSectionID;
 int sliderBrightnessDayID, switchNightModeID, sliderBrightnessNightID, call_day_time_startID, call_day_time_stopID;
 char* selectLang;

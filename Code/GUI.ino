@@ -206,6 +206,9 @@ void switchSingleMinutes(Control* sender, int value) {
 // ###########################################################################################################################################
 void __initVars() {
   minuteCountDown = 0;
+  
+  changedvalues = true;
+  updatedevice = true;
 }
 
 
@@ -225,8 +228,6 @@ void call_generic_switcher(Control* sender, int value) {
       break;
   }
   __initVars();
-  changedvalues = true;
-  updatedevice = true;
 }
 
 
@@ -239,8 +240,6 @@ void call_generic_number(Control* sender, int value) {
   const auto setting = UI2settingMap[sender->id];
   all_settings[setting].val = sender->value.toInt();
   __initVars();
-  changedvalues = true;
-  updatedevice = true;
 }
 
 
@@ -253,8 +252,6 @@ void call_generic_color(Control* sender, int value) {
   const auto setting = UI2settingMap[sender->id];
 //  all_settings[setting].val = sender->value.toInt();
   __initVars();
-  changedvalues = true;
-  updatedevice = true;
 }
 
 

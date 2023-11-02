@@ -107,10 +107,7 @@ int ShowScrollingTimeEveryMinute_default = 1;
 // ###########################################################################################################################################
 // # Various default settings:
 // ###########################################################################################################################################
-int useshowip_default = 1;       // Show the current ip at boot
-int usesinglemin_default = 1;    // Show the single minutes
 int RandomColor_default = 0;     // Change text color every minute in random color
-int useStartupText_default = 1;  // Show the "WordClock" text at boot
 int maxWiFiconnctiontries = 30;  // Maximum connection tries to logon to the set WiFi. After the amount of tries is reached the WiFi settings will be deleted!
 
 
@@ -143,7 +140,7 @@ int test_minute = 38;     // Test a special time: minute
 
 // ###########################################################################################################################################
 
-enum struct setting_type { langLEDlayout, useFixedHourColor,  showScrollingTimeEveryXMinutes };
+enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor,  showScrollingTimeEveryXMinutes };
 
 struct setting
 {
@@ -155,6 +152,9 @@ struct setting
 
 std::map<setting_type, setting> all_settings = { 
     { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } },
+    { setting_type::useshowip, { "useshowip", {}, 1, {} } },
+    { setting_type::useStartupText, { "useStartupText", {}, 1, {} } },
+    { setting_type::usesinglemin, { "usesinglemin", {}, 1, {} } },
     { setting_type::useFixedHourColor, { "useFixedHourColor", {}, 0, {} } },
     { setting_type::showScrollingTimeEveryXMinutes, { "showScrollingTimeEveryXMinutes", {}, 0, {} } } 
 };

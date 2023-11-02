@@ -20,8 +20,6 @@ void getFlashValues() {
   usenightmode = preferences.getUInt("usenightmode", usenightmode_default);
   day_time_start = preferences.getUInt("day_time_start", day_time_start_default);
   day_time_stop = preferences.getUInt("day_time_stop", day_time_stop_default);
-  useshowip = preferences.getUInt("useshowip", useshowip_default);
-  useStartupText = preferences.getUInt("useStartupText", useStartupText_default);
   usesinglemin = preferences.getUInt("usesinglemin", usesinglemin_default);
   RandomColor = preferences.getUInt("RandomColor", RandomColor_default);
 
@@ -69,8 +67,6 @@ void setFlashValues() {
   preferences.putUInt("usenightmode", usenightmode);
   preferences.putUInt("day_time_start", day_time_start);
   preferences.putUInt("day_time_stop", day_time_stop);
-  preferences.putUInt("useshowip", useshowip);
-  preferences.putUInt("useStartupText", useStartupText);
   preferences.putUInt("usesinglemin", usesinglemin);
   preferences.putUInt("RandomColor", RandomColor);
 
