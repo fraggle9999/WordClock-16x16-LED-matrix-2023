@@ -90,7 +90,7 @@ bool changedvalues = false;
 String iStartTime = " ";
 int redVal_back, greenVal_back, blueVal_back;
 int redVal_time, greenVal_time, blueVal_time;
-int intensity, intensity_day, intensity_night, intensity_web;
+int intensity, intensity_web;
 int set_web_intensity = 0;
 int usenightmode, day_time_start, day_time_stop, statusNightMode;
 int statusLabelID, statusNightModeID, statusLanguageID, intensity_web_HintID, DayNightSectionID, LEDsettingsSectionID;
@@ -141,7 +141,7 @@ void setup() {
   getFlashValues();                       // Read settings from flash
   strip.begin();                          // Init the LEDs
   strip.show();                           // Init the LEDs --> Set them to OFF
-  intensity = intensity_day;              // Set the intenity to day mode for startup
+  intensity = getSetting(setting_type::intensity_day);              // Set the intenity to day mode for startup
   strip.setBrightness(intensity);         // Set LED brightness
 
   initEffects();

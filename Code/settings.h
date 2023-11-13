@@ -81,8 +81,6 @@ int blueVal_back_default = 0;     // Default background color BLUE
 int redVal_time_default = 0;      // Default time color RED
 int greenVal_time_default = 255;  // Default time color GREEN
 int blueVal_time_default = 255;   // Default time color BLUE
-int intensity_day_default = 22;   // LED intensity (0..255) in day mode   - Important note: Check power consumption and used power supply capabilities!
-int intensity_night_default = 5;  // LED intensity (0..255) in day mode   - Important note: Check power consumption and used power supply capabilities!
 int usenightmode_default = 1;     // Use the night mode to reduce LED intensity during set times
 int day_time_start_default = 7;   // Define day mode start --> time before is then night mode if used
 int day_time_stop_default = 22;   // Define day mode end --> time after is then night mode if used
@@ -132,7 +130,7 @@ int test_minute = 38;     // Test a special time: minute
 // ###########################################################################################################################################
 
 enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor, showScrollingTimeEveryXMinutes, 
-    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown };
+    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night };
 
 struct setting
 {
@@ -153,7 +151,9 @@ std::map<setting_type, setting> all_settings = {
     { setting_type::animationDelay, { "animationDelay", {}, 20, {} } },
     { setting_type::textScrollDelay, { "textScrollDelay", {}, 100, {} } },
     { setting_type::blinkingSecond, { "blinkingSecond", {}, 0, {} } },
-    { setting_type::minuteCountdown, { "minuteCountdown", {}, 0, {} } }
+    { setting_type::minuteCountdown, { "minuteCountdown", {}, 0, {} } },
+    { setting_type::intensity_day, { "intensity_day", {}, 22, {} } },
+    { setting_type::intensity_night, { "intensity_night", {}, 5, {} } }
 };
 
 std::map<int, setting_type> UI2settingMap;

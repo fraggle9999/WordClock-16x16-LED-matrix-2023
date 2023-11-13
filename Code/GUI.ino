@@ -31,8 +31,6 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putUInt("redVal_back", redVal_back_default);
         preferences.putUInt("greenVal_back", greenVal_back_default);
         preferences.putUInt("blueVal_back", blueVal_back_default);
-        preferences.putUInt("intensity_day", intensity_day_default);
-        preferences.putUInt("intensity_night", intensity_night_default);
         preferences.putUInt("usenightmode", usenightmode_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
@@ -153,14 +151,14 @@ void switchNightMode(Control* sender, int value) {
     case S_ACTIVE:
       usenightmode = 1;
       if ((iHour >= day_time_start) && (iHour <= day_time_stop)) {
-        intensity = intensity_day;
-        if ((iHour == 0) && (day_time_stop == 23)) intensity = intensity_night;  // Special function if day_time_stop set to 23 and time is 24, so 0...
+        intensity = getSetting(setting_type::intensity_day);
+        if ((iHour == 0) && (day_time_stop == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
       } else {
-        intensity = intensity_night;
+        intensity = getSetting(setting_type::intensity_night);
       }
       break;
     case S_INACTIVE:
-      intensity = intensity_day;
+      intensity = getSetting(setting_type::intensity_day);
       usenightmode = 0;
       break;
   }
@@ -343,30 +341,6 @@ void colCallTIME(Control* sender, int type) {
 // ###########################################################################################################################################
 void colCallBACK(Control* sender, int type) {
   getRGBBACK(sender->value);
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Slider change for LED intensity: DAY
-// ###########################################################################################################################################
-void sliderBrightnessDay(Control* sender, int type) {
-  updatedevice = false;
-  delay(1000);
-  intensity_day = sender->value.toInt();
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Slider change for LED intensity: NIGHT
-// ###########################################################################################################################################
-void sliderBrightnessNight(Control* sender, int type) {
-  updatedevice = false;
-  delay(1000);
-  intensity_night = sender->value.toInt();
-  changedvalues = true;
-  updatedevice = true;
 }
 
 

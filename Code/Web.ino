@@ -103,10 +103,10 @@ void setupWebInterface() {
   switchNightModeID = ESPUI.switcher("Use night mode to reduce brightness", &switchNightMode, ControlColor::Dark, usenightmode);
 
   // Intensity DAY slider selector: !!! DEFAULT LIMITED TO 64 of 255 !!!
-  sliderBrightnessDayID = ESPUI.slider("Brightness during the day", &sliderBrightnessDay, ControlColor::Dark, intensity_day, 0, LEDintensityLIMIT);
+  setupSlider(setting_type::intensity_day, "Brightness during the day", 0, LEDintensityLIMIT);
 
   // Intensity NIGHT slider selector: !!! DEFAULT LIMITED TO 64 of 255 !!!
-  sliderBrightnessNightID = ESPUI.slider("Brightness at night", &sliderBrightnessNight, ControlColor::Dark, intensity_night, 0, LEDintensityLIMIT);
+  setupSlider(setting_type::intensity_night, "Brightness at night", 0, LEDintensityLIMIT);
 
   // Night mode status:
   statusNightModeID = ESPUI.label("Night mode status", ControlColor::Dark, "Night mode not used");

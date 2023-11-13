@@ -89,10 +89,10 @@ void show_time(int hours, int minutes) {
   // Night/Day mode intensity setting:
   if ((usenightmode == 1) && (set_web_intensity == 0)) {
     if ((iHour >= day_time_start) && (iHour < day_time_stop)) {
-      intensity = intensity_day;
-      if ((iHour == 0) && (day_time_stop == 23)) intensity = intensity_night;  // Special function if day_time_stop set to 23 and time is 24, so 0...
+      intensity = getSetting(setting_type::intensity_day);
+      if ((iHour == 0) && (day_time_stop == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
     } else {
-      intensity = intensity_night;
+      intensity = getSetting(setting_type::intensity_night);
     }
     if (testDayNightmode == 1) {  // Test day/night times function:
       Serial.println("############################################################################################");
@@ -112,7 +112,7 @@ void show_time(int hours, int minutes) {
       Serial.println("############################################################################################");
     }
   } else {  // Control intensity by WordClock settings or via HTML command:
-    if (set_web_intensity == 0) intensity = intensity_day;
+    if (set_web_intensity == 0) intensity = getSetting(setting_type::intensity_day);
     if (set_web_intensity == 1) intensity = 0;
   }
   strip.setBrightness(intensity);

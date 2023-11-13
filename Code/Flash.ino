@@ -15,8 +15,6 @@ void getFlashValues() {
   redVal_back = preferences.getUInt("redVal_back", redVal_back_default);
   greenVal_back = preferences.getUInt("greenVal_back", greenVal_back_default);
   blueVal_back = preferences.getUInt("blueVal_back", blueVal_back_default);
-  intensity_day = preferences.getUInt("intensity_day", intensity_day_default);
-  intensity_night = preferences.getUInt("intensity_night", intensity_night_default);
   usenightmode = preferences.getUInt("usenightmode", usenightmode_default);
   day_time_start = preferences.getUInt("day_time_start", day_time_start_default);
   day_time_stop = preferences.getUInt("day_time_stop", day_time_stop_default);
@@ -54,8 +52,6 @@ void setFlashValues() {
   preferences.putUInt("redVal_back", redVal_back);
   preferences.putUInt("greenVal_back", greenVal_back);
   preferences.putUInt("blueVal_back", blueVal_back);
-  preferences.putUInt("intensity_day", intensity_day);
-  preferences.putUInt("intensity_night", intensity_night);
   preferences.putUInt("usenightmode", usenightmode);
   preferences.putUInt("day_time_start", day_time_start);
   preferences.putUInt("day_time_stop", day_time_stop);
