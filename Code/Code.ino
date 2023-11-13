@@ -59,7 +59,7 @@
 // ###########################################################################################################################################
 // # Version number of the code:
 // ###########################################################################################################################################
-const char* WORD_CLOCK_VERSION = "V2023.11";
+const char* WORD_CLOCK_VERSION = "V2023.11.1";
 
 
 // ###########################################################################################################################################
@@ -105,17 +105,9 @@ bool WiFIsetup = false;
 // to be configured and stored
 int FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal; 
 
-int UseFixedMinuteColors, 
-    FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 
+int FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 
 
-int AnimationDelay;
-int TextScrollDelay;
-
-int BlinkingSecond;
-int MinuteCountdown;
-
-int minuteCountDown = 0;
-int ShowScrollingTimeEveryXMinutes = -1;
+int minuteCountDown = 0; // global variable, not for flash!
 
 // fixed values
 const int max_cols = 16;

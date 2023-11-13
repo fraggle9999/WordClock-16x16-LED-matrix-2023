@@ -735,6 +735,6 @@ void showScrollingText(const std::string& Text, uint32_t color) {
     }
 
     strip.show(); 
-    delay(TextScrollDelay);  
+    delay(getSetting(setting_type::textScrollDelay));  
   }
 }

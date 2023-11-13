@@ -87,29 +87,19 @@ int usenightmode_default = 1;     // Use the night mode to reduce LED intensity 
 int day_time_start_default = 7;   // Define day mode start --> time before is then night mode if used
 int day_time_stop_default = 22;   // Define day mode end --> time after is then night mode if used
 
-int UseFixedHourColor_default = 1;
 int FixedHourColor_redVal_default = 255; 
 int FixedHourColor_greenVal_default = 0; 
 int FixedHourColor_blueVal_default = 0; 
 
-int UseFixedMinuteColors_default = 1;
 int FixedMinuteColor_redVal_default[4] = { 255, 255, 0, 255 }; 
 int FixedMinuteColor_greenVal_default[4] = { 0, 255, 255, 255 }; 
 int FixedMinuteColor_blueVal_default[4] = { 0, 255, 0, 0 }; 
-
-int AnimationDelay_default = 20;
-int TextScrollDelay_default = 100;
-
-int BlinkingSecond_default = 1;
-int MinuteCountdown_default = 1;
-
-int ShowScrollingTimeEveryMinute_default = 1;
 
 // ###########################################################################################################################################
 // # Various default settings:
 // ###########################################################################################################################################
 int RandomColor_default = 0;     // Change text color every minute in random color
-int maxWiFiconnctiontries = 30;  // Maximum connection tries to logon to the set WiFi. After the amount of tries is reached the WiFi settings will be deleted!
+int maxWiFiconnectiontries = 30;  // Maximum connection tries to logon to the set WiFi. After the amount of tries is reached the WiFi settings will be deleted!
 
 
 // ###########################################################################################################################################
@@ -141,7 +131,8 @@ int test_minute = 38;     // Test a special time: minute
 
 // ###########################################################################################################################################
 
-enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor,  showScrollingTimeEveryXMinutes };
+enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor, showScrollingTimeEveryXMinutes, 
+    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown };
 
 struct setting
 {
@@ -157,7 +148,12 @@ std::map<setting_type, setting> all_settings = {
     { setting_type::useStartupText, { "useStartupText", {}, 1, {} } },
     { setting_type::usesinglemin, { "usesinglemin", {}, 1, {} } },
     { setting_type::useFixedHourColor, { "useFixedHourColor", {}, 0, {} } },
-    { setting_type::showScrollingTimeEveryXMinutes, { "showScrollingTimeEveryXMinutes", {}, 0, {} } } 
+    { setting_type::showScrollingTimeEveryXMinutes, { "showScrollingTimeEveryXMinutes", {}, 0, {} } }, 
+    { setting_type::useFixedMinuteColors, { "useFixedMinuteColors", {}, 0, {} } },
+    { setting_type::animationDelay, { "animationDelay", {}, 20, {} } },
+    { setting_type::textScrollDelay, { "textScrollDelay", {}, 100, {} } },
+    { setting_type::blinkingSecond, { "blinkingSecond", {}, 0, {} } },
+    { setting_type::minuteCountdown, { "minuteCountdown", {}, 0, {} } }
 };
 
 std::map<int, setting_type> UI2settingMap;

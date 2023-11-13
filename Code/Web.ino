@@ -21,6 +21,17 @@ void setupSwitcher(const setting_type type, const char* caption)
 
 
 // ###########################################################################################################################################
+// # Setup a slider field:
+// ###########################################################################################################################################
+void setupSlider(const setting_type type, const char* caption, const int min, const int max)
+{
+  const auto ID = ESPUI.slider(caption, call_generic_number, ControlColor::Dark, getSetting(type), min, max);
+  all_settings[type].UI_ID = ID;
+  UI2settingMap[ID] = type;
+}
+
+
+// ###########################################################################################################################################
 // # Setup a color field:
 // ###########################################################################################################################################
 void setupHexColor(const setting_type type, const char* caption)
@@ -126,6 +137,11 @@ void setupWebInterface() {
   setupSwitcher(setting_type::useFixedHourColor, "Use fixed hour color");
   setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_generic_number, -1, 7);
 
+  setupSwitcher(setting_type::useFixedMinuteColors, "Use fixed minute colors");
+  setupSlider(setting_type::animationDelay, "Animation delay", 0, 200);
+  setupSlider(setting_type::textScrollDelay, "Text scroll delay", 0, 200);
+  setupSwitcher(setting_type::blinkingSecond, "Blinking second");
+  setupSwitcher(setting_type::minuteCountdown, "Minute countdown");
 
   // Section WiFi:
   // #############

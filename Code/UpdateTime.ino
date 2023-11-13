@@ -42,7 +42,7 @@ void handleWithSeconds(const int hours, const int minutes) {
 
   getMinuteCoordsAndOffsets(0, plus_coordX, coordY, minuteVal_offsetX, minuteText_coordX, minuteText_len);
   
-  if (BlinkingSecond == 1)
+  if (getSetting(setting_type::blinkingSecond) == 1)
   {
     uint32_t c = color_green;
     if (currentSecond % 2 == 0)
@@ -52,7 +52,7 @@ void handleWithSeconds(const int hours, const int minutes) {
     setLEDcolXY(plus_coordX, coordY, 1, c);
   }
 
-  if (MinuteCountdown == 1)
+  if (getSetting(setting_type::minuteCountdown) == 1)
   {
     // show countdown to next minute
     if ((currentSecond >= 56) && (currentSecond <= 59))
@@ -142,7 +142,7 @@ void show_time(int hours, int minutes) {
   }
 
   // show current time as text
-  if (ShowScrollingTimeEveryXMinutes != 0)
+  if (getSetting(setting_type::showScrollingTimeEveryXMinutes) != 0)
   {
     if (minuteCountDown > 0)
       --minuteCountDown;
@@ -151,7 +151,7 @@ void show_time(int hours, int minutes) {
     {
       showCurrentTimeAsScrollingText(iHour, iMinute);
 
-      minuteCountDown = ShowScrollingTimeEveryXMinutes; 
+      minuteCountDown = getSetting(setting_type::showScrollingTimeEveryXMinutes); 
       if (minuteCountDown < 0)
         minuteCountDown = random(1, 7);
     }
@@ -175,7 +175,7 @@ void setLEDtimePart(const std::map<time_parts, position_t>& timeParts, const tim
   if (Index == timeParts.end())
     return;
 
-  setLEDcolXY(Index->second, color, AnimationDelay);
+  setLEDcolXY(Index->second, color, getSetting(setting_type::animationDelay));
 }
 
 
@@ -617,7 +617,7 @@ void showTime(const int iHour, const int iMinute)
       const auto& positionVector = Index->second;
 
       if (xHour <= positionVector.size())
-        setLEDcolXY(positionVector[xHour - 1], colorRGBForHour, AnimationDelay);
+        setLEDcolXY(positionVector[xHour - 1], colorRGBForHour, getSetting(setting_type::animationDelay));
     }
   }
 
@@ -970,13 +970,13 @@ void showMinutes(int minutes) {
   
   uint32_t colorRGBforMinute = colorRGB;
   
-  if (UseFixedMinuteColors == 1)
+  if (getSetting(setting_type::useFixedMinuteColors) == 1)
     // fixed colors for minutes
     colorRGBforMinute = strip.Color(FixedMinuteColor_redVal[minMod - 1], FixedMinuteColor_greenVal[minMod - 1], FixedMinuteColor_blueVal[minMod - 1]);
 
   setLEDcolXY(plus_coordX, coordY, 1, colorRGB); // +
   setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute); // num minutes
-  setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB, AnimationDelay); // "MINUTEN"
+  setLEDcolXY(minuteText_coordX, coordY, minuteText_len, colorRGB, getSetting(setting_type::animationDelay)); // "MINUTEN"
 }
 
 

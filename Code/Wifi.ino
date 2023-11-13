@@ -71,16 +71,16 @@ void WIFI_SETUP() {
         tryCount = tryCount + 1;
         Serial.print("Connection try #: ");
         Serial.println(tryCount);
-        if (tryCount >= maxWiFiconnctiontries - 10) {
+        if (tryCount >= maxWiFiconnectiontries - 10) {
           ShowWLAN(strip.Color(255, 0, 0));
         }
-        if (tryCount == maxWiFiconnctiontries) {
+        if (tryCount == maxWiFiconnectiontries) {
           Serial.println("\n\nWIFI CONNECTION ERROR: If the connection still can not be established please check the WiFi settings or location of the device.\n\n");
           preferences.putString("WIFIssid", "");  // Reset entered WiFi ssid
           preferences.putString("WIFIpass", "");  // Reset entered WiFi password
           preferences.end();
           delay(250);
-          Serial.println("WiFi settings deleted because in " + String(maxWiFiconnctiontries) + " tries the WiFi connection could not be established. Temporary WordClock access point will be started to reconfigure WiFi again.");
+          Serial.println("WiFi settings deleted because in " + String(maxWiFiconnectiontries) + " tries the WiFi connection could not be established. Temporary WordClock access point will be started to reconfigure WiFi again.");
           ESP.restart();
         }
         delay(500);
