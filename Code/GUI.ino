@@ -225,27 +225,14 @@ void call_generic_color(Control* sender, int value) {
 
 
 // ###########################################################################################################################################
-// # GUI: Use fixed hour color:
+// # GUI: Convert hex color value to RGB int values:
 // ###########################################################################################################################################
-void call_use_fixed_hour_color(Control* sender, int value) {
+void getRGB(const std::string& hexValue, int& red, int& green, int& blue) {
   updatedevice = false;
   delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      putSetting(setting_type::useFixedHourColor, 1);
-//      ESPUI.updateVisibility(text_colour_background, false);
-//      ESPUI.updateVisibility(text_colour_time, false);
-//      redVal_back = 0;
-//      greenVal_back = 0;
-//      blueVal_back = 0;
-      break;
-    case S_INACTIVE:
-      putSetting(setting_type::useFixedHourColor, 0);
-//      ESPUI.updateVisibility(text_colour_background, true);
-//      ESPUI.updateVisibility(text_colour_time, true);
-//      ESPUI.jsonReload();
-      break;
-  }
+  red = hexcolorToInt(hexValue.substr(0, 2));
+  green = hexcolorToInt(hexValue.substr(2, 2));
+  blue = hexcolorToInt(hexValue.substr(4, 2));
   changedvalues = true;
   updatedevice = true;
 }
@@ -254,49 +241,28 @@ void call_use_fixed_hour_color(Control* sender, int value) {
 // ###########################################################################################################################################
 // # GUI: Convert hex color value to RGB int values - TIME:
 // ###########################################################################################################################################
-void getRGBTIME(String hexvalue) {
-  updatedevice = false;
-  delay(1000);
-  hexvalue.toUpperCase();
-  char c[7];
-  hexvalue.toCharArray(c, 8);
-  int red = hexcolorToInt(c[1], c[2]);
-  int green = hexcolorToInt(c[3], c[4]);
-  int blue = hexcolorToInt(c[5], c[6]);
-  redVal_time = red;
-  greenVal_time = green;
-  blueVal_time = blue;
-  changedvalues = true;
-  updatedevice = true;
+void getRGBTIME(const std::string& hexValue) {
+  getRGB(hexValue, redVal_time, greenVal_time, blueVal_time);
 }
 
 
 // ###########################################################################################################################################
 // # GUI: Convert hex color value to RGB int values - BACKGROUND:
 // ###########################################################################################################################################
-void getRGBBACK(String hexvalue) {
-  updatedevice = false;
-  delay(1000);
-  hexvalue.toUpperCase();
-  char c[7];
-  hexvalue.toCharArray(c, 8);
-  int red = hexcolorToInt(c[1], c[2]);
-  int green = hexcolorToInt(c[3], c[4]);
-  int blue = hexcolorToInt(c[5], c[6]);
-  redVal_back = red;
-  greenVal_back = green;
-  blueVal_back = blue;
-  changedvalues = true;
-  updatedevice = true;
+void getRGBBACK(const std::string& hexValue) {
+  getRGB(hexValue, redVal_back, greenVal_back, blueVal_back);
 }
 
 
 // ###########################################################################################################################################
 // # GUI: Convert hex color value to RGB int values - helper function:
 // ###########################################################################################################################################
-int hexcolorToInt(char upper, char lower) {
-  int uVal = (int)upper;
-  int lVal = (int)lower;
+int hexcolorToInt(const std::string& hexValue) {
+  if (hexValue.size() != 2)
+    return 0;
+
+  int uVal = hexValue[0];
+  int lVal = hexValue[1];
   uVal = uVal > 64 ? uVal - 55 : uVal - 48;
   uVal = uVal << 4;
   lVal = lVal > 64 ? lVal - 55 : lVal - 48;
@@ -308,7 +274,7 @@ int hexcolorToInt(char upper, char lower) {
 // # GUI: Color change for time color:
 // ###########################################################################################################################################
 void colCallTIME(Control* sender, int type) {
-  getRGBTIME(sender->value);
+  getRGBTIME(sender->value.c_str());
 }
 
 
@@ -316,7 +282,7 @@ void colCallTIME(Control* sender, int type) {
 // # GUI: Color change for background color:
 // ###########################################################################################################################################
 void colCallBACK(Control* sender, int type) {
-  getRGBBACK(sender->value);
+  getRGBBACK(sender->value.c_str());
 }
 
 
