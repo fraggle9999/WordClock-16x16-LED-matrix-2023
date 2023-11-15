@@ -215,9 +215,14 @@ void call_generic_number(Control* sender, int value) {
 // ###########################################################################################################################################
 // # GUI: Generic color:
 // ###########################################################################################################################################
-void call_generic_color(Control* sender, int value) {
-  updatedevice = false;
-  delay(1000);
+void call_generic_color(Control* sender, int type) {
+  // TODO: store as hex string instead of three int values (get 3 ints at runtime)
+  int red;
+  int green;
+  int blue;
+
+  getRGB(sender->value.c_str(), red, green, blue);
+
   const auto setting = UI2settingMap[sender->id];
 //  putSetting(setting, sender->value.toInt());
   __initVars();
