@@ -96,10 +96,8 @@ int usenightmode, day_time_start, day_time_stop, statusNightMode;
 int statusLabelID, statusNightModeID, statusLanguageID, intensity_web_HintID, DayNightSectionID, LEDsettingsSectionID;
 int sliderBrightnessDayID, switchNightModeID, sliderBrightnessNightID, call_day_time_startID, call_day_time_stopID;
 char* selectLang;
-int RandomColor;
 uint16_t text_colour_background;
 uint16_t text_colour_time;
-int switchRandomColorID;
 bool WiFIsetup = false;
 
 // to be configured and stored

@@ -34,7 +34,6 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         preferences.putUInt("usenightmode", usenightmode_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
-        preferences.putUInt("RandomColor", RandomColor_default);
 
         preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
         preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
@@ -173,6 +172,10 @@ void switchNightMode(Control* sender, int value) {
 void __initVars() {
   minuteCountDown = 0;
   
+  ESPUI.updateVisibility(text_colour_background, getSetting(setting_type::RandomColor) == 0);
+  ESPUI.updateVisibility(text_colour_time, getSetting(setting_type::RandomColor) == 0);
+  ESPUI.jsonReload();
+
   changedvalues = true;
   updatedevice = true;
 }
@@ -241,33 +244,6 @@ void call_use_fixed_hour_color(Control* sender, int value) {
 //      ESPUI.updateVisibility(text_colour_background, true);
 //      ESPUI.updateVisibility(text_colour_time, true);
 //      ESPUI.jsonReload();
-      break;
-  }
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Use random color mode:
-// ###########################################################################################################################################
-void switchRandomColor(Control* sender, int value) {
-  updatedevice = false;
-  delay(1000);
-  switch (value) {
-    case S_ACTIVE:
-      RandomColor = 1;
-      ESPUI.updateVisibility(text_colour_background, false);
-      ESPUI.updateVisibility(text_colour_time, false);
-      redVal_back = 0;
-      greenVal_back = 0;
-      blueVal_back = 0;
-      break;
-    case S_INACTIVE:
-      RandomColor = 0;
-      ESPUI.updateVisibility(text_colour_background, true);
-      ESPUI.updateVisibility(text_colour_time, true);
-      ESPUI.jsonReload();
       break;
   }
   changedvalues = true;

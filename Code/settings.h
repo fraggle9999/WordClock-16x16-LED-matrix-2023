@@ -96,7 +96,6 @@ int FixedMinuteColor_blueVal_default[4] = { 0, 255, 0, 0 };
 // ###########################################################################################################################################
 // # Various default settings:
 // ###########################################################################################################################################
-int RandomColor_default = 0;     // Change text color every minute in random color
 int maxWiFiconnectiontries = 30;  // Maximum connection tries to logon to the set WiFi. After the amount of tries is reached the WiFi settings will be deleted!
 
 
@@ -130,7 +129,7 @@ int test_minute = 38;     // Test a special time: minute
 // ###########################################################################################################################################
 
 enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor, showScrollingTimeEveryXMinutes, 
-    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night };
+    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night, RandomColor };
 
 struct setting
 {
@@ -153,7 +152,8 @@ std::map<setting_type, setting> all_settings = {
     { setting_type::blinkingSecond, { "blinkingSecond", {}, 0, {} } },
     { setting_type::minuteCountdown, { "minuteCountdown", {}, 0, {} } },
     { setting_type::intensity_day, { "intensity_day", {}, 22, {} } },
-    { setting_type::intensity_night, { "intensity_night", {}, 5, {} } }
+    { setting_type::intensity_night, { "intensity_night", {}, 5, {} } },
+    { setting_type::RandomColor, { "RandomColor", {}, 0, {} } }
 };
 
 std::map<int, setting_type> UI2settingMap;

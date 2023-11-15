@@ -80,8 +80,8 @@ void setupWebInterface() {
   ESPUI.setInputType(text_colour_background, "color");
 
   // Use random color mode:
-  switchRandomColorID = ESPUI.switcher("Use random text color every new minute", &switchRandomColor, ControlColor::Dark, RandomColor);
-  if (RandomColor == 1) {
+  setupSwitcher(setting_type::RandomColor, "Use random text color every new minute");
+  if (getSetting(setting_type::RandomColor) == 1) {
     ESPUI.updateVisibility(text_colour_time, false);
     ESPUI.updateVisibility(text_colour_background, false);
   }
@@ -328,7 +328,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(call_day_time_stopID, false);
           ESPUI.updateVisibility(text_colour_time, false);
           ESPUI.updateVisibility(text_colour_background, false);
-          ESPUI.updateVisibility(switchRandomColorID, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
           ESPUI.jsonReload();
         }
@@ -353,7 +352,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(call_day_time_stopID, true);
           ESPUI.updateVisibility(text_colour_time, true);
           ESPUI.updateVisibility(text_colour_background, true);
-          ESPUI.updateVisibility(switchRandomColorID, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
         }
         changedvalues = true;

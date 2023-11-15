@@ -121,7 +121,7 @@ void show_time(int hours, int minutes) {
   back_color();
 
   // Static text color or random color mode:
-  if (RandomColor == 0) 
+  if (getSetting(setting_type::RandomColor) == 0) 
     colorRGB = strip.Color(redVal_time, greenVal_time, blueVal_time);
   else
     colorRGB = getRandomColor();

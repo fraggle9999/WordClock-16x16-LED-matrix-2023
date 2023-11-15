@@ -18,7 +18,6 @@ void getFlashValues() {
   usenightmode = preferences.getUInt("usenightmode", usenightmode_default);
   day_time_start = preferences.getUInt("day_time_start", day_time_start_default);
   day_time_stop = preferences.getUInt("day_time_stop", day_time_stop_default);
-  RandomColor = preferences.getUInt("RandomColor", RandomColor_default);
 
   FixedHourColor_redVal = preferences.getUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
   FixedHourColor_greenVal = preferences.getUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
@@ -55,7 +54,6 @@ void setFlashValues() {
   preferences.putUInt("usenightmode", usenightmode);
   preferences.putUInt("day_time_start", day_time_start);
   preferences.putUInt("day_time_stop", day_time_stop);
-  preferences.putUInt("RandomColor", RandomColor);
 
   preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal);
   preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal);
