@@ -19,10 +19,6 @@ void getFlashValues() {
   day_time_start = preferences.getUInt("day_time_start", day_time_start_default);
   day_time_stop = preferences.getUInt("day_time_stop", day_time_stop_default);
 
-  FixedHourColor_redVal = preferences.getUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
-  FixedHourColor_greenVal = preferences.getUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
-  FixedHourColor_blueVal = preferences.getUInt("FixedHourColor_blueVal", FixedHourColor_blueVal_default);
-
   for (int i = 0; i < 4; ++i)
   {
     std::string Prefix = "FixedMinuteColor" + std::to_string(i);
@@ -54,10 +50,6 @@ void setFlashValues() {
   preferences.putUInt("usenightmode", usenightmode);
   preferences.putUInt("day_time_start", day_time_start);
   preferences.putUInt("day_time_stop", day_time_stop);
-
-  preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal);
-  preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal);
-  preferences.putUInt("FixedHourColor_blueVal", FixedHourColor_blueVal);
 
   for (int i = 0; i < 4; ++i)
   {

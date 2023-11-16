@@ -101,7 +101,7 @@ uint16_t text_colour_time;
 bool WiFIsetup = false;
 
 // to be configured and stored
-int FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal; 
+int FixedHourColor_redValxx, FixedHourColor_greenVal, FixedHourColor_blueVal; 
 
 int FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 
 

@@ -1,3 +1,7 @@
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+
 // ###########################################################################################################################################
 // # Setup a number field:
 // ###########################################################################################################################################
@@ -34,12 +38,13 @@ void setupSlider(const setting_type type, const char* caption, const int min, co
 // ###########################################################################################################################################
 // # Setup a color field:
 // ###########################################################################################################################################
-void setupHexColor(const setting_type type, const char* caption)
+void setupColor(const setting_type type, const char* caption)
 {
-  // Time color selector:
-  char hex_time[7] = { 0 };
-  sprintf(hex_time, "#%02X%02X%02X", redVal_time, greenVal_time, blueVal_time);
-  const auto ID = ESPUI.text("Time", call_generic_color, ControlColor::Dark, hex_time);
+  // Color selector:
+  std::ostringstream ss;
+  ss << "#" << std::setfill('0') << std::setw(6) << std::hex << getSetting(type);
+  std::string time_str = ss.str();
+  const auto ID = ESPUI.text(caption, call_generic_color, ControlColor::Dark, time_str.c_str());
   ESPUI.setInputType(ID, "color");
 }
 
@@ -135,8 +140,8 @@ void setupWebInterface() {
   ESPUI.separator("Special functions:");
 
   setupSwitcher(setting_type::useFixedHourColor, "Use fixed hour color");
+  setupColor(setting_type::colorHour, "Fixed hour color");
   setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_generic_number, -1, 7);
-
   setupSwitcher(setting_type::useFixedMinuteColors, "Use fixed minute colors");
   setupSlider(setting_type::animationDelay, "Animation delay", 0, 200);
   setupSlider(setting_type::textScrollDelay, "Text scroll delay", 0, 200);

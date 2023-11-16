@@ -129,7 +129,8 @@ int test_minute = 38;     // Test a special time: minute
 // ###########################################################################################################################################
 
 enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor, showScrollingTimeEveryXMinutes, 
-    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night, RandomColor };
+    useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night, RandomColor,
+    colorTime, colorBack, colorHour, colorMin1, colorMin2, colorMin3, colorMin4 };
 
 struct setting
 {
@@ -153,7 +154,14 @@ std::map<setting_type, setting> all_settings = {
     { setting_type::minuteCountdown, { "minuteCountdown", {}, 0, {} } },
     { setting_type::intensity_day, { "intensity_day", {}, 22, {} } },
     { setting_type::intensity_night, { "intensity_night", {}, 5, {} } },
-    { setting_type::RandomColor, { "RandomColor", {}, 0, {} } }
+    { setting_type::RandomColor, { "RandomColor", {}, 0, {} } },
+    { setting_type::colorTime, { "colorTime", {}, 0x00ffff, {} } },
+    { setting_type::colorBack, { "colorBack", {}, 0x000000, {} } },
+    { setting_type::colorHour, { "colorHour", {}, 0xff0000, {} } },
+    { setting_type::colorMin1, { "colorMin1", {}, 0xff0000, {} } },
+    { setting_type::colorMin2, { "colorMin2", {}, 0xffffff, {} } },
+    { setting_type::colorMin3, { "colorMin3", {}, 0x00ff00, {} } },
+    { setting_type::colorMin4, { "colorMin4", {}, 0xffff00, {} } }
 };
 
 std::map<int, setting_type> UI2settingMap;

@@ -602,7 +602,7 @@ void showTime(const int iHour, const int iMinute)
   uint32_t colorRGBForHour = colorRGB;
   
   if (getSetting(setting_type::useFixedHourColor) == 1)
-    colorRGBForHour = strip.Color(FixedHourColor_redVal, FixedHourColor_greenVal, FixedHourColor_blueVal);
+    colorRGBForHour = getSetting(setting_type::colorHour);
 
   if (one1_defined && (xHour == 1) && (iMinute < 5))
   {
