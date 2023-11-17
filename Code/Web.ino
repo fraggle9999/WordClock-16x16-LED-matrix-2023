@@ -81,8 +81,8 @@ void setupWebInterface() {
   // Use random color mode:
   setupSwitcher(setting_type::RandomColor, "Use random text color every new minute");
   if (getSetting(setting_type::RandomColor) == 1) {
-    ESPUI.updateVisibility(text_colour_time, false);
-    ESPUI.updateVisibility(text_colour_background, false);
+    ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, false);
+    ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, false);
   }
 
   // Show single minutes to display the minute exact time:
@@ -325,8 +325,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(sliderBrightnessNightID, false);
           ESPUI.updateVisibility(call_day_time_startID, false);
           ESPUI.updateVisibility(call_day_time_stopID, false);
-          ESPUI.updateVisibility(text_colour_time, false);
-          ESPUI.updateVisibility(text_colour_background, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
           ESPUI.jsonReload();
         }
@@ -349,8 +347,6 @@ void handleLEDupdate() {  // LED server pages urls:
           ESPUI.updateVisibility(sliderBrightnessNightID, true);
           ESPUI.updateVisibility(call_day_time_startID, true);
           ESPUI.updateVisibility(call_day_time_stopID, true);
-          ESPUI.updateVisibility(text_colour_time, true);
-          ESPUI.updateVisibility(text_colour_background, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
         }
         changedvalues = true;

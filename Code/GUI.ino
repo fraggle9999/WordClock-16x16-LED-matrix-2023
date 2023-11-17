@@ -154,9 +154,9 @@ void switchNightMode(Control* sender, int value) {
 void __initVars() {
   minuteCountDown = 0;
   
-  ESPUI.updateVisibility(text_colour_background, getSetting(setting_type::RandomColor) == 0);
-  ESPUI.updateVisibility(text_colour_time, getSetting(setting_type::RandomColor) == 0);
-  ESPUI.jsonReload();
+  ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, getSetting(setting_type::RandomColor) == 0);
+  ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, getSetting(setting_type::RandomColor) == 0);
+//  ESPUI.jsonReload();
 
   changedvalues = true;
   updatedevice = true;
