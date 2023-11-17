@@ -454,11 +454,8 @@ void update_display() {
     Serial.println(" ");
     Serial.println("Show 'TEST' text...");
     strip.setBrightness(25);
-    redVal_back = 0;
-    greenVal_back = 0;
-    blueVal_back = 0;
     usenightmode = 0;
-    uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
+    uint32_t c = 0x000000;
     int TextWait = 500;
     showTextCharByChar("TEST", TextWait, c);
     for (int i = 1; i <= 12; i++) {  // 12 hours only:
@@ -489,7 +486,7 @@ void update_display() {
 // # Background color function: SET ALL LEDs OFF
 // ###########################################################################################################################################
 void back_color() {
-  uint32_t c0 = strip.Color(redVal_back, greenVal_back, blueVal_back);  // Background color
+  uint32_t c0 = getSetting(setting_type::colorBack);  // Background color
   for (int i = 0; i < NUMPIXELS; i++) {
     strip.setPixelColor(i, c0);
   }
@@ -505,13 +502,13 @@ void switchLED(int ledNrFrom, int ledNrTo, int switchOn) {
   } else {
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
-        strip.setPixelColor(i, strip.Color(redVal_time, greenVal_time, blueVal_time));
+        strip.setPixelColor(i, getSetting(setting_type::colorTime));
     }
   }
   if (switchOn == 0) {
     for (int i = ledNrFrom; i <= ledNrTo; i++) {
       if ((i >= 0) && (i < NUMPIXELS))
-        strip.setPixelColor(i, strip.Color(0, 0, 0));  // Switch LEDs off
+        strip.setPixelColor(i, 0x000000);  // Switch LEDs off
     }
   }
 }
@@ -521,7 +518,7 @@ void switchLED(int ledNrFrom, int ledNrTo, int switchOn) {
 // # Actual function, which controls 1/0 of the LED with x/y coords:
 // ###########################################################################################################################################
 void switchLEDXY(int coordX, int coordY, int numCols, int switchOn) {
-  uint32_t color = strip.Color(redVal_time, greenVal_time, blueVal_time);
+  uint32_t color = getSetting(setting_type::colorTime);
   if (switchOn == 0)
     color = strip.Color(0, 0, 0);
 
@@ -534,7 +531,7 @@ void switchLEDXY(int coordX, int coordY, int numCols, int switchOn) {
 // ###########################################################################################################################################
 void callStartText() {
   Serial.println("Show 'WordClock' startup text...");
-  uint32_t c = strip.Color(redVal_time, greenVal_time, blueVal_time);
+  uint32_t c = getSetting(setting_type::colorTime);
   showScrollingText("WordClock", c);
 }
 

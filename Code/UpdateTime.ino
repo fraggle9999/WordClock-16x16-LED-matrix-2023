@@ -122,7 +122,7 @@ void show_time(int hours, int minutes) {
 
   // Static text color or random color mode:
   if (getSetting(setting_type::RandomColor) == 0) 
-    colorRGB = strip.Color(redVal_time, greenVal_time, blueVal_time);
+    colorRGB = getSetting(setting_type::colorTime);
   else
     colorRGB = getRandomColor();
 
@@ -971,8 +971,30 @@ void showMinutes(int minutes) {
   uint32_t colorRGBforMinute = colorRGB;
   
   if (getSetting(setting_type::useFixedMinuteColors) == 1)
+  {
     // fixed colors for minutes
-    colorRGBforMinute = strip.Color(FixedMinuteColor_redVal[minMod - 1], FixedMinuteColor_greenVal[minMod - 1], FixedMinuteColor_blueVal[minMod - 1]);
+    switch (minMod)
+    {
+      case 1: 
+        colorRGBforMinute = getSetting(setting_type::colorMin1);
+        break;
+
+      case 2: 
+        colorRGBforMinute = getSetting(setting_type::colorMin2);
+        break;
+
+      case 3: 
+        colorRGBforMinute = getSetting(setting_type::colorMin3);
+        break;
+
+      case 4: 
+        colorRGBforMinute = getSetting(setting_type::colorMin4);
+        break;
+
+      default:
+        break;
+    }
+  }
 
   setLEDcolXY(plus_coordX, coordY, 1, colorRGB); // +
   setLEDcolXY(minuteVal_offsetX + minMod, coordY, 1, colorRGBforMinute); // num minutes

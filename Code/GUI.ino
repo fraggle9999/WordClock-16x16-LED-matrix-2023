@@ -25,27 +25,9 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         for (const auto& single_setting : all_settings)
           preferences.putInt(single_setting.second.name.c_str(), single_setting.second.default_val);
 
-        preferences.putUInt("redVal_time", redVal_time_default);
-        preferences.putUInt("greenVal_time", greenVal_time_default);
-        preferences.putUInt("blueVal_time", blueVal_time_default);
-        preferences.putUInt("redVal_back", redVal_back_default);
-        preferences.putUInt("greenVal_back", greenVal_back_default);
-        preferences.putUInt("blueVal_back", blueVal_back_default);
         preferences.putUInt("usenightmode", usenightmode_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
         preferences.putUInt("day_time_stop", day_time_stop_default);
-
-        preferences.putUInt("FixedHourColor_redVal", FixedHourColor_redVal_default);
-        preferences.putUInt("FixedHourColor_greenVal", FixedHourColor_greenVal_default);
-        preferences.putUInt("FixedHourColor_blueVal", FixedHourColor_blueVal_default);
-
-        for (int i = 0; i < 4; ++i)
-        {
-          std::string Prefix = "FixedMinuteColor" + std::to_string(i);
-          preferences.putUInt(std::string(Prefix + "_redVal").c_str(), FixedMinuteColor_redVal_default[i]); 
-          preferences.putUInt(std::string(Prefix + "_greenVal").c_str(), FixedMinuteColor_greenVal_default[i]); 
-          preferences.putUInt(std::string(Prefix + "_blueVal").c_str(), FixedMinuteColor_blueVal_default[i]); 
-        }
 
         delay(100);
         preferences.end();
@@ -219,70 +201,11 @@ void call_generic_color(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
   const auto setting = UI2settingMap[sender->id];
-  putSetting(setting, sender->value.toInt());
+
+  std::string color_str = sender->value.c_str();
+  int colorVal = std::stoi(color_str.substr(1), nullptr, 16); // cut off '#' prefix
+  putSetting(setting, colorVal);
   __initVars();
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Convert hex color value to RGB int values:
-// ###########################################################################################################################################
-void getRGB(const std::string& hexValue, int& red, int& green, int& blue) {
-  updatedevice = false;
-  delay(1000);
-  red = hexcolorToInt(hexValue.substr(0, 2));
-  green = hexcolorToInt(hexValue.substr(2, 2));
-  blue = hexcolorToInt(hexValue.substr(4, 2));
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Convert hex color value to RGB int values - TIME:
-// ###########################################################################################################################################
-void getRGBTIME(const std::string& hexValue) {
-  getRGB(hexValue, redVal_time, greenVal_time, blueVal_time);
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Convert hex color value to RGB int values - BACKGROUND:
-// ###########################################################################################################################################
-void getRGBBACK(const std::string& hexValue) {
-  getRGB(hexValue, redVal_back, greenVal_back, blueVal_back);
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Convert hex color value to RGB int values - helper function:
-// ###########################################################################################################################################
-int hexcolorToInt(const std::string& hexValue) {
-  if (hexValue.size() != 2)
-    return 0;
-
-  int uVal = hexValue[0];
-  int lVal = hexValue[1];
-  uVal = uVal > 64 ? uVal - 55 : uVal - 48;
-  uVal = uVal << 4;
-  lVal = lVal > 64 ? lVal - 55 : lVal - 48;
-  return uVal + lVal;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Color change for time color:
-// ###########################################################################################################################################
-void colCallTIME(Control* sender, int type) {
-  getRGBTIME(sender->value.c_str());
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Color change for background color:
-// ###########################################################################################################################################
-void colCallBACK(Control* sender, int type) {
-  getRGBBACK(sender->value.c_str());
 }
 
 

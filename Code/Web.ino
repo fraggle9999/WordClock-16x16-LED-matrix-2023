@@ -73,16 +73,10 @@ void setupWebInterface() {
   LEDsettingsSectionID = ESPUI.separator("LED settings:");
 
   // Time color selector:
-  char hex_time[7] = { 0 };
-  sprintf(hex_time, "#%02X%02X%02X", redVal_time, greenVal_time, blueVal_time);
-  text_colour_time = ESPUI.text("Time", colCallTIME, ControlColor::Dark, hex_time);
-  ESPUI.setInputType(text_colour_time, "color");
+  setupColor(setting_type::colorTime, "Time");
 
   // Background color selector:
-  char hex_back[7] = { 0 };
-  sprintf(hex_back, "#%02X%02X%02X", redVal_back, greenVal_back, blueVal_back);
-  text_colour_background = ESPUI.text("Background", colCallBACK, ControlColor::Dark, hex_back);
-  ESPUI.setInputType(text_colour_background, "color");
+  setupColor(setting_type::colorBack, "Background");
 
   // Use random color mode:
   setupSwitcher(setting_type::RandomColor, "Use random text color every new minute");

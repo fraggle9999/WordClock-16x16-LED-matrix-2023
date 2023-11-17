@@ -88,8 +88,6 @@ bool updatenow = false;
 bool updatemode = false;
 bool changedvalues = false;
 String iStartTime = " ";
-int redVal_back, greenVal_back, blueVal_back;
-int redVal_time, greenVal_time, blueVal_time;
 int intensity, intensity_web;
 int set_web_intensity = 0;
 int usenightmode, day_time_start, day_time_stop, statusNightMode;
@@ -99,11 +97,6 @@ char* selectLang;
 uint16_t text_colour_background;
 uint16_t text_colour_time;
 bool WiFIsetup = false;
-
-// to be configured and stored
-int FixedHourColor_redValxx, FixedHourColor_greenVal, FixedHourColor_blueVal; 
-
-int FixedMinuteColor_redVal[4], FixedMinuteColor_greenVal[4], FixedMinuteColor_blueVal[4]; 
 
 int minuteCountDown = 0; // global variable, not for flash!
 
