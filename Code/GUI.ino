@@ -200,10 +200,18 @@ void call_generic_number(Control* sender, int value) {
 void call_generic_color(Control* sender, int type) {
   updatedevice = false;
   delay(1000);
-  const auto setting = UI2settingMap[sender->id];
 
   std::string color_str = sender->value.c_str();
+  Serial.print("Selected color: ");
+  Serial.println(color_str.c_str());
   int colorVal = std::stoi(color_str.substr(1), nullptr, 16); // cut off '#' prefix
+  Serial.print("Color value: ");
+  Serial.println(colorVal);
+
+  Serial.print("Sender id: ");
+  Serial.println(sender->id);
+  
+  const auto setting = UI2settingMap[sender->id];
   putSetting(setting, colorVal);
   __initVars();
 }

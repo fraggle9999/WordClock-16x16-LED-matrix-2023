@@ -9,9 +9,9 @@ void getFlashValues() {
   for (auto& single_setting : all_settings)
   {
     const auto* key = single_setting.second.name.c_str();
-    Serial.println(key);
+//    Serial.println(key);
     const auto val = preferences.getInt(key, single_setting.second.default_val);
-    Serial.println(val);
+//    Serial.println(val);
     single_setting.second.val = val;
   }
   
@@ -33,14 +33,14 @@ void setFlashValues() {
   for (const auto& single_setting : all_settings)
   {
     const auto* key = single_setting.second.name.c_str();
-    Serial.println(key);
+//    Serial.println(key);
     const auto val = single_setting.second.val;
-    Serial.println(val);
+//    Serial.println(val);
     preferences.remove(key); // in case it was formerly stored as other data type
-    if (preferences.putInt(key, val) == 0)
-      Serial.println("error");
-    else
-      Serial.println("OK");
+    // if (preferences.putInt(key, val) == 0)
+    //   Serial.println("error");
+    // else
+    //   Serial.println("OK");
   }
 
   preferences.putUInt("usenightmode", usenightmode);

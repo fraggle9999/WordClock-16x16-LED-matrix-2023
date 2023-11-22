@@ -45,6 +45,9 @@ void setupColor(const setting_type type, const char* caption)
   ss << "#" << std::setfill('0') << std::setw(6) << std::hex << getSetting(type);
   std::string time_str = ss.str();
   const auto ID = ESPUI.text(caption, call_generic_color, ControlColor::Dark, time_str.c_str());
+  all_settings[type].UI_ID = ID;
+  UI2settingMap[ID] = type;
+ 
   ESPUI.setInputType(ID, "color");
 }
 
@@ -270,6 +273,8 @@ void setupWebInterface() {
       ESPUI.print(statusNightModeID, "Night time");
     }
   }
+
+  __initVars();
 
   // Deploy the page:
   ESPUI.begin("WordClock");

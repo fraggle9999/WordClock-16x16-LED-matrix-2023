@@ -126,6 +126,7 @@ struct setting
     int UI_ID; // for GUI
 };
 
+// ATTENTION! Key names must not be longer than 15 characters!
 std::map<setting_type, setting> all_settings = { 
     { setting_type::langLEDlayout, { "langLEDlayout", {}, 0, {} } },
     { setting_type::useshowip, { "useshowip", {}, 1, {} } },
@@ -164,7 +165,17 @@ inline int getSetting(const setting_type type) {
 // # Put setting to map:
 // ###########################################################################################################################################
 inline void putSetting(const setting_type type, const int val) {
-  all_settings[type].val = val;
+  auto& setting = all_settings[type];
+
+  // Serial.print("Setting name: ");
+  // Serial.print(setting.name.c_str());
+  // Serial.print(", old val: ");
+  // Serial.println(setting.val);
+
+  setting.val = val;
+
+  // Serial.print("New val: ");
+  // Serial.println(setting.val);
 }
 
 
