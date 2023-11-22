@@ -140,6 +140,10 @@ void setupWebInterface() {
   setupColor(setting_type::colorHour, "Fixed hour color");
   setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_generic_number, -1, 7);
   setupSwitcher(setting_type::useFixedMinuteColors, "Use fixed minute colors");
+  setupColor(setting_type::colorMin1, "Minute 1");
+  setupColor(setting_type::colorMin2, "Minute 2");
+  setupColor(setting_type::colorMin3, "Minute 3");
+  setupColor(setting_type::colorMin4, "Minute 4");
   setupSlider(setting_type::animationDelay, "Animation delay", 0, 200);
   setupSlider(setting_type::textScrollDelay, "Text scroll delay", 0, 200);
   setupSwitcher(setting_type::blinkingSecond, "Blinking second");

@@ -156,6 +156,13 @@ void __initVars() {
   
   ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, getSetting(setting_type::RandomColor) == 0);
   ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, getSetting(setting_type::RandomColor) == 0);
+
+  ESPUI.updateVisibility(all_settings[setting_type::colorHour].UI_ID, getSetting(setting_type::useFixedHourColor) == 1);
+  ESPUI.updateVisibility(all_settings[setting_type::colorMin1].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
+  ESPUI.updateVisibility(all_settings[setting_type::colorMin2].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
+  ESPUI.updateVisibility(all_settings[setting_type::colorMin3].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
+  ESPUI.updateVisibility(all_settings[setting_type::colorMin4].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
+
 //  ESPUI.jsonReload();
 
   changedvalues = true;
@@ -210,7 +217,7 @@ void call_generic_color(Control* sender, int type) {
 
   Serial.print("Sender id: ");
   Serial.println(sender->id);
-  
+
   const auto setting = UI2settingMap[sender->id];
   putSetting(setting, colorVal);
   __initVars();
