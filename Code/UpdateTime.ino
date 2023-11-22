@@ -87,22 +87,22 @@ void show_time(int hours, int minutes) {
   // if (debugtexts == 1) Serial.println("Update display now: " + String(hours) + ":" + String(minutes) + ":" + String(iSecond));
 
   // Night/Day mode intensity setting:
-  if ((usenightmode == 1) && (set_web_intensity == 0)) {
-    if ((iHour >= day_time_start) && (iHour < day_time_stop)) {
+  if ((getSetting(setting_type::usenightmode) == 1) && (set_web_intensity == 0)) {
+    if ((iHour >= getSetting(setting_type::day_time_start)) && (iHour < getSetting(setting_type::day_time_stop))) {
       intensity = getSetting(setting_type::intensity_day);
-      if ((iHour == 0) && (day_time_stop == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
+      if ((iHour == 0) && (getSetting(setting_type::day_time_stop) == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
     } else {
       intensity = getSetting(setting_type::intensity_night);
     }
     if (testDayNightmode == 1) {  // Test day/night times function:
       Serial.println("############################################################################################");
       Serial.println("Current time day/night test: " + String(hours) + ":" + String(minutes) + ":" + String(iSecond));
-      Serial.println("Current settings: day_time_start: " + String(day_time_start) + " day_time_stop: " + String(day_time_stop));
+      Serial.println("Current settings: day_time_start: " + String(getSetting(setting_type::day_time_start)) + " day_time_stop: " + String(getSetting(setting_type::day_time_stop)));
       for (int i = 0; i < 24; i++) {
         String daynightvar = "-";
-        if ((i >= day_time_start) && (i < day_time_stop)) {
+        if ((i >= getSetting(setting_type::day_time_start)) && (i < getSetting(setting_type::day_time_stop))) {
           daynightvar = "Day time";
-          if ((i == 0) && (day_time_stop == 23)) daynightvar = "Night time";
+          if ((i == 0) && (getSetting(setting_type::day_time_stop) == 23)) daynightvar = "Night time";
         } else {
           daynightvar = "Night time";
         }

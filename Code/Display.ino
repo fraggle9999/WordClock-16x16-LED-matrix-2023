@@ -454,7 +454,7 @@ void update_display() {
     Serial.println(" ");
     Serial.println("Show 'TEST' text...");
     strip.setBrightness(25);
-    usenightmode = 0;
+//    usenightmode = 0;
     uint32_t c = 0x000000;
     int TextWait = 500;
     showTextCharByChar("TEST", TextWait, c);

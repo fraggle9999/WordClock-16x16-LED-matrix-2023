@@ -90,9 +90,9 @@ bool changedvalues = false;
 String iStartTime = " ";
 int intensity, intensity_web;
 int set_web_intensity = 0;
-int usenightmode, day_time_start, day_time_stop, statusNightMode;
+int statusNightMode;
 int statusLabelID, statusNightModeID, statusLanguageID, intensity_web_HintID, DayNightSectionID, LEDsettingsSectionID;
-int sliderBrightnessDayID, switchNightModeID, sliderBrightnessNightID, call_day_time_startID, call_day_time_stopID;
+int switchNightModeID;
 char* selectLang;
 bool WiFIsetup = false;
 

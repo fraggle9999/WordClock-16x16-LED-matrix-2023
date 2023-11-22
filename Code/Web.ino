@@ -5,9 +5,9 @@
 // ###########################################################################################################################################
 // # Setup a number field:
 // ###########################################################################################################################################
-void setupNumber(const setting_type type, const char* caption, void (*callback)(Control*, int), const int min, const int max)
+void setupNumber(const setting_type type, const char* caption, const int min, const int max)
 {
-  const auto ID = ESPUI.number(caption, callback, ControlColor::Dark, getSetting(type), min, max);
+  const auto ID = ESPUI.number(caption, call_generic_number, ControlColor::Dark, getSetting(type), min, max);
   all_settings[type].UI_ID = ID;
   UI2settingMap[ID] = type;
 }
@@ -83,10 +83,10 @@ void setupWebInterface() {
 
   // Use random color mode:
   setupSwitcher(setting_type::RandomColor, "Use random text color every new minute");
-  if (getSetting(setting_type::RandomColor) == 1) {
-    ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, false);
-    ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, false);
-  }
+  // if (getSetting(setting_type::RandomColor) == 1) {
+  //   ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, false);
+  //   ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, false);
+  // }
 
   // Show single minutes to display the minute exact time:
   setupSwitcher(setting_type::usesinglemin, "Show single minutes to display the minute exact time");
@@ -102,7 +102,7 @@ void setupWebInterface() {
   DayNightSectionID = ESPUI.separator("Day/Night LED brightness mode settings:");
 
   // Use night mode function:
-  switchNightModeID = ESPUI.switcher("Use night mode to reduce brightness", &switchNightMode, ControlColor::Dark, usenightmode);
+  switchNightModeID = ESPUI.switcher("Use night mode to reduce brightness", &switchNightMode, ControlColor::Dark, getSetting(setting_type::usenightmode));
 
   // Intensity DAY slider selector: !!! DEFAULT LIMITED TO 64 of 255 !!!
   setupSlider(setting_type::intensity_day, "Brightness during the day", 0, LEDintensityLIMIT);
@@ -114,11 +114,10 @@ void setupWebInterface() {
   statusNightModeID = ESPUI.label("Night mode status", ControlColor::Dark, "Night mode not used");
 
   // Day mode start time:
-  call_day_time_startID = ESPUI.number("Day time starts at", call_day_time_start, ControlColor::Dark, day_time_start, 0, 11);
+  setupNumber(setting_type::day_time_start, "Day time starts at", 0, 11);
 
   // Day mode stop time:
-  call_day_time_stopID = ESPUI.number("Day time ends at", call_day_time_stop, ControlColor::Dark, day_time_stop, 12, 23);
-
+  setupNumber(setting_type::day_time_stop, "Day time starts at", 12, 23);
 
 
   // Section Startup:
@@ -138,7 +137,7 @@ void setupWebInterface() {
 
   setupSwitcher(setting_type::useFixedHourColor, "Use fixed hour color");
   setupColor(setting_type::colorHour, "Fixed hour color");
-  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", call_generic_number, -1, 7);
+  setupNumber(setting_type::showScrollingTimeEveryXMinutes, "Show scrolling time every ... minutes (-1 = random, 0 = never)", -1, 7);
   setupSwitcher(setting_type::useFixedMinuteColors, "Use fixed minute colors");
   setupColor(setting_type::colorMin1, "Minute 1");
   setupColor(setting_type::colorMin2, "Minute 2");
@@ -267,16 +266,8 @@ void setupWebInterface() {
   ESPUI.label("License information", ControlColor::Dark, "NonCommercial — You may not use the project for commercial purposes!");
 
 
-
   // Update night mode status text on startup:
-  if (usenightmode == 1) {
-    if ((iHour >= day_time_start) && (iHour <= day_time_stop)) {
-      ESPUI.print(statusNightModeID, "Day time");
-      if ((iHour == 0) && (day_time_stop == 23)) ESPUI.print(statusNightModeID, "Night time");  // Special function if day_time_stop set to 23 and time is 24, so 0...
-    } else {
-      ESPUI.print(statusNightModeID, "Night time");
-    }
-  }
+  updateNightModeText();
 
   __initVars();
 
@@ -329,11 +320,6 @@ void handleLEDupdate() {  // LED server pages urls:
           }
 
           ESPUI.updateVisibility(statusNightModeID, false);
-          ESPUI.updateVisibility(sliderBrightnessDayID, false);
-          ESPUI.updateVisibility(switchNightModeID, false);
-          ESPUI.updateVisibility(sliderBrightnessNightID, false);
-          ESPUI.updateVisibility(call_day_time_startID, false);
-          ESPUI.updateVisibility(call_day_time_stopID, false);
           ESPUI.updateVisibility(DayNightSectionID, false);
           ESPUI.jsonReload();
         }
@@ -351,11 +337,6 @@ void handleLEDupdate() {  // LED server pages urls:
           }
 
           ESPUI.updateVisibility(statusNightModeID, true);
-          ESPUI.updateVisibility(sliderBrightnessDayID, true);
-          ESPUI.updateVisibility(switchNightModeID, true);
-          ESPUI.updateVisibility(sliderBrightnessNightID, true);
-          ESPUI.updateVisibility(call_day_time_startID, true);
-          ESPUI.updateVisibility(call_day_time_stopID, true);
           ESPUI.updateVisibility(DayNightSectionID, true);
         }
         changedvalues = true;

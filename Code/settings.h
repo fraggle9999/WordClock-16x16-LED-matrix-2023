@@ -75,7 +75,6 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, LEDPIN, NEO_GRB + NEO_KHZ
 // ###########################################################################################################################################
 // # LED defaults:
 // ###########################################################################################################################################
-int usenightmode_default = 1;     // Use the night mode to reduce LED intensity during set times
 int day_time_start_default = 7;   // Define day mode start --> time before is then night mode if used
 int day_time_stop_default = 22;   // Define day mode end --> time after is then night mode if used
 
@@ -116,7 +115,7 @@ int test_minute = 38;     // Test a special time: minute
 
 enum struct setting_type { langLEDlayout, useshowip, useStartupText, usesinglemin, useFixedHourColor, showScrollingTimeEveryXMinutes, 
     useFixedMinuteColors, animationDelay, textScrollDelay, blinkingSecond, minuteCountdown, intensity_day, intensity_night, RandomColor,
-    colorTime, colorBack, colorHour, colorMin1, colorMin2, colorMin3, colorMin4 };
+    colorTime, colorBack, colorHour, colorMin1, colorMin2, colorMin3, colorMin4, usenightmode, day_time_start, day_time_stop };
 
 struct setting
 {
@@ -148,7 +147,10 @@ std::map<setting_type, setting> all_settings = {
     { setting_type::colorMin1, { "colorMin1", {}, 0xff0000, {} } },
     { setting_type::colorMin2, { "colorMin2", {}, 0xffffff, {} } },
     { setting_type::colorMin3, { "colorMin3", {}, 0x00ff00, {} } },
-    { setting_type::colorMin4, { "colorMin4", {}, 0xffff00, {} } }
+    { setting_type::colorMin4, { "colorMin4", {}, 0xffff00, {} } },
+    { setting_type::usenightmode, { "usenightmode", {}, 1, {} } },
+    { setting_type::day_time_start, { "day_time_start", {}, 7, {} } },
+    { setting_type::day_time_stop, { "day_time_stop", {}, 22, {} } }
 };
 
 std::map<int, setting_type> UI2settingMap;

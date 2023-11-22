@@ -25,10 +25,6 @@ void buttonWordClockReset(Control* sender, int type, void* param) {
         for (const auto& single_setting : all_settings)
           preferences.putInt(single_setting.second.name.c_str(), single_setting.second.default_val);
 
-        preferences.putUInt("usenightmode", usenightmode_default);
-        preferences.putUInt("day_time_stop", day_time_stop_default);
-        preferences.putUInt("day_time_stop", day_time_stop_default);
-
         delay(100);
         preferences.end();
         Serial.println("####################################################################################################");
@@ -130,17 +126,17 @@ void switchNightMode(Control* sender, int value) {
   delay(1000);
   switch (value) {
     case S_ACTIVE:
-      usenightmode = 1;
-      if ((iHour >= day_time_start) && (iHour <= day_time_stop)) {
+      putSetting(setting_type::usenightmode, 1);
+      if ((iHour >= getSetting(setting_type::day_time_start)) && (iHour <= getSetting(setting_type::day_time_stop))) {
         intensity = getSetting(setting_type::intensity_day);
-        if ((iHour == 0) && (day_time_stop == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
+        if ((iHour == 0) && (getSetting(setting_type::day_time_stop) == 23)) intensity = getSetting(setting_type::intensity_night);  // Special function if day_time_stop set to 23 and time is 24, so 0...
       } else {
         intensity = getSetting(setting_type::intensity_night);
       }
       break;
     case S_INACTIVE:
       intensity = getSetting(setting_type::intensity_day);
-      usenightmode = 0;
+      putSetting(setting_type::usenightmode, 0);
       break;
   }
   changedvalues = true;
@@ -221,30 +217,6 @@ void call_generic_color(Control* sender, int type) {
   const auto setting = UI2settingMap[sender->id];
   putSetting(setting, colorVal);
   __initVars();
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Time Day Mode Start
-// ###########################################################################################################################################
-void call_day_time_start(Control* sender, int type) {
-  updatedevice = false;
-  delay(1000);
-  day_time_start = sender->value.toInt();
-  changedvalues = true;
-  updatedevice = true;
-}
-
-
-// ###########################################################################################################################################
-// # GUI: Time Day Mode Stop
-// ###########################################################################################################################################
-void call_day_time_stop(Control* sender, int type) {
-  updatedevice = false;
-  delay(1000);
-  day_time_stop = sender->value.toInt();
-  changedvalues = true;
-  updatedevice = true;
 }
 
 
