@@ -16,7 +16,7 @@ void getFlashValues() {
 
 
 // ###########################################################################################################################################
-// # Write settings to flash:
+// # Update text for night mode:
 // ###########################################################################################################################################
 void updateNightModeText()
 {
@@ -45,6 +45,7 @@ void setFlashValues() {
     const auto* key = single_setting.second.name.c_str();
     const auto val = single_setting.second.val;
     preferences.remove(key); // in case it was formerly stored as other data type
+    preferences.putInt(key, val);
   }
 
   if (debugtexts == 1) Serial.println("Write settings to flash: END");
