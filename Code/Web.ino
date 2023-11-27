@@ -269,7 +269,7 @@ void setupWebInterface() {
   // Update night mode status text on startup:
   updateNightModeText();
 
-  __initVars();
+  InitVarsAndVisibility();
 
   // Deploy the page:
   ESPUI.begin("WordClock");

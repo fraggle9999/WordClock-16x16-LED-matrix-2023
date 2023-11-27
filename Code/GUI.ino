@@ -147,19 +147,38 @@ void switchNightMode(Control* sender, int value) {
 // ###########################################################################################################################################
 // # GUI: Init variables:
 // ###########################################################################################################################################
-void __initVars() {
+bool __updateVisibility(const setting_type type, const bool condition) {
+  const auto id = all_settings[type].UI_ID;
+  auto* control = ESPUI.getControl(id);
+  
+  if (control->visible != condition)
+  {
+    ESPUI.updateVisibility(id, condition);
+    return true;
+  }
+
+  return false;
+}
+
+
+// ###########################################################################################################################################
+// # GUI: Init variables and visibilities:
+// ###########################################################################################################################################
+void InitVarsAndVisibility() {
   minuteCountDown = 0;
   
-  ESPUI.updateVisibility(all_settings[setting_type::colorBack].UI_ID, getSetting(setting_type::RandomColor) == 0);
-  ESPUI.updateVisibility(all_settings[setting_type::colorTime].UI_ID, getSetting(setting_type::RandomColor) == 0);
+  bool visibility_changed =
+      __updateVisibility(setting_type::colorBack, getSetting(setting_type::RandomColor) == 0) |
+      __updateVisibility(setting_type::colorTime, getSetting(setting_type::RandomColor) == 0) |
 
-  ESPUI.updateVisibility(all_settings[setting_type::colorHour].UI_ID, getSetting(setting_type::useFixedHourColor) == 1);
-  ESPUI.updateVisibility(all_settings[setting_type::colorMin1].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
-  ESPUI.updateVisibility(all_settings[setting_type::colorMin2].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
-  ESPUI.updateVisibility(all_settings[setting_type::colorMin3].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
-  ESPUI.updateVisibility(all_settings[setting_type::colorMin4].UI_ID, getSetting(setting_type::useFixedMinuteColors) == 1);
+      __updateVisibility(setting_type::colorHour, getSetting(setting_type::useFixedHourColor) == 1) |
+      __updateVisibility(setting_type::colorMin1, getSetting(setting_type::useFixedMinuteColors) == 1) |
+      __updateVisibility(setting_type::colorMin2, getSetting(setting_type::useFixedMinuteColors) == 1) |
+      __updateVisibility(setting_type::colorMin3, getSetting(setting_type::useFixedMinuteColors) == 1) |
+      __updateVisibility(setting_type::colorMin4, getSetting(setting_type::useFixedMinuteColors) == 1);
 
-//  ESPUI.jsonReload();
+  if (visibility_changed)
+    ESPUI.jsonReload();
 
   changedvalues = true;
   updatedevice = true;
@@ -181,7 +200,7 @@ void call_generic_switcher(Control* sender, int value) {
       putSetting(setting, 0);
       break;
   }
-  __initVars();
+  InitVarsAndVisibility();
 }
 
 
@@ -193,7 +212,7 @@ void call_generic_number(Control* sender, int value) {
   delay(1000);
   const auto setting = UI2settingMap[sender->id];
   putSetting(setting, sender->value.toInt());
-  __initVars();
+  InitVarsAndVisibility();
 }
 
 
@@ -216,7 +235,7 @@ void call_generic_color(Control* sender, int type) {
 
   const auto setting = UI2settingMap[sender->id];
   putSetting(setting, colorVal);
-  __initVars();
+  InitVarsAndVisibility();
 }
 
 
