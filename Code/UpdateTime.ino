@@ -60,6 +60,9 @@ void handleWithSeconds(const int hours, const int minutes) {
       // shut off all minute values
       switchLEDXY(minuteVal_offsetX + 1, coordY, 4, 0);
 
+      // shut off "minutes" text
+      switchLEDXY(minuteText_coordX, coordY, minuteText_len, 0);
+
       // set remaining seconds as actual minute value
       setLEDcolXY(minuteVal_offsetX + (60 - currentSecond), coordY, 1, color_green);
     }

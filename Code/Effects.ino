@@ -186,6 +186,66 @@ void snake() {
 
 
 // ###########################################################################################################################################
+// # Show lines from left to right and vice versa
+// ###########################################################################################################################################
+void linesleftright() {
+  std::vector<uint32_t> c;
+  for (int y = 0; y < 8; ++y)
+    c.push_back(getRandomColor());
+
+  for (int round = 0; round < 2; ++round)
+  {
+    for (int x = 0; x < 16; ++x)
+    {
+      for (int y = 0; y < 8; ++y)
+      {
+        auto x_pos = (y % 2 == 0) ? x : 15 - x;
+        auto color = (round == 0) ? c[y] : 0;
+
+        setLEDcolXY(x_pos, y, 1, color);
+      }
+
+      strip.show();
+      delay(10);
+    }
+  }
+
+  ClearDisplay();
+  strip.show();
+}
+
+
+// ###########################################################################################################################################
+// # Show lines from top to bottom and vice versa
+// ###########################################################################################################################################
+void linestopbottom() {
+  std::vector<uint32_t> c;
+  for (int x = 0; x < 16; ++x)
+    c.push_back(getRandomColor());
+
+  for (int round = 0; round < 2; ++round)
+  {
+    for (int y = 0; y < 8; ++y)
+    {
+      for (int x = 0; x < 16; ++x)
+      {
+        auto y_pos = (x % 2 == 0) ? y : 7 - y;
+        auto color = (round == 0) ? c[x] : 0;
+
+        setLEDcolXY(x, y_pos, 1, color);
+      }
+
+      strip.show();
+      delay(10);
+    }
+  }
+
+  ClearDisplay();
+  strip.show();
+}
+
+
+// ###########################################################################################################################################
 // # Create a list of all effects
 // ###########################################################################################################################################
 void initEffects() {
@@ -194,6 +254,8 @@ void initEffects() {
   effectList.push_back(explosionEffect);
   effectList.push_back(blinkingHour);
   effectList.push_back(snake);
+  effectList.push_back(linesleftright);
+  effectList.push_back(linestopbottom);
 
   randomSeed(analogRead(0));
 }
