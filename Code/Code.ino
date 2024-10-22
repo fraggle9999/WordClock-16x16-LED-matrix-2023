@@ -41,6 +41,8 @@
 // # - ArduinoJson            // by bblanchon:                    https://github.com/bblanchon/ArduinoJson
 // # - LITTLEFS               // by lorol:                        https://github.com/lorol/LITTLEFS
 // #
+// # WORKS ONLY WITH ESP32 Board Package 2.0.17, NOT 3.x!
+// #
 // ###########################################################################################################################################
 #include <WiFi.h>               // Used to connect the ESP32 to your WiFi
 #include <WebServer.h>          // ESP32 OTA update function
@@ -59,7 +61,7 @@
 // ###########################################################################################################################################
 // # Version number of the code:
 // ###########################################################################################################################################
-const char* WORD_CLOCK_VERSION = "V2023.11.6";
+const char* WORD_CLOCK_VERSION = "V2024.10.22";
 
 
 // ###########################################################################################################################################
@@ -130,7 +132,7 @@ void setup() {
   getFlashValues();                       // Read settings from flash
   strip.begin();                          // Init the LEDs
   strip.show();                           // Init the LEDs --> Set them to OFF
-  intensity = getSetting(setting_type::intensity_day);              // Set the intenity to day mode for startup
+  intensity = getSetting(setting_type::intensity_day);              // Set the intensity to day mode for startup
   strip.setBrightness(intensity);         // Set LED brightness
 
   initEffects();
